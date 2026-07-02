@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucie & Simon — 26 June 2027</title>
+  <meta name="description" content="Join us as we celebrate our wedding on Saturday 26 June 2027 at St Mary's Church, Honley and Manor House, Lindley.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">Lucie &amp; Simon</a>
+  <ul class="nav-links">
+    <li><a href="/about">Our Story</a></li>
+    <li><a href="/the-day">The Day</a></li>
+    <li><a href="/venue">Venues</a></li>
+    <li><a href="/travel">Travel &amp; Stay</a></li>
+    <li><a href="/rsvp">RSVP</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">Saturday &middot; 26 June 2027</span>
+      <h1 class="hero-title">Lucie<br>&amp; Simon</h1>
+      <p class="hero-subtitle">are getting married</p>
+      <div class="hero-divider"></div>
+      <p class="hero-location">Honley &amp; Lindley, West Yorkshire</p>
+      <p class="hero-countdown" id="countdown-wrap">
+        <strong id="days-count">–</strong> days to go
+      </p>
+      <div class="cta-group">
+        <a href="/about" class="btn btn-solid">Our Story</a>
+        <a href="/the-day" class="btn btn-outline">The Day</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="quick-links">
+    <a href="/the-day" class="ql-item">
+      <span class="ql-label">Schedule</span>
+      <span class="ql-title">The Day</span>
+    </a>
+    <a href="/venue" class="ql-item">
+      <span class="ql-label">Where</span>
+      <span class="ql-title">Venues</span>
+    </a>
+    <a href="/travel" class="ql-item">
+      <span class="ql-label">Getting There</span>
+      <span class="ql-title">Travel &amp; Stay</span>
+    </a>
+    <a href="/rsvp" class="ql-item">
+      <span class="ql-label">Confirm Attendance</span>
+      <span class="ql-title">RSVP</span>
+    </a>
+  </div>
+
+  <section style="max-width: 720px; margin: 0 auto; padding: 100px 40px; text-align: center;">
+    <span style="font-size:11px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:24px;">26 June 2027</span>
+    <p style="font-family:var(--ff-d);font-size:clamp(22px,3vw,30px);line-height:1.65;color:var(--ink);">
+      We can&rsquo;t wait to celebrate with you. The day begins with a ceremony
+      at St Mary&rsquo;s Church in Honley before we head to the beautiful
+      Manor House in Lindley for an afternoon and evening of food, dancing, and memories.
+    </p>
+    <div style="margin-top:48px;">
+      <a href="/rsvp" class="btn btn-solid">RSVP now</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-name">Lucie &amp; Simon</p>
+  <p class="footer-date">Saturday &middot; 26 June 2027</p>
+  <div class="footer-rule"></div>
+  <ul class="footer-nav">
+    <li><a href="/about">Our Story</a></li>
+    <li><a href="/the-day">The Day</a></li>
+    <li><a href="/venue">Venues</a></li>
+    <li><a href="/travel">Travel &amp; Stay</a></li>
+    <li><a href="/rsvp">RSVP</a></li>
+  </ul>
+</footer>
+
+<script>
+  (function() {
+    var wedding = new Date('2027-06-26T00:00:00');
+    var now = new Date();
+    now.setHours(0,0,0,0);
+    var diff = Math.ceil((wedding - now) / 86400000);
+    var el = document.getElementById('days-count');
+    if (el && diff > 0) el.textContent = diff;
+    else if (el) { el.closest('#countdown-wrap').textContent = 'The big day is here!'; }
+  })();
+</script>
+
+</body>
+</html>
