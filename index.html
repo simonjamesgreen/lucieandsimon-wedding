@@ -189,6 +189,30 @@ a { color: inherit; text-decoration: none; }
 
 a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
 
+/* ── TOP NAV ── */
+.topnav {
+  position: fixed;
+  top: 15px; left: 15px; right: 15px;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  gap: clamp(14px, 2.6vw, 34px);
+  padding: 18px 20px;
+  animation-delay: 1.35s;
+}
+
+.topnav a {
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  transition: color .2s;
+  padding-bottom: 2px;
+}
+
+.topnav a:hover { color: var(--brass); }
+
 .foot {
   position: absolute;
   bottom: clamp(26px, 4.5vh, 44px);
@@ -197,7 +221,12 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   letter-spacing: .3em;
   text-transform: uppercase;
   color: var(--ink-dim);
-  animation-delay: 1.35s;
+  animation-delay: 1.5s;
+}
+
+@media (max-width: 640px) {
+  .topnav { gap: 12px; flex-wrap: wrap; padding: 14px 12px; }
+  .topnav a { font-size: 9px; letter-spacing: .18em; }
 }
 
 @media (max-width: 480px) {
@@ -210,6 +239,15 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
 
 <div class="glow" aria-hidden="true"></div>
 <div class="frame" aria-hidden="true"></div>
+
+<nav class="topnav fade" aria-label="Site pages">
+  <a href="/our-story">Our Story</a>
+  <a href="/the-day">The Day</a>
+  <a href="/travel">Travel</a>
+  <a href="/accommodation">Accommodation</a>
+  <a href="/rsvp">RSVP</a>
+  <a href="/faqs">FAQs</a>
+</nav>
 
 <main class="page">
   <p class="eyebrow fade">Together with their families</p>
@@ -229,13 +267,7 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
 
   <a class="rsvp fade" href="/rsvp">RSVP</a>
 
-  <nav class="foot fade" aria-label="Site pages">
-    <a href="/our-story" style="border-bottom:1px solid transparent;">Our Story</a> &nbsp;·&nbsp;
-    <a href="/the-day">The Day</a> &nbsp;·&nbsp;
-    <a href="/travel">Travel</a> &nbsp;·&nbsp;
-    <a href="/accommodation">Stay</a> &nbsp;·&nbsp;
-    <a href="/faqs">FAQs</a>
-  </nav>
+  <p class="foot fade">St Mary&rsquo;s Church &middot; Manor House Lindley</p>
 </main>
 
 <script>
