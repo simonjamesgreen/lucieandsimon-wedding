@@ -147,7 +147,8 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
 
 /* ── PHOTOS ── */
 .photo-full {
-  margin: clamp(36px, 6vh, 64px) 0;
+  margin: clamp(36px, 6vh, 64px) auto;
+  max-width: 560px;
 }
 
 .photo-full img {
