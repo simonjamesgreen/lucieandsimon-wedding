@@ -152,8 +152,7 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
 
 .photo-full img {
   width: 100%;
-  height: clamp(320px, 62vh, 640px);
-  object-fit: cover;
+  height: auto;
   border: 1px solid var(--brass-line);
   padding: 10px;
   background: var(--ivory);
@@ -164,12 +163,12 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   grid-template-columns: 1fr 1fr;
   gap: clamp(16px, 3vw, 36px);
   margin: clamp(36px, 6vh, 64px) 0;
+  align-items: start;
 }
 
 .photo-pair figure img {
   width: 100%;
-  height: clamp(300px, 48vh, 520px);
-  object-fit: cover;
+  height: auto;
   border: 1px solid var(--brass-line);
   padding: 8px;
   background: var(--ivory);
