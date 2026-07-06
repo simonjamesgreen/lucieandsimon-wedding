@@ -5,6 +5,117 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RSVP — Lucie & Simon</title>
 <link rel="stylesheet" href="/style.css">
+<style>
+.form-wrap { max-width: 620px; margin: 0 auto; text-align: left; }
+
+.f-label {
+  font-size: 10.5px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  display: block;
+  margin: 30px 0 10px;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--brass-line);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 17px;
+  color: var(--ink);
+  padding: 10px 2px;
+  outline: none;
+  transition: border-color .2s;
+  border-radius: 0;
+}
+
+input:focus, textarea:focus { border-bottom-color: var(--brass); }
+textarea { resize: vertical; min-height: 70px; }
+
+.att-opts { display: grid; gap: 10px; margin-top: 4px; }
+
+.att-opt {
+  border: 1px solid var(--brass-line);
+  padding: 16px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color .2s, background .2s;
+}
+
+.att-opt input { accent-color: var(--brass); width: 16px; height: 16px; }
+
+.att-opt span {
+  font-family: var(--serif);
+  font-size: 18px;
+}
+
+.att-opt.sel { border-color: var(--brass); background: rgba(168,131,75,.06); }
+
+.guest-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 8px;
+}
+
+.guest-row .rm {
+  background: none;
+  border: none;
+  color: var(--ink-dim);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px 6px;
+}
+
+.guest-row .rm:hover { color: var(--brass); }
+
+.add-guest {
+  background: none;
+  border: 1px solid var(--brass-line);
+  font-family: var(--sans);
+  font-size: 10.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 12px 22px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: border-color .2s, color .2s;
+}
+
+.add-guest:hover { border-color: var(--brass); color: var(--brass); }
+
+.submit-btn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  margin-top: 44px;
+  font-family: var(--sans);
+}
+
+.form-msg {
+  margin-top: 22px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--brass);
+  min-height: 20px;
+}
+
+.success-view { text-align: center; display: none; padding: 40px 0 20px; }
+.success-view .big {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(30px, 5vw, 44px);
+  margin-bottom: 18px;
+}
+.success-view p { color: var(--ink-dim); }
+</style>
 </head>
 <body>
 
@@ -23,37 +134,52 @@
 <header class="page-head">
   <span class="eyebrow">Répondez s&rsquo;il vous plaît</span>
   <h1 class="page-title">RS<em>VP</em></h1>
-  <p class="page-sub">One email is all it takes — we&rsquo;d love to know you&rsquo;re coming.</p>
+  <p class="page-sub">Kindly reply by the 1st of April 2027.</p>
   <div class="rule-v" aria-hidden="true"></div>
 </header>
 
-<div class="wrap" style="text-align:center;">
+<div class="wrap">
+  <div class="form-wrap" id="form-view">
 
-  <div class="stamp">
-    <span class="k">Kindly reply by</span>
-    <span class="v">The first of April, 2027</span>
+    <label class="f-label" for="contact_name">Your name</label>
+    <input type="text" id="contact_name" autocomplete="name" placeholder="First &amp; last name">
+
+    <label class="f-label" for="email">Email</label>
+    <input type="email" id="email" autocomplete="email" placeholder="you@example.com">
+
+    <label class="f-label" for="phone">Phone <span style="opacity:.5;letter-spacing:.1em;">(optional)</span></label>
+    <input type="tel" id="phone" autocomplete="tel" placeholder="07&hellip;">
+
+    <label class="f-label">Will you be joining us?</label>
+    <div class="att-opts" id="att-opts">
+      <label class="att-opt"><input type="radio" name="attending" value="whole_day"><span>Joyfully accepts — the whole day</span></label>
+      <label class="att-opt"><input type="radio" name="attending" value="evening_only"><span>Joining for the evening celebration</span></label>
+      <label class="att-opt"><input type="radio" name="attending" value="declines"><span>Regretfully declines</span></label>
+    </div>
+
+    <div id="party-section">
+      <label class="f-label">Your party</label>
+      <p style="font-size:13.5px;color:var(--ink-dim);margin-bottom:16px;">Everyone attending, including yourself — with any dietary requirements or allergies.</p>
+      <div id="guests"></div>
+      <button type="button" class="add-guest" id="add-guest">+ Add a guest</button>
+    </div>
+
+    <label class="f-label" for="song">Song request <span style="opacity:.5;letter-spacing:.1em;">(optional)</span></label>
+    <input type="text" id="song" placeholder="One song guaranteed to get you dancing">
+
+    <label class="f-label" for="message">A message for us <span style="opacity:.5;letter-spacing:.1em;">(optional)</span></label>
+    <textarea id="message" placeholder="Anything you'd like us to know"></textarea>
+
+    <button class="btn submit-btn" id="submit">Send RSVP</button>
+    <p class="form-msg" id="msg"></p>
   </div>
 
-  <div class="prose">
-    <p class="lede">Email us with the <span>names in your party</span> and any dietary requirements for the wedding breakfast.</p>
+  <div class="success-view" id="success-view">
+    <p class="big" id="success-title">Thank you!</p>
+    <p id="success-body">Your RSVP has been received. We can&rsquo;t wait to celebrate with you.</p>
+    <p style="margin-top:26px;"><a href="/" class="btn">Back to the invitation</a></p>
   </div>
-
-  <div class="stamp">
-    <span class="k">Write to</span>
-    <span class="v"><a href="mailto:lucieandsimonwedding@gmail.com">lucieandsimonwedding@gmail.com</a></span>
-  </div>
-
-  <div class="prose" style="margin-top:16px;">
-    <p>Questions about the day, the venues, travel, anything at all — same address. We&rsquo;ll come back to you quickly.</p>
-  </div>
-
 </div>
-
-<section class="next-block">
-  <span class="eyebrow">While you&rsquo;re here</span>
-  <h2>Dress code, children, gifts, parking —<br>the answers live on one page.</h2>
-  <a class="btn" href="/faqs">FAQs</a>
-</section>
 
 <footer class="footer">
   <p class="f-names">Lucie <span>&amp;</span> Simon</p>
@@ -67,6 +193,109 @@
     <a href="/faqs">FAQs</a>
   </nav>
 </footer>
+
+<script>
+(function(){
+  var SUPABASE_URL = 'https://uvvtdqltmdzbwchbtvbj.supabase.co';
+  var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
+
+  var guests = document.getElementById('guests');
+
+  function guestRow(name) {
+    var row = document.createElement('div');
+    row.className = 'guest-row';
+    row.innerHTML =
+      '<div><label class="f-label" style="margin:0 0 6px;">Name</label>' +
+      '<input type="text" class="g-name" placeholder="Guest name"></div>' +
+      '<div><label class="f-label" style="margin:0 0 6px;">Dietary</label>' +
+      '<input type="text" class="g-diet" placeholder="None / vegetarian / allergy&hellip;"></div>' +
+      '<button type="button" class="rm" aria-label="Remove guest">&times;</button>';
+    row.querySelector('.rm').onclick = function(){ row.remove(); };
+    if (name) row.querySelector('.g-name').value = name;
+    guests.appendChild(row);
+  }
+
+  guestRow();
+  document.getElementById('add-guest').onclick = function(){ guestRow(); };
+
+  // Radio highlight + hide party for declines
+  var opts = document.querySelectorAll('.att-opt');
+  opts.forEach(function(o){
+    o.querySelector('input').addEventListener('change', function(){
+      opts.forEach(function(x){ x.classList.remove('sel'); });
+      o.classList.add('sel');
+      document.getElementById('party-section').style.display =
+        this.value === 'declines' ? 'none' : 'block';
+    });
+  });
+
+  // Mirror contact name into first guest row
+  document.getElementById('contact_name').addEventListener('input', function(){
+    var first = guests.querySelector('.g-name');
+    if (first && !first.dataset.touched) first.value = this.value;
+  });
+  guests.addEventListener('input', function(e){
+    if (e.target.classList.contains('g-name')) e.target.dataset.touched = '1';
+  });
+
+  document.getElementById('submit').onclick = async function(){
+    var msg = document.getElementById('msg');
+    var name = document.getElementById('contact_name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var att = document.querySelector('input[name="attending"]:checked');
+
+    if (!name) { msg.textContent = 'Please add your name.'; return; }
+    if (!email || email.indexOf('@') < 1) { msg.textContent = 'Please add a valid email.'; return; }
+    if (!att) { msg.textContent = 'Please tell us if you can join us.'; return; }
+
+    var party = [];
+    if (att.value !== 'declines') {
+      guests.querySelectorAll('.guest-row').forEach(function(r){
+        var n = r.querySelector('.g-name').value.trim();
+        if (n) party.push({ name: n, dietary: r.querySelector('.g-diet').value.trim() });
+      });
+      if (!party.length) { msg.textContent = 'Please add at least one guest name to your party.'; return; }
+    }
+
+    this.disabled = true;
+    msg.textContent = 'Sending\u2026';
+
+    try {
+      var res = await fetch(SUPABASE_URL + '/rest/v1/wedding_rsvps', {
+        method: 'POST',
+        headers: {
+          'apikey': ANON_KEY,
+          'Authorization': 'Bearer ' + ANON_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          contact_name: name,
+          email: email,
+          phone: document.getElementById('phone').value.trim() || null,
+          attending: att.value,
+          party_members: party,
+          song_request: document.getElementById('song').value.trim() || null,
+          message: document.getElementById('message').value.trim() || null
+        })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+
+      document.getElementById('form-view').style.display = 'none';
+      var sv = document.getElementById('success-view');
+      if (att.value === 'declines') {
+        document.getElementById('success-title').textContent = 'We\u2019ll miss you';
+        document.getElementById('success-body').textContent = 'Thank you for letting us know \u2014 you\u2019ll be with us in spirit.';
+      }
+      sv.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      msg.textContent = 'Something went wrong \u2014 please try again, or email lucieandsimonwedding@gmail.com';
+      this.disabled = false;
+    }
+  };
+})();
+</script>
 
 </body>
 </html>

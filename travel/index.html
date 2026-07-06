@@ -5,6 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Travel — Lucie & Simon</title>
 <link rel="stylesheet" href="/style.css">
+<style>
+.venue-map-block {
+  margin: clamp(36px, 6vh, 60px) 0;
+}
+
+.venue-map-block .v-head {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.venue-map-block .v-head .tag {
+  font-size: 10px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.venue-map-block .v-head h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(26px, 3.8vw, 38px);
+}
+
+.venue-map-block .v-head .addr {
+  font-size: 13.5px;
+  color: var(--ink-dim);
+  margin-top: 8px;
+}
+
+.map-frame {
+  border: 1px solid var(--brass-line);
+  padding: 10px;
+  background: var(--ivory);
+}
+
+.map-frame iframe {
+  width: 100%;
+  height: 380px;
+  border: 0;
+  display: block;
+  filter: grayscale(.35) sepia(.08);
+}
+
+.venue-links { text-align: center; margin-top: 18px; display: flex; gap: 26px; justify-content: center; }
+
+.venue-links a {
+  font-size: 10.5px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 3px;
+  transition: color .2s;
+}
+
+.venue-links a:hover { color: var(--brass); }
+</style>
 </head>
 <body>
 
@@ -23,29 +81,64 @@
 <header class="page-head">
   <span class="eyebrow">Getting there</span>
   <h1 class="page-title">Tra<em>vel</em></h1>
-  <p class="page-sub">Both venues sit just outside Huddersfield, West Yorkshire — easy by road or rail.</p>
+  <p class="page-sub">Two venues, twenty minutes apart, just outside Huddersfield, West Yorkshire.</p>
   <div class="rule-v" aria-hidden="true"></div>
 </header>
+
+<div class="wrap">
+
+  <div class="venue-map-block">
+    <div class="v-head">
+      <span class="tag">The Ceremony · 12 noon</span>
+      <h2>St Mary&rsquo;s Church, Honley</h2>
+      <p class="addr">Church Street, Honley, Holmfirth HD9 6AH</p>
+    </div>
+    <div class="map-frame">
+      <iframe
+        src="https://maps.google.com/maps?q=St%20Mary%27s%20Church%2C%20Church%20Street%2C%20Honley%2C%20Holmfirth%20HD9%206AH&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Map of St Mary's Church, Honley"></iframe>
+    </div>
+    <div class="venue-links">
+      <a href="https://maps.google.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Open in Google Maps</a>
+      <a href="https://maps.apple.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Open in Apple Maps</a>
+    </div>
+    <p style="font-size:14px;color:var(--ink-dim);text-align:center;max-width:56ch;margin:20px auto 0;line-height:1.75;">Please be seated by 11:45. Parking in the village is limited — car-share where you can, or take a taxi.</p>
+  </div>
+
+  <div class="rule-v" aria-hidden="true" style="margin:0 auto;"></div>
+
+  <div class="venue-map-block">
+    <div class="v-head">
+      <span class="tag">The Reception · from 1:30pm</span>
+      <h2>Manor House, Lindley</h2>
+      <p class="addr">Lidget Street, Lindley, Huddersfield HD3 3JB</p>
+    </div>
+    <div class="map-frame">
+      <iframe
+        src="https://maps.google.com/maps?q=Manor%20House%2C%20Lidget%20Street%2C%20Lindley%2C%20Huddersfield%20HD3%203JB&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Map of Manor House, Lindley"></iframe>
+    </div>
+    <div class="venue-links">
+      <a href="https://maps.google.com/?q=Manor+House+Lidget+Street+Lindley+Huddersfield+HD3+3JB" target="_blank" rel="noopener">Open in Google Maps</a>
+      <a href="https://maps.apple.com/?q=Manor+House+Lindley+HD3+3JB" target="_blank" rel="noopener">Open in Apple Maps</a>
+    </div>
+    <p style="font-size:14px;color:var(--ink-dim);text-align:center;max-width:56ch;margin:20px auto 0;line-height:1.75;">Parking on site. The bar is open from 1:30pm until half past midnight.</p>
+  </div>
+
+</div>
 
 <div class="wrap">
   <div class="info-list">
 
     <div class="info-row">
-      <div class="info-key">The venues</div>
-      <div class="info-val">
-        <h3>Two stops, twenty minutes apart</h3>
-        <p><strong>St Mary&rsquo;s Church</strong> — Church Street, Honley, Holmfirth HD9 6AH · <a href="https://maps.google.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Directions</a></p>
-        <p><strong>Manor House</strong> — Lidget Street, Lindley, Huddersfield HD3 3JB · <a href="https://maps.google.com/?q=Manor+House+Lidget+Street+Lindley+Huddersfield+HD3+3JB" target="_blank" rel="noopener">Directions</a></p>
-        <p>The drive between the two is around 20 minutes. Please arrange your lift or taxi before the day.</p>
-      </div>
-    </div>
-
-    <div class="info-row">
       <div class="info-key">By train</div>
       <div class="info-val">
         <h3>Huddersfield is the station</h3>
-        <p>Direct from London King&rsquo;s Cross via Wakefield Westgate, or St Pancras via Leeds or Sheffield — about <strong>2 hours 15 minutes</strong> from London. Quick connections from Leeds, Manchester, and Sheffield.</p>
-        <p>From the station it&rsquo;s a short taxi to either venue. Advance tickets are much cheaper — book early.</p>
+        <p>Direct from London King&rsquo;s Cross via Wakefield Westgate, or St Pancras via Leeds or Sheffield — about <strong>2 hours 15 minutes</strong> from London. Quick connections from Leeds, Manchester, and Sheffield. From the station it&rsquo;s a short taxi to either venue.</p>
       </div>
     </div>
 
@@ -59,7 +152,6 @@
           <li><strong>Leeds</strong> — around 20 minutes via the A62</li>
           <li><strong>Sheffield</strong> — around 30 minutes via the A616</li>
         </ul>
-        <p>Manor House has parking on site. Parking in Honley village is limited — please share cars where possible.</p>
       </div>
     </div>
 
@@ -67,8 +159,7 @@
       <div class="info-key">Taxis</div>
       <div class="info-val">
         <h3>Book before the day</h3>
-        <p>Taxis between the church and Manor House, and home at the end of the night, are best arranged in advance — especially for the 1am finish. Uber operates in the Huddersfield area; local firm recommendations will follow with the invitations.</p>
-        <p>If you plan to drink — we&rsquo;d encourage it — please don&rsquo;t drive.</p>
+        <p>Taxis between the church and Manor House, and home after the 1am finish, are best arranged in advance. Uber operates in the Huddersfield area; local firm recommendations will follow with the invitations. If you plan to drink — we&rsquo;d encourage it — please don&rsquo;t drive.</p>
       </div>
     </div>
 
@@ -77,7 +168,7 @@
 
 <section class="next-block">
   <span class="eyebrow">Next</span>
-  <h2>Where to stay in Huddersfield<br>and the Holme Valley.</h2>
+  <h2>Where to stay — from a two-minute walk<br>to countryside inns.</h2>
   <a class="btn" href="/accommodation">Accommodation</a>
 </section>
 

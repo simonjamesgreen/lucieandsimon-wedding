@@ -5,6 +5,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Accommodation — Lucie & Simon</title>
 <link rel="stylesheet" href="/style.css">
+<style>
+.cat-head {
+  text-align: center;
+  padding: clamp(44px, 7vh, 72px) 0 clamp(22px, 3.5vh, 34px);
+}
+
+.cat-head .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--brass);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cat-head h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(26px, 3.6vw, 36px);
+}
+
+.cat-head p {
+  font-size: 13.5px;
+  color: var(--ink-dim);
+  margin-top: 8px;
+}
+
+.hotel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.hotel-card {
+  border: 1px solid var(--brass-line);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--ivory);
+  transition: border-color .2s;
+}
+
+.hotel-card:hover { border-color: var(--brass); }
+
+.hotel-card .dist {
+  font-size: 9.5px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 12px;
+}
+
+.hotel-card h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 23px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.hotel-card .stars {
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: var(--brass);
+  margin-bottom: 12px;
+}
+
+.hotel-card .stars span { color: var(--ink-dim); font-size: 12px; letter-spacing: .02em; }
+
+.hotel-card .desc {
+  font-size: 14px;
+  color: var(--ink-dim);
+  line-height: 1.7;
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.hotel-card .price {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  margin-bottom: 18px;
+}
+
+.hotel-card .price span { font-family: var(--sans); font-style: normal; font-size: 11px; color: var(--ink-dim); }
+
+.hotel-card .links { display: flex; gap: 16px; }
+
+.hotel-card .links a {
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 3px;
+  transition: color .2s;
+}
+
+.hotel-card .links a:hover { color: var(--brass); }
+</style>
 </head>
 <body>
 
@@ -23,55 +123,200 @@
 <header class="page-head">
   <span class="eyebrow">Where to stay</span>
   <h1 class="page-title">Accommo<em>dation</em></h1>
-  <p class="page-sub">From boutique rooms at the venue itself to cottages in the Holme Valley.</p>
+  <p class="page-sub">Hand-picked places within easy reach of Manor House — from a two-minute stroll to countryside inns. Google ratings and guide prices included; book direct for the best rates.</p>
   <div class="rule-v" aria-hidden="true"></div>
 </header>
 
-<div class="wrap">
-  <div class="info-list">
+<div class="wrap-wide">
 
-    <div class="info-row">
-      <div class="info-key">At the venue</div>
-      <div class="info-val">
-        <h3>Manor House Lindley</h3>
-        <p>The venue itself has <strong>eleven individually designed boutique bedrooms</strong> — original Georgian sash windows, exposed stone, and you&rsquo;re already home when the bar closes. These will go quickly, so if you&rsquo;d like one, contact the hotel as soon as possible and mention the wedding.</p>
-        <p><a href="https://www.manorhouselindley.co.uk/" target="_blank" rel="noopener">manorhouselindley.co.uk</a></p>
+  <!-- CLOSEST -->
+  <div class="cat-head">
+    <span class="num">I.</span>
+    <h2>Closest to the Venue</h2>
+    <p>Walk home from the reception — no taxi required.</p>
+  </div>
+  <div class="hotel-grid">
+
+    <div class="hotel-card">
+      <p class="dist">2 min walk · Lindley</p>
+      <h3>Plover Cottage</h3>
+      <p class="stars">★★★★★ <span>4.8 (139 reviews)</span></p>
+      <p class="desc">Beautifully kept cottages moments from Manor House — guests at previous weddings there rave about it. Spacious, spotless, with parking. The single best-located option there is.</p>
+      <p class="price">£90–130 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.google.com/search?q=Plover+Cottage+Lindley+Huddersfield" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Plover+Cottage,+13+Plover+Rd,+Lindley+HD3+3HU" target="_blank" rel="noopener">Map</a>
       </div>
     </div>
 
-    <div class="info-row">
-      <div class="info-key">Nearby hotels</div>
-      <div class="info-val">
-        <h3>Huddersfield &amp; around</h3>
-        <ul>
-          <li><strong>Huddersfield town centre</strong> — a short taxi from Manor House, with a range of hotels at sensible prices</li>
-          <li><strong>Cedar Court Hotel</strong> — just off the M62, ten minutes from Lindley by car</li>
-          <li><strong>The Old Golf House Hotel, Outlane</strong> — close to Lindley, quieter setting</li>
-        </ul>
+    <div class="hotel-card">
+      <p class="dist">10 min walk · Lindley</p>
+      <h3>Heritage Serviced Suites</h3>
+      <p class="stars">★★★★½ <span>4.4 (76 reviews)</span></p>
+      <p class="desc">Apartment-style suites with kitchens and living space — previous Manor House wedding guests recommend them. On-site parking, gym, and a famously good café breakfast next door.</p>
+      <p class="price">£80–120 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.google.com/search?q=Heritage+Serviced+Suites+Lindley" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Heritage+Serviced+Suites,+70+Plover+Rd,+Lindley+HD3+3HR" target="_blank" rel="noopener">Map</a>
       </div>
     </div>
 
-    <div class="info-row">
-      <div class="info-key">The valley</div>
-      <div class="info-val">
-        <h3>Honley &amp; Holmfirth</h3>
-        <p>If you&rsquo;d rather wake up in the countryside, the Holme Valley around Honley and Holmfirth has lovely pubs with rooms and plenty of holiday cottages — ideal if you fancy making a weekend of it. You&rsquo;d be close to the church, with a 20-minute taxi back from Manor House at night.</p>
-        <ul>
-          <li><strong>Cottages &amp; Airbnb</strong> — great for families and groups; June books up early</li>
-          <li><strong>Pubs with rooms</strong> — characterful and very local</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="info-row">
-      <div class="info-key">Our advice</div>
-      <div class="info-val">
-        <h3>Book early, stay two nights</h3>
-        <p>Late June is peak season in the valley. If you can, arrive on the Friday — the area is genuinely one of the most beautiful corners of England, and you won&rsquo;t want to rush off on the Sunday either.</p>
+    <div class="hotel-card">
+      <p class="dist">1 mile · Birchencliffe</p>
+      <h3>Briar Court Hotel</h3>
+      <p class="stars">★★★★ <span>4.3 (450 reviews)</span></p>
+      <p class="desc">A friendly, well-run hotel five minutes' drive away, with a well-regarded Italian restaurant on site. Comfortable rooms and warm Yorkshire service.</p>
+      <p class="price">£80–110 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.google.com/search?q=Briar+Court+Hotel+Huddersfield" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Briar+Court+Hotel,+Halifax+Rd,+Huddersfield+HD3+3NT" target="_blank" rel="noopener">Map</a>
       </div>
     </div>
 
   </div>
+
+  <!-- BUDGET -->
+  <div class="cat-head">
+    <span class="num">II.</span>
+    <h2>Best on a Budget</h2>
+    <p>Clean, reliable, and kind to the wallet.</p>
+  </div>
+  <div class="hotel-grid">
+
+    <div class="hotel-card">
+      <p class="dist">1.5 miles · Ainley Top</p>
+      <h3>Fortune Hotel <span style="font-size:14px;">(Best Western)</span></h3>
+      <p class="stars">★★★★½ <span>4.4 (392 reviews)</span></p>
+      <p class="desc">The area&rsquo;s hidden bargain — spacious, spotless rooms from around £45, free parking, and a proper old pub with an open fire next door. Guests are consistently amazed at the value.</p>
+      <p class="price">£45–75 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.google.com/search?q=Fortune+Hotel+Huddersfield+Best+Western" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Fortune+Hotel,+New+Hey+Rd,+Huddersfield+HD2+2EA" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <p class="dist">3 miles · Town centre</p>
+      <h3>Premier Inn Huddersfield Central</h3>
+      <p class="stars">★★★★ <span>4.2 (906 reviews)</span></p>
+      <p class="desc">Exactly what you expect from a Premier Inn — comfy beds, soundproofed windows, canal views, and a team guests genuinely rave about. Short taxi to both venues.</p>
+      <p class="price">£60–90 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.premierinn.com/gb/en/hotels/england/west-yorkshire/huddersfield/huddersfield-central.html" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Premier+Inn+Huddersfield+Central" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <p class="dist">1.5 miles · Ainley Top</p>
+      <h3>Cedar Court Hotel</h3>
+      <p class="stars">★★★★ <span>3.8 (1,895 reviews)</span></p>
+      <p class="desc">A large hotel right by the M62 with recently refurbished public areas, a bar, and dog-friendly rooms — handy for bigger groups who want to stay together.</p>
+      <p class="price">£85–120 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.cedarcourthotels.co.uk/hotels/huddersfield/" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Cedar+Court+Hotel+Huddersfield" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAMILY -->
+  <div class="cat-head">
+    <span class="num">III.</span>
+    <h2>Family-Friendly</h2>
+    <p>Space to spread out, kitchens, and room for the kids.</p>
+  </div>
+  <div class="hotel-grid">
+
+    <div class="hotel-card">
+      <p class="dist">10 min walk · Lindley</p>
+      <h3>Heritage Serviced Suites</h3>
+      <p class="stars">★★★★½ <span>4.4 (76 reviews)</span></p>
+      <p class="desc">The apartments here are ideal for families — separate living areas, full kitchens for early breakfasts and bedtime routines, and you can walk to the reception.</p>
+      <p class="price">£80–120 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.google.com/search?q=Heritage+Serviced+Suites+Lindley" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Heritage+Serviced+Suites+Lindley" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <p class="dist">2 min walk · Lindley</p>
+      <h3>Plover Cottage <span style="font-size:14px;">(cottages)</span></h3>
+      <p class="stars">★★★★★ <span>4.8 (139 reviews)</span></p>
+      <p class="desc">Adjoining cottage apartments that sleep four comfortably — perfect for a family or two couples sharing, with parking and two bathrooms in some units.</p>
+      <p class="price">£90–130 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.google.com/search?q=Plover+Cottage+Lindley+Huddersfield" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Plover+Cottage+Lindley" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <p class="dist">3 miles · Town centre</p>
+      <h3>Premier Inn <span style="font-size:14px;">(family rooms)</span></h3>
+      <p class="stars">★★★★ <span>4.2 (906 reviews)</span></p>
+      <p class="desc">Family rooms sleeping up to four at sensible prices, an on-site restaurant for easy dinners, and staff known for being brilliant with kids.</p>
+      <p class="price">£70–100 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.premierinn.com/gb/en/hotels/england/west-yorkshire/huddersfield/huddersfield-central.html" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Premier+Inn+Huddersfield+Central" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CHARACTER -->
+  <div class="cat-head">
+    <span class="num">IV.</span>
+    <h2>Country Inns &amp; Character</h2>
+    <p>A little further out, but worth every mile — and handy for the church.</p>
+  </div>
+  <div class="hotel-grid">
+
+    <div class="hotel-card">
+      <p class="dist">7 miles · Thunder Bridge</p>
+      <h3>The Woodman Inn</h3>
+      <p class="stars">★★★★½ <span>4.5 (1,256 reviews)</span></p>
+      <p class="desc">A gorgeous stone inn in a wooded hamlet — beautiful rooms (some with huge baths), superb food, and one of our favourite spots in the area. Genuinely special.</p>
+      <p class="price">£110–150 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.woodman-inn.com/" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=The+Woodman+Inn+Thunder+Bridge" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <p class="dist">6 miles · Holmfirth</p>
+      <h3>The Huntsman Inn</h3>
+      <p class="stars">★★★★½ <span>4.5 (2,045 reviews)</span></p>
+      <p class="desc">Set in the hills above Holmfirth with knockout views, lovely rooms, and a Sunday roast people drive across the county for. Close to the church side of the day.</p>
+      <p class="price">£100–140 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.huntsmaninn.co.uk/" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=The+Huntsman+Inn+Holmfirth" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <p class="dist">5 miles · Holmfirth</p>
+      <h3>Rooms at the Nook</h3>
+      <p class="stars">★★★★½ <span>4.4 (42 reviews)</span></p>
+      <p class="desc">Cosy rooms above a brilliant little brewery pub in the middle of Holmfirth — full English included, great pubs on the doorstep, and proper Last of the Summer Wine country.</p>
+      <p class="price">£70–90 <span>/ night, guide</span></p>
+      <div class="links">
+        <a href="https://www.thenookbrewhouse.co.uk/" target="_blank" rel="noopener">Book</a>
+        <a href="https://maps.google.com/?q=Rooms+at+the+Nook+Holmfirth" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="prose" style="margin-top:clamp(48px,8vh,80px);">
+    <p class="lede">One honest tip: <span>book early.</span> Late June is peak season in the valley, and the closest options have very few rooms.</p>
+  </div>
+
 </div>
 
 <section class="next-block">
