@@ -36,6 +36,11 @@
   margin-top: 8px;
 }
 
+.venue-map-block .photo-pair figure img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
 .map-frame {
   border: 1px solid var(--brass-line);
   padding: 10px;
@@ -123,12 +128,9 @@
       <h2>Manor House, Lindley</h2>
       <p class="addr">Lidget Street, Lindley, Huddersfield HD3 3JB</p>
     </div>
-    <div class="photo-pair" style="margin:0 0 22px;">
+    <div class="photo-pair" style="margin:0 0 22px;grid-template-columns:1fr;">
       <figure>
-        <img src="/images/manor-house.jpg" alt="Manor House Lindley — the Georgian front and gates">
-      </figure>
-      <figure>
-        <img src="/images/coach-house.jpg" alt="The Coach House and gardens at Manor House Lindley">
+        <img src="/images/manor-house.jpg" alt="Manor House Lindley — the Georgian front and gates" style="aspect-ratio:16/9;">
       </figure>
     </div>
     <div class="map-frame">
