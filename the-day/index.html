@@ -16,6 +16,7 @@
     <a href="/travel">Travel</a>
     <a href="/accommodation">Accommodation</a>
     <a href="/rsvp">RSVP</a>
+    <a href="/photos">Photos</a>
     <a href="/faqs">FAQs</a>
   </div>
 </nav>
@@ -166,6 +167,15 @@
   </div>
 </div>
 
+<div class="wrap" style="padding-top:0;">
+  <div style="text-align:center;border-top:1px solid var(--brass-faint);padding-top:clamp(44px,7vh,72px);">
+    <span class="eyebrow">The jukebox</span>
+    <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,36px);margin-bottom:14px;">Songs you&rsquo;ve requested</h2>
+    <p style="font-size:14px;color:var(--ink-dim);max-width:46ch;margin:0 auto 30px;">Every song requested on an RSVP lands here — and on the dancefloor. Add yours when you <a href="/rsvp" style="border-bottom:1px solid var(--brass);">RSVP</a>.</p>
+    <div id="jukebox" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:760px;margin:0 auto;"></div>
+  </div>
+</div>
+
 <section class="next-block">
   <span class="eyebrow">Next</span>
   <h2>Getting to Yorkshire, and between<br>the church and Manor House.</h2>
@@ -181,9 +191,77 @@
     <a href="/travel">Travel</a>
     <a href="/accommodation">Accommodation</a>
     <a href="/rsvp">RSVP</a>
+    <a href="/photos">Photos</a>
     <a href="/faqs">FAQs</a>
   </nav>
 </footer>
+
+<script>
+(function(){
+  var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
+
+  // Jukebox wall
+  fetch('https://uvvtdqltmdzbwchbtvbj.supabase.co/rest/v1/rpc/get_song_requests', {
+    method: 'POST',
+    headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY, 'Content-Type': 'application/json' },
+    body: '{}'
+  }).then(function(r){ return r.json(); }).then(function(rows){
+    var jb = document.getElementById('jukebox');
+    if (!rows || !rows.length) {
+      jb.innerHTML = '<p style="font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-dim);">No requests yet — the dancefloor is yours to shape.</p>';
+      return;
+    }
+    jb.innerHTML = rows.map(function(r){
+      var s = String(r.song || '').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; });
+      return '<span style="border:1px solid var(--brass-line);padding:9px 18px;font-size:13px;">♪&nbsp; ' + s + '</span>';
+    }).join('');
+  }).catch(function(){});
+
+  // Happening now — only on the wedding day
+  var now = new Date();
+  var isDay = now.getFullYear() === 2027 && now.getMonth() === 5 && (now.getDate() === 26 || (now.getDate() === 27 && now.getHours() < 2));
+  if (!isDay) return;
+
+  var slots = [
+    ['2027-06-26T12:00:00+01:00', '2027-06-26T13:00:00+01:00'],
+    ['2027-06-26T13:00:00+01:00', '2027-06-26T13:30:00+01:00'],
+    ['2027-06-26T13:30:00+01:00', '2027-06-26T14:00:00+01:00'],
+    ['2027-06-26T14:00:00+01:00', '2027-06-26T15:30:00+01:00'],
+    ['2027-06-26T15:30:00+01:00', '2027-06-26T15:45:00+01:00'],
+    ['2027-06-26T15:45:00+01:00', '2027-06-26T18:00:00+01:00'],
+    ['2027-06-26T18:00:00+01:00', '2027-06-26T18:30:00+01:00'],
+    ['2027-06-26T18:30:00+01:00', '2027-06-26T19:30:00+01:00'],
+    ['2027-06-26T19:30:00+01:00', '2027-06-26T20:00:00+01:00'],
+    ['2027-06-26T20:00:00+01:00', '2027-06-26T20:45:00+01:00'],
+    ['2027-06-26T20:45:00+01:00', '2027-06-26T21:30:00+01:00'],
+    ['2027-06-26T21:30:00+01:00', '2027-06-26T22:15:00+01:00'],
+    ['2027-06-26T22:15:00+01:00', '2027-06-27T00:00:00+01:00'],
+    ['2027-06-27T00:00:00+01:00', '2027-06-27T00:30:00+01:00'],
+    ['2027-06-27T00:30:00+01:00', '2027-06-27T01:00:00+01:00'],
+    ['2027-06-27T01:00:00+01:00', '2027-06-27T02:00:00+01:00']
+  ];
+
+  function highlight() {
+    var n = new Date();
+    var rows = document.querySelectorAll('.order-row');
+    rows.forEach(function(row, i){
+      var old = row.querySelector('.now-chip');
+      if (old) old.remove();
+      row.style.background = '';
+      if (i < slots.length && n >= new Date(slots[i][0]) && n < new Date(slots[i][1])) {
+        row.style.background = 'rgba(168,131,75,.07)';
+        var chip = document.createElement('span');
+        chip.className = 'now-chip';
+        chip.textContent = 'Happening now';
+        chip.style.cssText = 'display:inline-block;margin-left:12px;font-family:var(--sans);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ivory);background:var(--brass);padding:4px 10px;vertical-align:middle;';
+        row.querySelector('.order-event').appendChild(chip);
+      }
+    });
+  }
+  highlight();
+  setInterval(highlight, 60000);
+})();
+</script>
 
 </body>
 </html>

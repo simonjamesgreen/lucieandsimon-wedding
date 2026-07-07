@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Wall — Lucie & Simon</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+.upload-zone {
+  max-width: 560px;
+  margin: 0 auto 50px;
+  text-align: center;
+}
+
+.upload-btn {
+  display: inline-block;
+  cursor: pointer;
+}
+
+#file-input { display: none; }
+
+.up-status { font-size: 13px; color: var(--brass); margin-top: 16px; min-height: 18px; }
+
+.gallery {
+  columns: 3;
+  column-gap: 14px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.gallery figure {
+  break-inside: avoid;
+  margin-bottom: 14px;
+  border: 1px solid var(--brass-line);
+  padding: 7px;
+  background: var(--ivory);
+}
+
+.gallery img { width: 100%; height: auto; display: block; }
+
+.empty-note {
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--ink-dim);
+  padding: 40px 0;
+}
+
+@media (max-width: 860px) { .gallery { columns: 2; } }
+@media (max-width: 520px) { .gallery { columns: 1; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">Lucie <span>&amp;</span> Simon</a>
+  <div class="nav-links">
+    <a href="/our-story">Our Story</a>
+    <a href="/the-day">The Day</a>
+    <a href="/travel">Travel</a>
+    <a href="/accommodation">Accommodation</a>
+    <a href="/rsvp">RSVP</a>
+    <a href="/photos" class="active">Photos</a>
+    <a href="/faqs">FAQs</a>
+  </div>
+</nav>
+
+<header class="page-head">
+  <span class="eyebrow">The photo wall</span>
+  <h1 class="page-title">Pho<em>tos</em></h1>
+  <p class="page-sub">Took a great photo on the day? Add it to the wall — it appears here instantly for everyone to enjoy.</p>
+  <div class="rule-v" aria-hidden="true"></div>
+</header>
+
+<div class="wrap-wide">
+
+  <div class="upload-zone">
+    <label class="btn upload-btn" for="file-input">Add your photos</label>
+    <input type="file" id="file-input" accept="image/*" multiple>
+    <p class="up-status" id="up-status"></p>
+  </div>
+
+  <div class="gallery" id="gallery"></div>
+  <p class="empty-note" id="empty" style="display:none;">No photos yet — be the first to add one.</p>
+
+</div>
+
+<footer class="footer">
+  <p class="f-names">Lucie <span>&amp;</span> Simon</p>
+  <p class="f-date">Saturday 26 June 2027 · Honley &amp; Lindley</p>
+  <nav class="f-nav">
+    <a href="/our-story">Our Story</a>
+    <a href="/the-day">The Day</a>
+    <a href="/travel">Travel</a>
+    <a href="/accommodation">Accommodation</a>
+    <a href="/rsvp">RSVP</a>
+    <a href="/photos">Photos</a>
+    <a href="/faqs">FAQs</a>
+  </nav>
+</footer>
+
+<script>
+(function(){
+  var URL_BASE = 'https://uvvtdqltmdzbwchbtvbj.supabase.co/storage/v1';
+  var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
+  var BUCKET = 'wedding-photos';
+
+  async function listPhotos() {
+    var res = await fetch(URL_BASE + '/object/list/' + BUCKET, {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prefix: '', limit: 500, sortBy: { column: 'created_at', order: 'desc' } })
+    });
+    if (!res.ok) return [];
+    var items = await res.json();
+    return items.filter(function(i){ return i.name && !i.name.startsWith('.'); });
+  }
+
+  function render(items) {
+    var g = document.getElementById('gallery');
+    document.getElementById('empty').style.display = items.length ? 'none' : 'block';
+    g.innerHTML = items.map(function(i){
+      var src = URL_BASE + '/object/public/' + BUCKET + '/' + encodeURIComponent(i.name);
+      return '<figure><img src="' + src + '" loading="lazy" alt="Wedding guest photo"></figure>';
+    }).join('');
+  }
+
+  async function refresh(){ render(await listPhotos()); }
+  refresh();
+
+  document.getElementById('file-input').addEventListener('change', async function(){
+    var files = Array.from(this.files || []);
+    if (!files.length) return;
+    var status = document.getElementById('up-status');
+    var done = 0;
+    for (var f of files) {
+      status.textContent = 'Uploading ' + (done + 1) + ' of ' + files.length + '\u2026';
+      var ext = (f.name.split('.').pop() || 'jpg').toLowerCase();
+      var name = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+      try {
+        var res = await fetch(URL_BASE + '/object/' + BUCKET + '/' + name, {
+          method: 'POST',
+          headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': f.type || 'image/jpeg' },
+          body: f
+        });
+        if (res.ok) done++;
+      } catch(e){}
+    }
+    status.textContent = done === files.length
+      ? 'Added ' + done + ' photo' + (done === 1 ? '' : 's') + ' — thank you!'
+      : 'Added ' + done + ' of ' + files.length + ' — try the rest again?';
+    this.value = '';
+    refresh();
+  });
+})();
+</script>
+
+</body>
+</html>

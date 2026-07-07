@@ -246,6 +246,7 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   <a href="/travel">Travel</a>
   <a href="/accommodation">Accommodation</a>
   <a href="/rsvp">RSVP</a>
+  <a href="/photos">Photos</a>
   <a href="/faqs">FAQs</a>
 </nav>
 
@@ -267,6 +268,14 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
 
   <a class="rsvp fade" href="/rsvp">RSVP</a>
 
+  <p class="fade" id="ticker" style="font-size:12px;letter-spacing:.14em;color:var(--brass);margin-top:22px;min-height:16px;animation-delay:1.3s;"></p>
+
+  <p class="fade" style="margin-top:6px;animation-delay:1.42s;">
+    <a href="/lucie-and-simon-wedding.ics" style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-dim);border-bottom:1px solid var(--brass-line);padding-bottom:2px;">Apple Calendar</a>
+    <span style="color:var(--brass-line);padding:0 10px;">·</span>
+    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Lucie+%26+Simon%27s+Wedding&dates=20270626T104500Z/20270627T000000Z&location=St+Mary%27s+Church,+Honley+HD9+6AH&details=Ceremony+12+noon,+St+Mary%27s+Church,+Honley.+Reception+from+1:30pm,+Manor+House,+Lindley.+https://lucieandsimon.wedding" target="_blank" rel="noopener" style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-dim);border-bottom:1px solid var(--brass-line);padding-bottom:2px;">Google Calendar</a>
+  </p>
+
   <p class="foot fade">St Mary&rsquo;s Church &middot; Manor House Lindley</p>
 </main>
 
@@ -281,6 +290,19 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
     document.getElementById('m').textContent = Math.floor(diff%36e5/6e4);
   }
   tick(); setInterval(tick, 30000);
+
+  // Live guest count
+  fetch('https://uvvtdqltmdzbwchbtvbj.supabase.co/rest/v1/rpc/get_rsvp_count', {
+    method: 'POST',
+    headers: {
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c',
+      'Content-Type': 'application/json'
+    },
+    body: '{}'
+  }).then(function(r){ return r.json(); }).then(function(n){
+    if (n >= 10) document.getElementById('ticker').textContent = n + ' guests are coming — join them';
+  }).catch(function(){});
 })();
 </script>
 

@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//lucieandsimon.wedding//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:wedding-2027@lucieandsimon.wedding
+DTSTAMP:20260707T090000Z
+DTSTART:20270626T104500Z
+DTEND:20270627T000000Z
+SUMMARY:Lucie & Simon's Wedding
+DESCRIPTION:Ceremony at 12 noon\, St Mary's Church\, Honley (please be seated by 11:45). Reception from 1:30pm at Manor House\, Lindley. Carriages at 1am. Full details: https://lucieandsimon.wedding
+LOCATION:St Mary's Church\, Church Street\, Honley\, Holmfirth HD9 6AH
+URL:https://lucieandsimon.wedding
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:Lucie & Simon's wedding is one week away!
+END:VALARM
+END:VEVENT
+END:VCALENDAR
