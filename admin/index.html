@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — L&S</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta property="og:title" content="Lucie & Simon — 26 June 2027">
+<meta property="og:description" content="Join us as we celebrate our wedding. St Mary's Church, Honley & Manor House, Lindley, West Yorkshire.">
+<meta property="og:image" content="https://lucieandsimon.wedding/images/og-share.jpg">
+<meta property="og:url" content="https://lucieandsimon.wedding">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="/style.css">
 <style>
@@ -127,11 +134,29 @@
 
   <div id="dash" style="display:none;">
     <div class="stats" id="stats"></div>
-    <div class="toolbar">
-      <button id="refresh">Refresh</button>
-      <button id="csv">Download CSV</button>
+    <div class="toolbar" style="justify-content:center;margin-bottom:26px;">
+      <button class="tab-btn" data-tab="rsvps" style="border-color:var(--brass);color:var(--brass);">RSVPs</button>
+      <button class="tab-btn" data-tab="guests">Guest list</button>
+      <button class="tab-btn" data-tab="photos">Photo wall</button>
     </div>
-    <div id="cards"></div>
+    <div id="tab-rsvps">
+      <div class="toolbar">
+        <button id="refresh">Refresh</button>
+        <button id="csv">Download CSV</button>
+      </div>
+      <div id="cards"></div>
+    </div>
+    <div id="tab-guests" style="display:none;">
+      <div class="toolbar">
+        <button id="g-all" style="border-color:var(--brass);color:var(--brass);">All</button>
+        <button id="g-pending">Not yet responded</button>
+      </div>
+      <div id="guest-rows"></div>
+    </div>
+    <div id="tab-photos" style="display:none;">
+      <p style="font-size:13px;color:var(--ink-dim);text-align:center;margin-bottom:20px;">Tap any photo to remove it from the wall. Deletion is immediate and permanent.</p>
+      <div id="mod-gallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;"></div>
+    </div>
   </div>
 
 </div>
@@ -237,6 +262,98 @@
     a.download = 'wedding-rsvps.csv';
     a.click();
   };
+
+  // ── Tabs ──
+  var tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(function(b){
+    b.onclick = function(){
+      tabs.forEach(function(x){ x.style.borderColor=''; x.style.color=''; });
+      b.style.borderColor = 'var(--brass)'; b.style.color = 'var(--brass)';
+      ['rsvps','guests','photos'].forEach(function(t){
+        document.getElementById('tab-' + t).style.display = t === b.dataset.tab ? 'block' : 'none';
+      });
+      if (b.dataset.tab === 'guests') loadGuests();
+      if (b.dataset.tab === 'photos') loadModGallery();
+    };
+  });
+
+  // ── Guest list ──
+  var guestData = [], guestFilter = 'all';
+
+  async function loadGuests() {
+    var res = await fetch(SUPABASE_URL + '/rest/v1/rpc/get_guest_status', {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_password: pw })
+    });
+    guestData = res.ok ? await res.json() : [];
+    renderGuests();
+  }
+
+  function renderGuests() {
+    var rows = guestFilter === 'pending' ? guestData.filter(function(g){ return !g.responded; }) : guestData;
+    var pending = guestData.filter(function(g){ return !g.responded; }).length;
+    var html = '<p style="font-size:13px;color:var(--ink-dim);text-align:center;margin-bottom:18px;">' +
+      guestData.length + ' on the list · <strong style="color:var(--brass);">' + pending + ' not yet responded</strong></p>';
+    var byGroup = {};
+    rows.forEach(function(g){ (byGroup[g.guest_group || 'Other'] = byGroup[g.guest_group || 'Other'] || []).push(g); });
+    Object.keys(byGroup).sort().forEach(function(grp){
+      html += '<p style="font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass);padding:22px 0 10px;">' + esc(grp) + '</p>';
+      html += byGroup[grp].map(function(g){
+        var badge = g.responded
+          ? '<span class="badge ' + (g.attending || 'whole_day') + '">' + (LABELS[g.attending] || 'Responded') + '</span>'
+          : '<span class="badge" style="color:#999;">Awaiting</span>';
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 4px;border-bottom:1px solid var(--brass-faint);">' +
+          '<span style="font-family:var(--serif);font-size:18px;">' + esc(g.first_name + ' ' + g.last_name) + '</span>' + badge + '</div>';
+      }).join('');
+    });
+    document.getElementById('guest-rows').innerHTML = html;
+  }
+
+  document.getElementById('g-all').onclick = function(){
+    guestFilter = 'all';
+    this.style.borderColor='var(--brass)'; this.style.color='var(--brass)';
+    document.getElementById('g-pending').style.borderColor=''; document.getElementById('g-pending').style.color='';
+    renderGuests();
+  };
+  document.getElementById('g-pending').onclick = function(){
+    guestFilter = 'pending';
+    this.style.borderColor='var(--brass)'; this.style.color='var(--brass)';
+    document.getElementById('g-all').style.borderColor=''; document.getElementById('g-all').style.color='';
+    renderGuests();
+  };
+
+  // ── Photo moderation ──
+  var STORAGE = SUPABASE_URL + '/storage/v1';
+
+  async function loadModGallery() {
+    var res = await fetch(STORAGE + '/object/list/wedding-photos', {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prefix: '', limit: 500, sortBy: { column: 'created_at', order: 'desc' } })
+    });
+    var items = res.ok ? await res.json() : [];
+    items = items.filter(function(i){ return i.name && !i.name.startsWith('.'); });
+    var g = document.getElementById('mod-gallery');
+    if (!items.length) { g.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--ink-dim);">No photos on the wall yet.</p>'; return; }
+    g.innerHTML = items.map(function(i){
+      var src = STORAGE + '/object/public/wedding-photos/' + encodeURIComponent(i.name);
+      return '<figure style="border:1px solid var(--brass-line);padding:5px;cursor:pointer;margin:0;" data-name="' + esc(i.name) + '">' +
+        '<img src="' + src + '" loading="lazy" style="width:100%;height:140px;object-fit:cover;display:block;"></figure>';
+    }).join('');
+    g.querySelectorAll('figure').forEach(function(fig){
+      fig.onclick = async function(){
+        if (!confirm('Remove this photo from the wall permanently?')) return;
+        var res = await fetch(SUPABASE_URL + '/rest/v1/rpc/delete_wedding_photo', {
+          method: 'POST',
+          headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ p_password: pw, p_name: fig.dataset.name })
+        });
+        if (res.ok) fig.remove();
+        else alert('Delete failed — try refreshing.');
+      };
+    });
+  }
 })();
 </script>
 
