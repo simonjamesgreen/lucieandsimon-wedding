@@ -601,3 +601,21 @@ body.page-exit { opacity: 0; transition: opacity .26s ease; }
 @media (prefers-reduced-motion: reduce) {
   .hotel-card, .btn::before, #lightbox img, .nav-links a::after { transition: none !important; }
 }
+
+/* ── MOBILE REFINEMENTS ── */
+@media (max-width: 640px) {
+  /* Nav: horizontal scroll strip instead of cramped wrap */
+  .nav-links {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    max-width: 100%;
+    padding: 2px 8px;
+    justify-content: flex-start;
+    mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { flex-shrink: 0; font-size: 10px; letter-spacing: .18em; }
+}
