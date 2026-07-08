@@ -219,27 +219,37 @@ figcaption {
 
 .order-row {
   display: grid;
-  grid-template-columns: 92px 1fr;
-  gap: clamp(20px, 4vw, 44px);
-  padding: clamp(18px, 2.6vh, 26px) 0;
+  grid-template-columns: minmax(120px, 185px) 1fr;
+  gap: clamp(18px, 3.5vw, 40px);
+  padding: clamp(20px, 3.2vh, 30px) 0;
   border-top: 1px solid var(--brass-faint);
-  align-items: baseline;
+  align-items: center;
 }
 
 .order-row:last-child { border-bottom: 1px solid var(--brass-faint); }
 
 .order-time {
-  font-size: 13px;
+  font-family: var(--serif);
   font-weight: 400;
-  letter-spacing: .14em;
+  font-size: clamp(34px, 5.6vw, 56px);
+  line-height: .9;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+
+.order-time sup {
+  font-size: .3em;
+  font-style: italic;
   color: var(--brass);
-  text-align: right;
+  vertical-align: super;
+  margin-left: 3px;
+  letter-spacing: 0;
 }
 
 .order-event {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(19px, 2.5vw, 26px);
+  font-size: clamp(19px, 2.5vw, 25px);
   line-height: 1.25;
 }
 
@@ -250,7 +260,8 @@ figcaption {
   line-height: 1.65;
 }
 
-.order-row.key .order-event { font-style: italic; color: var(--brass); }
+.order-row.key .order-time { color: var(--brass); }
+.order-row.key .order-event { font-style: italic; }
 
 /* ── INFO ROWS (travel / accommodation) ── */
 .info-list { border-top: 1px solid var(--brass-line); }
@@ -466,7 +477,7 @@ figcaption {
   .nav-links { gap: 12px; flex-wrap: wrap; justify-content: center; }
   .nav-links a { font-size: 9.5px; letter-spacing: .16em; }
   .photo-pair { grid-template-columns: 1fr; }
-  .order-row { grid-template-columns: 64px 1fr; gap: 16px; }
+  .order-row { grid-template-columns: 96px 1fr; gap: 14px; }
   .info-row { grid-template-columns: 1fr; gap: 10px; }
   .info-key { padding-top: 0; }
 }
