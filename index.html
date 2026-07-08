@@ -289,6 +289,29 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
 <script>
 (function(){
   var t = new Date('2027-06-26T12:00:00+01:00');
+
+  // ── Wedding-day mode ──
+  var now = new Date();
+  var dayStart = new Date('2027-06-26T00:00:00+01:00');
+  var dayEnd = new Date('2027-06-27T02:00:00+01:00');
+  if (now >= dayStart && now < dayEnd) {
+    var countEl = document.querySelector('.count');
+    if (countEl) {
+      countEl.outerHTML =
+        '<div class="fade" style="margin:clamp(30px,5vh,52px) 0;animation-delay:1s;">' +
+        '<p style="font-family:var(--serif);font-style:italic;font-size:clamp(28px,4.5vw,44px);color:var(--brass);">It&rsquo;s today.</p>' +
+        '<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px;">' +
+        '<a href="/the-day" class="rsvp" style="animation:none;opacity:1;transform:none;">What&rsquo;s happening now</a>' +
+        '<a href="/photos" class="rsvp" style="animation:none;opacity:1;transform:none;background:transparent;color:var(--ink);border:1px solid var(--ink);">Add your photos</a>' +
+        '</div></div>';
+      var rsvpBtn = document.querySelector('a.rsvp.fade');
+      if (rsvpBtn) rsvpBtn.style.display = 'none';
+      var ticker = document.getElementById('ticker');
+      if (ticker) ticker.style.display = 'none';
+    }
+    return; // no countdown needed today
+  }
+
   function tick(){
     var n = new Date(), diff = t - n;
     if (diff < 0) diff = 0;

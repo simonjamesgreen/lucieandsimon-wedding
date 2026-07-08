@@ -151,6 +151,7 @@ textarea { resize: vertical; min-height: 70px; }
 
     <label class="f-label" for="contact_name">Your name</label>
     <input type="text" id="contact_name" autocomplete="name" placeholder="First &amp; last name">
+    <p id="found-msg" style="font-size:13px;color:var(--brass);margin-top:10px;min-height:18px;font-style:italic;font-family:var(--serif);"></p>
 
     <label class="f-label" for="email">Email</label>
     <input type="email" id="email" autocomplete="email" placeholder="you@example.com">
@@ -247,6 +248,35 @@ textarea { resize: vertical; min-height: 70px; }
     if (e.target.classList.contains('g-name')) e.target.dataset.touched = '1';
   });
 
+  // Personalised guest recognition
+  var lookupTimer = null, lastLookup = '';
+  document.getElementById('contact_name').addEventListener('input', function(){
+    var v = this.value.trim();
+    clearTimeout(lookupTimer);
+    var fm = document.getElementById('found-msg');
+    if (v.split(' ').length < 2 || v.length < 5) { fm.textContent = ''; lastLookup = ''; return; }
+    lookupTimer = setTimeout(async function(){
+      if (v === lastLookup) return;
+      lastLookup = v;
+      try {
+        var res = await fetch(SUPABASE_URL + '/rest/v1/rpc/find_guest', {
+          method: 'POST',
+          headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ p_name: v })
+        });
+        var rows = res.ok ? await res.json() : [];
+        if (rows.length) {
+          var g = rows[0];
+          fm.textContent = 'Found you on the guest list, ' + g.first_name + ' \u2014 lovely to have you.';
+          var first = guests.querySelector('.g-name');
+          if (first && !first.dataset.touched) first.value = g.first_name + ' ' + g.last_name;
+        } else {
+          fm.textContent = '';
+        }
+      } catch(e){ fm.textContent = ''; }
+    }, 500);
+  });
+
   document.getElementById('submit').onclick = async function(){
     var msg = document.getElementById('msg');
     var name = document.getElementById('contact_name').value.trim();
@@ -306,5 +336,6 @@ textarea { resize: vertical; min-height: 70px; }
 })();
 </script>
 
+<script src="/reveal.js" defer></script>
 </body>
 </html>
