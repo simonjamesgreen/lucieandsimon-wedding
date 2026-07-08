@@ -138,6 +138,7 @@
       <button class="tab-btn" data-tab="rsvps" style="border-color:var(--brass);color:var(--brass);">RSVPs</button>
       <button class="tab-btn" data-tab="guests">Guest list</button>
       <button class="tab-btn" data-tab="photos">Photo wall</button>
+      <button class="tab-btn" data-tab="gbook">Guestbook</button>
     </div>
     <div id="tab-rsvps">
       <div class="toolbar">
@@ -152,6 +153,10 @@
         <button id="g-pending">Not yet responded</button>
       </div>
       <div id="guest-rows"></div>
+    </div>
+    <div id="tab-gbook" style="display:none;">
+      <p style="font-size:13px;color:var(--ink-dim);text-align:center;margin-bottom:20px;">Tap any note to remove it from the wall.</p>
+      <div id="gb-admin"></div>
     </div>
     <div id="tab-photos" style="display:none;">
       <p style="font-size:13px;color:var(--ink-dim);text-align:center;margin-bottom:20px;">Tap any photo to remove it from the wall. Deletion is immediate and permanent.</p>
@@ -269,11 +274,12 @@
     b.onclick = function(){
       tabs.forEach(function(x){ x.style.borderColor=''; x.style.color=''; });
       b.style.borderColor = 'var(--brass)'; b.style.color = 'var(--brass)';
-      ['rsvps','guests','photos'].forEach(function(t){
+      ['rsvps','guests','photos','gbook'].forEach(function(t){
         document.getElementById('tab-' + t).style.display = t === b.dataset.tab ? 'block' : 'none';
       });
       if (b.dataset.tab === 'guests') loadGuests();
       if (b.dataset.tab === 'photos') loadModGallery();
+      if (b.dataset.tab === 'gbook') loadGuestbookAdmin();
     };
   });
 
@@ -322,6 +328,32 @@
     document.getElementById('g-all').style.borderColor=''; document.getElementById('g-all').style.color='';
     renderGuests();
   };
+
+  // ── Guestbook moderation ──
+  async function loadGuestbookAdmin() {
+    var res = await fetch(SUPABASE_URL + '/rest/v1/rpc/get_guestbook', {
+      method: 'POST', headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' }, body: '{}'
+    });
+    var rows = res.ok ? await res.json() : [];
+    var el = document.getElementById('gb-admin');
+    if (!rows.length) { el.innerHTML = '<p style="text-align:center;color:var(--ink-dim);">No notes yet.</p>'; return; }
+    el.innerHTML = rows.map(function(r){
+      return '<div class="rsvp-card" style="cursor:pointer;" data-id="' + r.id + '">' +
+        '<p style="font-family:var(--serif);font-style:italic;font-size:17px;">“' + esc(r.message) + '”</p>' +
+        '<p class="meta">— ' + esc(r.author) + ' · ' + new Date(r.created_at).toLocaleDateString('en-GB') + '</p></div>';
+    }).join('');
+    el.querySelectorAll('.rsvp-card').forEach(function(card){
+      card.onclick = async function(){
+        if (!confirm('Remove this note from the guestbook permanently?')) return;
+        var res = await fetch(SUPABASE_URL + '/rest/v1/rpc/delete_guestbook_entry', {
+          method: 'POST',
+          headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ p_password: pw, p_id: card.dataset.id })
+        });
+        if (res.ok) card.remove();
+      };
+    });
+  }
 
   // ── Photo moderation ──
   var STORAGE = SUPABASE_URL + '/storage/v1';
