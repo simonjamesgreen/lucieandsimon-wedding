@@ -105,6 +105,76 @@
 
 </div>
 
+<div class="wrap" style="padding-top:0;">
+  <div style="border-top:1px solid var(--brass-faint);padding-top:clamp(44px,7vh,72px);text-align:center;">
+    <span class="eyebrow">The guestbook</span>
+    <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,36px);margin-bottom:14px;">Leave us a note</h2>
+    <p style="font-size:14px;color:var(--ink-dim);max-width:44ch;margin:0 auto 30px;">A line of advice, a memory, or just hello — it appears on the wall below for everyone to read.</p>
+
+    <div style="max-width:520px;margin:0 auto 44px;text-align:left;">
+      <label class="eyebrow" style="font-size:10px;letter-spacing:.32em;margin-bottom:8px;display:block;" for="gb-name">Your name</label>
+      <input type="text" id="gb-name" maxlength="80" placeholder="Who's writing?" style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--brass-line);font-family:var(--sans);font-weight:300;font-size:16px;color:var(--ink);padding:10px 2px;outline:none;border-radius:0;">
+      <label class="eyebrow" style="font-size:10px;letter-spacing:.32em;margin:24px 0 8px;display:block;" for="gb-msg">Your note</label>
+      <textarea id="gb-msg" maxlength="500" placeholder="Write something lovely (or funny)…" style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--brass-line);font-family:var(--sans);font-weight:300;font-size:16px;color:var(--ink);padding:10px 2px;outline:none;resize:vertical;min-height:64px;border-radius:0;"></textarea>
+      <button class="btn" id="gb-send" style="border:none;cursor:pointer;margin-top:24px;width:100%;">Sign the guestbook</button>
+      <p id="gb-status" style="font-size:13px;color:var(--brass);text-align:center;margin-top:12px;min-height:18px;"></p>
+    </div>
+
+    <div id="gb-wall" style="max-width:680px;margin:0 auto;text-align:left;"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var URL_ = 'https://uvvtdqltmdzbwchbtvbj.supabase.co/rest/v1';
+  var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
+  var H = { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY, 'Content-Type': 'application/json' };
+
+  function esc(s){ return String(s||'').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function load(){
+    fetch(URL_ + '/rpc/get_guestbook', { method: 'POST', headers: H, body: '{}' })
+      .then(function(r){ return r.json(); })
+      .then(function(rows){
+        var w = document.getElementById('gb-wall');
+        if (!rows || !rows.length) {
+          w.innerHTML = '<p style="text-align:center;font-family:var(--serif);font-style:italic;color:var(--ink-dim);">Be the first to sign.</p>';
+          return;
+        }
+        w.innerHTML = rows.map(function(r){
+          return '<div style="border-top:1px solid var(--brass-faint);padding:22px 4px;">' +
+            '<p style="font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.6;">&ldquo;' + esc(r.message) + '&rdquo;</p>' +
+            '<p style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin-top:10px;">&mdash; ' + esc(r.author) + '</p>' +
+            '</div>';
+        }).join('');
+      }).catch(function(){});
+  }
+  load();
+
+  document.getElementById('gb-send').onclick = function(){
+    var name = document.getElementById('gb-name').value.trim();
+    var msg = document.getElementById('gb-msg').value.trim();
+    var st = document.getElementById('gb-status');
+    if (!name || !msg) { st.textContent = 'Both a name and a note, please.'; return; }
+    this.disabled = true;
+    fetch(URL_ + '/wedding_guestbook', {
+      method: 'POST',
+      headers: Object.assign({ 'Prefer': 'return=minimal' }, H),
+      body: JSON.stringify({ author: name, message: msg })
+    }).then(function(r){
+      if (!r.ok) throw 0;
+      st.textContent = 'Thank you — added to the wall.';
+      document.getElementById('gb-msg').value = '';
+      load();
+    }).catch(function(){
+      st.textContent = 'Something went wrong — try again?';
+    }).finally(function(){
+      document.getElementById('gb-send').disabled = false;
+    });
+  };
+})();
+</script>
+
 <section class="next-block">
   <span class="eyebrow">Next</span>
   <h2>Noon in Honley, one a.m. in Lindley —<br>here&rsquo;s how the day runs.</h2>

@@ -619,3 +619,19 @@ body.page-exit { opacity: 0; transition: opacity .26s ease; }
   .nav-links::-webkit-scrollbar { display: none; }
   .nav-links a { flex-shrink: 0; font-size: 10px; letter-spacing: .18em; }
 }
+
+/* ── PRINT: The Day as a clean order of service ── */
+@media print {
+  .nav, .footer, .next-block, #scroll-progress, #lightbox { display: none !important; }
+  body { background: #fff; color: #000; font-size: 12pt; }
+  .page-head { padding: 0 0 24pt; }
+  .page-title, .order-time, .order-event, .order-part h2 { color: #000 !important; }
+  .order-time sup, .order-part .num, .eyebrow { color: #555 !important; }
+  .order-row { break-inside: avoid; padding: 10pt 0; border-top: 1pt solid #ddd; }
+  .order-row.key .order-time, .order-row.key .order-event { color: #000 !important; }
+  .order-note { color: #555; }
+  /* hide interactive jukebox when printing */
+  .wrap [id="jukebox"], .wrap:has(#jukebox) > div { display: none; }
+  a { text-decoration: none; color: inherit; }
+}
+@media print { .no-print { display: none !important; } }
