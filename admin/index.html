@@ -190,9 +190,10 @@
   }
 
   function render() {
-    var dayGuests = 0, eveGuests = 0, declines = 0;
+    var dayGuests = 0, eveGuests = 0, declines = 0, seats = 0;
     data.forEach(function(r){
       var n = (r.party_members || []).length;
+      seats += (r.transport_seats || 0);
       if (r.attending === 'whole_day') dayGuests += n;
       else if (r.attending === 'evening_only') eveGuests += n;
       else declines++;
@@ -202,7 +203,8 @@
       '<div class="stat"><b>' + data.length + '</b><span>Responses</span></div>' +
       '<div class="stat"><b>' + dayGuests + '</b><span>Day guests</span></div>' +
       '<div class="stat"><b>' + eveGuests + '</b><span>Evening guests</span></div>' +
-      '<div class="stat"><b>' + declines + '</b><span>Declines</span></div>';
+      '<div class="stat"><b>' + declines + '</b><span>Declines</span></div>' +
+      '<div class="stat"><b>' + seats + '</b><span>Bus seats</span></div>';
 
     var dietary = [];
     var html = data.map(function(r){
@@ -216,6 +218,7 @@
         '<p class="meta">' + esc(r.email) + (r.phone ? ' · ' + esc(r.phone) : '') +
         ' · ' + new Date(r.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) + '</p>' +
         (members ? '<ul>' + members + '</ul>' : '') +
+        (r.transport_seats ? '<p class="note">🚌 ' + r.transport_seats + ' transport seat' + (r.transport_seats === 1 ? '' : 's') + ' requested</p>' : '') +
         (r.song_request ? '<p class="note">♪ ' + esc(r.song_request) + '</p>' : '') +
         (r.message ? '<p class="note">“' + esc(r.message) + '”</p>' : '') +
         '</div>';
@@ -248,7 +251,7 @@
   };
 
   document.getElementById('csv').onclick = function(){
-    var rows = [['Date','Contact','Email','Phone','Attending','Party','Dietary','Song','Message']];
+    var rows = [['Date','Contact','Email','Phone','Attending','Party','Dietary','Transport seats','Song','Message']];
     data.forEach(function(r){
       rows.push([
         new Date(r.created_at).toISOString().slice(0,16).replace('T',' '),
@@ -256,6 +259,7 @@
         LABELS[r.attending],
         (r.party_members||[]).map(function(m){return m.name;}).join('; '),
         (r.party_members||[]).filter(function(m){return m.dietary;}).map(function(m){return m.name+': '+m.dietary;}).join('; '),
+        r.transport_seats || 0,
         r.song_request || '', r.message || ''
       ]);
     });

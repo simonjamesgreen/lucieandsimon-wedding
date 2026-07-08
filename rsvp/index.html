@@ -178,6 +178,19 @@ textarea { resize: vertical; min-height: 70px; }
       <button type="button" class="add-guest" id="add-guest">+ Add a guest</button>
     </div>
 
+    <div id="transport-section" style="display:none;">
+      <label class="f-label">Transport from the church</label>
+      <p style="font-size:13.5px;color:var(--ink-dim);margin-bottom:16px;">We&rsquo;re looking at arranging transport from St Mary&rsquo;s to Manor House after the ceremony. Would you like seats, or will you make your own way?</p>
+      <div class="att-opts">
+        <label class="att-opt"><input type="radio" name="transport" value="yes"><span>Yes please — save us seats</span></label>
+        <label class="att-opt"><input type="radio" name="transport" value="no"><span>We&rsquo;ll make our own way</span></label>
+      </div>
+      <div id="seat-count" style="display:none;margin-top:16px;">
+        <label class="f-label" for="seats" style="margin-top:0;">How many seats?</label>
+        <input type="number" id="seats" min="1" max="12" value="2" style="max-width:120px;">
+      </div>
+    </div>
+
     <label class="f-label" for="song">Song request <span style="opacity:.5;letter-spacing:.1em;">(optional)</span></label>
     <input type="text" id="song" placeholder="One song guaranteed to get you dancing">
 
@@ -233,14 +246,33 @@ textarea { resize: vertical; min-height: 70px; }
   guestRow();
   document.getElementById('add-guest').onclick = function(){ guestRow(); };
 
-  // Radio highlight + hide party for declines
-  var opts = document.querySelectorAll('.att-opt');
+  // Radio highlight + hide party/transport sections as appropriate
+  var opts = document.querySelectorAll('#att-opts .att-opt');
   opts.forEach(function(o){
     o.querySelector('input').addEventListener('change', function(){
       opts.forEach(function(x){ x.classList.remove('sel'); });
       o.classList.add('sel');
-      document.getElementById('party-section').style.display =
-        this.value === 'declines' ? 'none' : 'block';
+      var showParty = this.value !== 'declines';
+      document.getElementById('party-section').style.display = showParty ? 'block' : 'none';
+      // Transport only relevant for whole-day guests (evening guests skip the church)
+      document.getElementById('transport-section').style.display =
+        this.value === 'whole_day' ? 'block' : 'none';
+    });
+  });
+
+  // Transport radios: highlight + reveal seat count, defaulting to party size
+  var tOpts = document.querySelectorAll('#transport-section .att-opt');
+  tOpts.forEach(function(o){
+    o.querySelector('input').addEventListener('change', function(){
+      tOpts.forEach(function(x){ x.classList.remove('sel'); });
+      o.classList.add('sel');
+      var yes = this.value === 'yes';
+      document.getElementById('seat-count').style.display = yes ? 'block' : 'none';
+      if (yes) {
+        var n = guests.querySelectorAll('.guest-row .g-name');
+        var filled = Array.from(n).filter(function(i){ return i.value.trim(); }).length;
+        if (filled) document.getElementById('seats').value = filled;
+      }
     });
   });
 
@@ -319,6 +351,11 @@ textarea { resize: vertical; min-height: 70px; }
           phone: document.getElementById('phone').value.trim() || null,
           attending: att.value,
           party_members: party,
+          transport_seats: (att.value === 'whole_day' &&
+            document.querySelector('input[name="transport"]:checked') &&
+            document.querySelector('input[name="transport"]:checked').value === 'yes')
+            ? Math.max(1, Math.min(12, parseInt(document.getElementById('seats').value, 10) || 1))
+            : 0,
           song_request: document.getElementById('song').value.trim() || null,
           message: document.getElementById('message').value.trim() || null
         })
