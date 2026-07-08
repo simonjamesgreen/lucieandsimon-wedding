@@ -481,3 +481,123 @@ figcaption {
   .info-row { grid-template-columns: 1fr; gap: 10px; }
   .info-key { padding-top: 0; }
 }
+
+/* ── POLISH LAYER ── */
+
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--brass);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 300;
+  pointer-events: none;
+}
+
+/* Nav: frosted on scroll, animated underlines */
+.nav {
+  transition: background .3s, box-shadow .3s, backdrop-filter .3s;
+}
+
+.nav.scrolled {
+  background: rgba(247,244,236,.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--brass-faint);
+}
+
+.nav-links a {
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--brass);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s cubic-bezier(.2,.6,.2,1);
+}
+
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-links a.active { border-bottom: none; }
+.nav-links a.active::after { transform: scaleX(1); }
+
+/* Page transitions */
+body.page-enter { opacity: 0; }
+body.page-enter-active { opacity: 1; transition: opacity .45s ease; }
+body.page-exit { opacity: 0; transition: opacity .26s ease; }
+
+/* Lightbox */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(20,18,14,.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 400;
+  cursor: zoom-out;
+}
+
+#lightbox.open { opacity: 1; pointer-events: auto; }
+
+#lightbox img {
+  max-width: min(92vw, 1100px);
+  max-height: 88vh;
+  border: 1px solid var(--brass-line);
+  padding: 10px;
+  background: var(--ivory);
+  transform: scale(.96);
+  transition: transform .3s cubic-bezier(.2,.6,.2,1);
+}
+
+#lightbox.open img { transform: scale(1); }
+
+#lb-close {
+  position: absolute;
+  top: 20px; right: 28px;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 34px;
+  color: var(--ivory);
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Photos feel touchable */
+.photo-pair img, .photo-full img, .gallery img { cursor: zoom-in; transition: box-shadow .3s; }
+.photo-pair figure:hover img, .photo-full figure:hover img { box-shadow: 0 14px 44px rgba(29,27,22,.14); }
+
+/* Hotel cards lift */
+.hotel-card { transition: border-color .25s, box-shadow .25s, transform .25s; }
+.hotel-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 44px rgba(168,131,75,.16);
+}
+
+/* Buttons: brass sweep */
+.btn { position: relative; overflow: hidden; }
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--brass);
+  transform: translateX(-101%);
+  transition: transform .35s cubic-bezier(.2,.6,.2,1);
+}
+.btn:hover::before { transform: translateX(0); }
+.btn > * , .btn { z-index: 0; }
+.btn { isolation: isolate; }
+.btn::before { z-index: -1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hotel-card, .btn::before, #lightbox img, .nav-links a::after { transition: none !important; }
+}
