@@ -13,67 +13,287 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/style.css">
 <style>
-.venue-map-block {
-  margin: clamp(36px, 6vh, 60px) 0;
+/* ── Editorial travel layout ── */
+.tr-head {
+  padding: clamp(140px, 20vh, 190px) var(--pad) clamp(44px, 7vh, 72px);
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.venue-map-block .v-head {
-  text-align: center;
-  margin-bottom: 24px;
-}
+.tr-head .eyebrow { margin-bottom: 20px; }
 
-.venue-map-block .v-head .tag {
-  font-size: 10px;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: var(--brass);
-  display: block;
-  margin-bottom: 8px;
-}
-
-.venue-map-block .v-head h2 {
+.tr-head h1 {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(26px, 3.8vw, 38px);
+  font-size: clamp(38px, 6.4vw, 76px);
+  line-height: 1.06;
+  letter-spacing: .002em;
+  max-width: 17ch;
 }
 
-.venue-map-block .v-head .addr {
-  font-size: 13.5px;
+.tr-head h1 em { font-style: italic; color: var(--brass); }
+
+.tr-head .intro {
+  font-size: clamp(15px, 1.8vw, 18px);
   color: var(--ink-dim);
-  margin-top: 8px;
+  max-width: 52ch;
+  margin-top: 24px;
+  line-height: 1.8;
 }
 
-.venue-map-block .photo-pair figure img {
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+/* Route visual */
+.route {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(30px, 5vh, 56px) var(--pad) clamp(56px, 9vh, 90px);
+  display: grid;
+  grid-template-columns: 1fr minmax(150px, 220px) 1fr;
+  gap: clamp(16px, 3vw, 36px);
+  align-items: center;
 }
 
-.map-frame {
-  border: 1px solid var(--brass-line);
-  padding: 10px;
-  background: var(--ivory);
-}
-
-.map-frame iframe {
+.route .stop img {
   width: 100%;
-  height: 380px;
-  border: 0;
+  aspect-ratio: 1/1;
+  object-fit: cover;
   display: block;
-  filter: grayscale(.35) sepia(.08);
 }
 
-.venue-links { text-align: center; margin-top: 18px; display: flex; gap: 26px; justify-content: center; }
+.route .stop .s-tag {
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 16px 0 4px;
+}
 
-.venue-links a {
+.route .stop h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.15;
+}
+
+.route .stop .s-addr {
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin-top: 6px;
+}
+
+.route .stop .s-links { margin-top: 12px; display: flex; gap: 18px; }
+
+.route .stop .s-links a {
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 2px;
+}
+
+.route .leg {
+  text-align: center;
+  position: relative;
+  align-self: start;
+  padding-top: clamp(60px, 9vw, 110px);
+}
+
+.route .leg::before {
+  content: '';
+  position: absolute;
+  top: clamp(80px, 12vw, 140px);
+  left: -8%; right: -8%;
+  border-top: 2px dotted var(--brass);
+}
+
+.route .leg .l-time {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  background: var(--ivory);
+  padding: 8px 16px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(17px, 2vw, 22px);
+  color: var(--brass);
+  border: 1px solid var(--brass-line);
+}
+
+.route .leg .l-note {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 10px;
+}
+
+/* Big journey numerals */
+.tr-times {
+  border-top: 1px solid var(--brass-faint);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(48px, 8vh, 80px) var(--pad);
+}
+
+.tr-times .t-label {
+  font-size: 11px;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: clamp(28px, 4.5vh, 44px);
+  display: block;
+}
+
+.tt-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: var(--brass-faint);
+  border: 1px solid var(--brass-faint);
+}
+
+.tt {
+  background: var(--ivory);
+  padding: clamp(24px, 3.5vw, 44px) clamp(16px, 2.5vw, 32px);
+}
+
+.tt b {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(34px, 4.8vw, 58px);
+  line-height: .95;
+  letter-spacing: -.01em;
+}
+
+.tt b sup { font-size: .32em; font-style: italic; color: var(--brass); letter-spacing: 0; }
+
+.tt span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 14px;
+}
+
+.tt small { display: block; font-size: 12px; color: var(--ink-dim); margin-top: 4px; letter-spacing: 0; text-transform: none; }
+
+/* Mode essays */
+.tr-modes {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--pad) clamp(56px, 9vh, 96px);
+}
+
+.mode {
+  display: grid;
+  grid-template-columns: minmax(160px, 280px) 1fr;
+  gap: clamp(24px, 5vw, 72px);
+  padding: clamp(36px, 6vh, 60px) 0;
+  border-top: 1px solid var(--brass-faint);
+}
+
+.mode h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(26px, 3.6vw, 40px);
+  line-height: 1.05;
+}
+
+.mode h3 em { font-style: italic; color: var(--brass); }
+
+.mode .m-body { max-width: 58ch; }
+
+.mode .m-body p {
+  font-size: 15.5px;
+  color: var(--ink-dim);
+  line-height: 1.85;
+  margin-bottom: 14px;
+}
+
+.mode .m-body strong { color: var(--ink); font-weight: 400; }
+
+.firm-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 13px 0;
+  border-top: 1px dotted var(--brass-line);
+}
+
+.firm-row:first-of-type { margin-top: 8px; }
+
+.firm-row .f-name { font-family: var(--serif); font-size: 18px; }
+.firm-row .f-name small { font-family: var(--sans); font-size: 12px; color: var(--ink-dim); margin-left: 8px; }
+.firm-row a { font-size: 13px; letter-spacing: .08em; color: var(--brass); border-bottom: 1px solid var(--brass); white-space: nowrap; }
+
+.uber-cta {
+  display: inline-block;
+  border: 1px solid var(--ink);
+  padding: 13px 26px;
   font-size: 10.5px;
   letter-spacing: .24em;
   text-transform: uppercase;
-  border-bottom: 1px solid var(--brass);
-  padding-bottom: 3px;
-  transition: color .2s;
+  margin: 6px 0 18px;
+  transition: background .25s, color .25s, border-color .25s;
 }
 
-.venue-links a:hover { color: var(--brass); }
+.uber-cta:hover { background: var(--ink); color: var(--ivory); }
+
+/* Maps: quiet pair */
+.tr-maps {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--pad) clamp(64px, 10vh, 110px);
+}
+
+.tr-maps .t-label {
+  font-size: 11px;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--brass);
+  display: block;
+  margin-bottom: 24px;
+}
+
+.maps-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--brass-faint);
+  border: 1px solid var(--brass-faint);
+}
+
+.maps-pair .mp { background: var(--ivory); }
+
+.maps-pair iframe {
+  width: 100%;
+  height: 320px;
+  border: 0;
+  display: block;
+  filter: grayscale(.4) sepia(.06);
+}
+
+.maps-pair .mp-cap {
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.maps-pair .mp-cap span { font-family: var(--serif); font-size: 16px; }
+.maps-pair .mp-cap a { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; border-bottom: 1px solid var(--brass); }
+
+@media (max-width: 860px) {
+  .route { grid-template-columns: 1fr; }
+  .route .leg { padding: 8px 0; }
+  .route .leg::before { left: 50%; right: auto; top: -18px; bottom: -18px; border-top: none; border-left: 2px dotted var(--brass); }
+  .tt-grid { grid-template-columns: 1fr 1fr; }
+  .mode { grid-template-columns: 1fr; gap: 14px; }
+  .maps-pair { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -91,134 +311,95 @@
   </div>
 </nav>
 
-<header class="page-head">
-  <span class="eyebrow">Getting there</span>
-  <h1 class="page-title">Tra<em>vel</em></h1>
-  <p class="page-sub">Two venues, twenty minutes apart, just outside Huddersfield, West Yorkshire.</p>
-  <p id="wx" style="display:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-top:18px;"></p>
-  <div class="rule-v" aria-hidden="true"></div>
+<header class="tr-head">
+  <span class="eyebrow">Travel</span>
+  <h1>Noon in Honley.<br>Half past one <em>in Lindley.</em></h1>
+  <p class="intro">Two venues, one valley, twenty minutes between them. Everything you need to plan the journey — from wherever you&rsquo;re starting.</p>
+  <p id="wx" style="display:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-top:22px;"></p>
 </header>
 
-<script>
-(function(){
-  var wedding = new Date('2027-06-26');
-  var days = Math.ceil((wedding - new Date().setHours(0,0,0,0)) / 864e5);
-  if (days < 0 || days > 7) return;
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=53.607&longitude=-1.795&daily=weather_code,temperature_2m_max,precipitation_probability_max&timezone=Europe%2FLondon&start_date=2027-06-26&end_date=2027-06-26')
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      var code = d.daily.weather_code[0], t = Math.round(d.daily.temperature_2m_max[0]), rain = d.daily.precipitation_probability_max[0];
-      var desc = code <= 1 ? 'Sunny' : code <= 3 ? 'Sunny intervals' : code <= 48 ? 'Cloudy' :
-                 code <= 67 ? 'Some rain' : code <= 82 ? 'Showers' : 'Stormy';
-      var el = document.getElementById('wx');
-      el.textContent = 'Saturday\u2019s forecast for Honley \u00b7 ' + t + '\u00b0 \u00b7 ' + desc + (rain >= 40 ? ' \u00b7 pack a brolly' : '');
-      el.style.display = 'block';
-    }).catch(function(){});
-})();
-</script>
-
-<div class="wrap">
-
-  <div class="venue-map-block">
-    <div class="v-head">
-      <span class="tag">The Ceremony · 12 noon</span>
-      <h2>St Mary&rsquo;s Church, Honley</h2>
-      <p class="addr">Church Street, Honley, Holmfirth HD9 6AH</p>
+<div class="route">
+  <div class="stop">
+    <img src="/images/church-village.jpg" alt="St Mary's Church tower above Honley village street">
+    <p class="s-tag">First — the ceremony · 12 noon</p>
+    <h2>St Mary&rsquo;s Church, Honley</h2>
+    <p class="s-addr">Church Street, Honley HD9 6AH · seated by 11:45</p>
+    <div class="s-links">
+      <a href="https://maps.google.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Google Maps</a>
+      <a href="https://maps.apple.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Apple Maps</a>
     </div>
-    <div class="photo-pair" style="margin:0 0 22px;">
-      <figure>
-        <img src="/images/church-tower.jpg" alt="St Mary's Church, Honley — the clock tower above the cobbled lane">
-      </figure>
-      <figure>
-        <img src="/images/church-village.jpg" alt="The church tower seen along Honley village street">
-      </figure>
-    </div>
-    <div class="map-frame">
-      <iframe
-        src="https://maps.google.com/maps?q=St%20Mary%27s%20Church%2C%20Church%20Street%2C%20Honley%2C%20Holmfirth%20HD9%206AH&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Map of St Mary's Church, Honley"></iframe>
-    </div>
-    <div class="venue-links">
-      <a href="https://maps.google.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Open in Google Maps</a>
-      <a href="https://maps.apple.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Open in Apple Maps</a>
-    </div>
-    <p style="font-size:14px;color:var(--ink-dim);text-align:center;max-width:56ch;margin:20px auto 0;line-height:1.75;">Please be seated by 11:45. Parking in the village is limited — car-share where you can, or take a taxi.</p>
   </div>
 
-  <div class="rule-v" aria-hidden="true" style="margin:0 auto;"></div>
+  <div class="leg" aria-label="Twenty minutes by car between the venues">
+    <span class="l-time">20 minutes</span>
+    <p class="l-note">over the hill, by car</p>
+  </div>
 
-  <div class="venue-map-block">
-    <div class="v-head">
-      <span class="tag">The Reception · from 1:30pm</span>
-      <h2>Manor House, Lindley</h2>
-      <p class="addr">Lidget Street, Lindley, Huddersfield HD3 3JB</p>
+  <div class="stop">
+    <img src="/images/manor-house.jpg" alt="Manor House Lindley, Georgian front and gates">
+    <p class="s-tag">Then — the reception · from 1:30 pm</p>
+    <h2>Manor House, Lindley</h2>
+    <p class="s-addr">Lidget Street, Lindley HD3 3JB · parking on site</p>
+    <div class="s-links">
+      <a href="https://maps.google.com/?q=Manor+House+Lidget+Street+Lindley+Huddersfield+HD3+3JB" target="_blank" rel="noopener">Google Maps</a>
+      <a href="https://maps.apple.com/?q=Manor+House+Lindley+HD3+3JB" target="_blank" rel="noopener">Apple Maps</a>
     </div>
-    <div class="photo-pair" style="margin:0 0 22px;">
-      <figure>
-        <img src="/images/manor-house.jpg" alt="Manor House Lindley — the Georgian front and gates">
-      </figure>
-      <figure>
-        <img src="/images/coach-house.jpg" alt="The Coach House and gardens at Manor House Lindley">
-      </figure>
+  </div>
+</div>
+
+<section class="tr-times">
+  <span class="t-label">Getting to the valley</span>
+  <div class="tt-grid">
+    <div class="tt"><b>2¼<sup>hrs</sup></b><span>From London</span><small>direct rail to Huddersfield, or M1 by car (~3 hrs)</small></div>
+    <div class="tt"><b>45<sup>min</sup></b><span>From Manchester</span><small>M62 east, or direct rail</small></div>
+    <div class="tt"><b>20<sup>min</sup></b><span>From Leeds</span><small>A62, or a quick train</small></div>
+    <div class="tt"><b>30<sup>min</sup></b><span>From Sheffield</span><small>A616 over the tops</small></div>
+  </div>
+</section>
+
+<div class="tr-modes">
+
+  <div class="mode">
+    <h3>By <em>rail</em></h3>
+    <div class="m-body">
+      <p><strong>Huddersfield is the station.</strong> Direct trains run from London King&rsquo;s Cross via Wakefield Westgate, and from St Pancras via Leeds or Sheffield. From the station it&rsquo;s a ten-minute taxi to either venue.</p>
+      <p>Advance tickets are dramatically cheaper — book as soon as your plans firm up.</p>
     </div>
-    <div class="map-frame">
-      <iframe
-        src="https://maps.google.com/maps?q=Manor%20House%2C%20Lidget%20Street%2C%20Lindley%2C%20Huddersfield%20HD3%203JB&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Map of Manor House, Lindley"></iframe>
+  </div>
+
+  <div class="mode">
+    <h3>By <em>car</em></h3>
+    <div class="m-body">
+      <p>The valley sits just off the M62 — junction 24 for Lindley. Manor House has parking on site, and cars can stay overnight if you&rsquo;re taxiing home. Parking in Honley village is limited, so share lifts to the church where you can.</p>
+      <p>If you plan to drink — and we&rsquo;d encourage it — please don&rsquo;t drive.</p>
     </div>
-    <div class="venue-links">
-      <a href="https://maps.google.com/?q=Manor+House+Lidget+Street+Lindley+Huddersfield+HD3+3JB" target="_blank" rel="noopener">Open in Google Maps</a>
-      <a href="https://maps.apple.com/?q=Manor+House+Lindley+HD3+3JB" target="_blank" rel="noopener">Open in Apple Maps</a>
+  </div>
+
+  <div class="mode">
+    <h3>Getting <em>home</em></h3>
+    <div class="m-body">
+      <p><strong>Uber works well here.</strong> Simon works for Uber and has assured us there&rsquo;s plenty of supply — including at 1am. To lock in your ride, <strong>Uber Reserve</strong> lets you pre-book in the app.</p>
+      <a class="uber-cta" href="https://m.uber.com/ul/?action=setPickup&pickup[latitude]=53.6549&pickup[longitude]=-1.8246&pickup[nickname]=Manor%20House%20Lindley" target="_blank" rel="noopener">Open Uber — pickup at Manor House</a>
+      <p>Prefer a local firm? Book your end-of-night ride in advance — 1am on a Saturday is peak demand.</p>
+      <div class="firm-row"><span class="f-name">Mount Taxis <small>Marsh · 4.6★</small></span><a href="tel:+441484515006">01484 515006</a></div>
+      <div class="firm-row"><span class="f-name">Woods Taxis <small>Salendine Nook · 4.6★</small></span><a href="tel:+441484400400">01484 400400</a></div>
+      <div class="firm-row"><span class="f-name">Huddersfield Taxis <small>24hr, app · 4.3★</small></span><a href="tel:+441484300030">01484 300030</a></div>
     </div>
-    <p style="font-size:14px;color:var(--ink-dim);text-align:center;max-width:56ch;margin:20px auto 0;line-height:1.75;">Parking on site. The bar is open from 1:30pm until half past midnight.</p>
   </div>
 
 </div>
 
-<div class="wrap">
-  <div class="info-list">
-
-    <div class="info-row">
-      <div class="info-key">By train</div>
-      <div class="info-val">
-        <h3>Huddersfield is the station</h3>
-        <p>Direct from London King&rsquo;s Cross via Wakefield Westgate, or St Pancras via Leeds or Sheffield — about <strong>2 hours 15 minutes</strong> from London. Quick connections from Leeds, Manchester, and Sheffield. From the station it&rsquo;s a short taxi to either venue.</p>
-      </div>
+<div class="tr-maps">
+  <span class="t-label">Pin them now</span>
+  <div class="maps-pair">
+    <div class="mp">
+      <iframe src="https://maps.google.com/maps?q=St%20Mary%27s%20Church%2C%20Church%20Street%2C%20Honley%2C%20Holmfirth%20HD9%206AH&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of St Mary's Church, Honley"></iframe>
+      <div class="mp-cap"><span>St Mary&rsquo;s, Honley</span><a href="https://maps.google.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Directions</a></div>
     </div>
-
-    <div class="info-row">
-      <div class="info-key">By car</div>
-      <div class="info-val">
-        <h3>Just off the M62</h3>
-        <ul>
-          <li><strong>London</strong> — around 3 hours via the M1</li>
-          <li><strong>Manchester</strong> — around 45 minutes via the M62</li>
-          <li><strong>Leeds</strong> — around 20 minutes via the A62</li>
-          <li><strong>Sheffield</strong> — around 30 minutes via the A616</li>
-        </ul>
-      </div>
+    <div class="mp">
+      <iframe src="https://maps.google.com/maps?q=Manor%20House%2C%20Lidget%20Street%2C%20Lindley%2C%20Huddersfield%20HD3%203JB&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of Manor House, Lindley"></iframe>
+      <div class="mp-cap"><span>Manor House, Lindley</span><a href="https://maps.google.com/?q=Manor+House+Lidget+Street+Lindley+Huddersfield+HD3+3JB" target="_blank" rel="noopener">Directions</a></div>
     </div>
-
-    <div class="info-row">
-      <div class="info-key">Taxis</div>
-      <div class="info-val">
-        <h3>Uber works well here</h3>
-        <p>Simon works for Uber and has assured us there&rsquo;s plenty of supply in the area — including at the end of the night. If you&rsquo;d rather lock in your ride ahead of time, <strong>Uber Reserve</strong> lets you pre-book a car in the app.</p>
-        <p style="margin:14px 0 18px;"><a href="https://m.uber.com/ul/?action=setPickup&pickup[latitude]=53.6549&pickup[longitude]=-1.8246&pickup[nickname]=Manor%20House%20Lindley" target="_blank" rel="noopener" style="display:inline-block;border:1px solid var(--brass);padding:12px 24px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;border-bottom-width:1px;">Open Uber — pickup at Manor House</a></p>
-        <p>Prefer a local firm? These are well-rated and all a short hop from Lindley:</p>
-        <ul>
-          <li><strong>Mount Taxis</strong> (Marsh) — <a href="tel:+441484515006">01484 515006</a> · 4.6★ on Google</li>
-          <li><strong>Woods Taxis</strong> (Salendine Nook) — <a href="tel:+441484400400">01484 400400</a> · 4.6★ on Google</li>
-          <li><strong>Huddersfield Taxis</strong> (24hr, app available) — <a href="tel:+441484300030">01484 300030</a> · 4.3★ on Google</li>
-        </ul>
-        <p style="margin-top:12px;">Whichever you choose, book your end-of-night ride before the day — 1am on a Saturday is peak demand. And if you plan to drink (we&rsquo;d encourage it), please don&rsquo;t drive.</p>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -242,7 +423,25 @@
   </nav>
 </footer>
 
+<script>
+(function(){
+  var wedding = new Date('2027-06-26');
+  var days = Math.ceil((wedding - new Date().setHours(0,0,0,0)) / 864e5);
+  if (days < 0 || days > 7) return;
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=53.607&longitude=-1.795&daily=weather_code,temperature_2m_max,precipitation_probability_max&timezone=Europe%2FLondon&start_date=2027-06-26&end_date=2027-06-26')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var code = d.daily.weather_code[0], t = Math.round(d.daily.temperature_2m_max[0]), rain = d.daily.precipitation_probability_max[0];
+      var desc = code <= 1 ? 'Sunny' : code <= 3 ? 'Sunny intervals' : code <= 48 ? 'Cloudy' :
+                 code <= 67 ? 'Some rain' : code <= 82 ? 'Showers' : 'Stormy';
+      var el = document.getElementById('wx');
+      el.textContent = 'Saturday\u2019s forecast for Honley \u00b7 ' + t + '\u00b0 \u00b7 ' + desc + (rain >= 40 ? ' \u00b7 pack a brolly' : '');
+      el.style.display = 'block';
+    }).catch(function(){});
+})();
+</script>
 <script src="/reveal.js" defer></script>
 <script src="/site.js" defer></script>
+
 </body>
 </html>
