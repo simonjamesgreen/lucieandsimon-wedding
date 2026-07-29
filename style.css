@@ -24,6 +24,20 @@ body {
   font-size: 16.5px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Paper grain — near-invisible, gives the ivory ground a printed texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: .035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px;
 }
 
 a { color: inherit; text-decoration: none; }

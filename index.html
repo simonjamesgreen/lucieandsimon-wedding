@@ -240,6 +240,73 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   .frame { inset: 10px; }
   .count div { min-width: 44px; }
 }
+
+/* Wax seal */
+.hero-seal {
+  width: clamp(56px, 8vw, 84px);
+  height: auto;
+  margin: 22px auto 0;
+  display: block;
+  animation-delay: .5s;
+}
+
+/* Cursor parallax wrapper */
+.names-parallax {
+  will-change: transform;
+  transition: transform .35s cubic-bezier(.2,.6,.2,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .names-parallax { transition: none !important; transform: none !important; }
+}
+
+/* Numbers strip */
+.numbers-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--brass-line);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ns-item {
+  text-align: center;
+  padding: clamp(30px, 5vh, 48px) 14px;
+  border-right: 1px solid var(--brass-line);
+}
+
+.ns-item:last-child { border-right: none; }
+
+.ns-item b {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(30px, 4.6vw, 48px);
+  line-height: 1;
+}
+
+.ns-item b sup {
+  font-size: .34em;
+  font-style: italic;
+  color: var(--brass);
+  letter-spacing: 0;
+  margin-left: 2px;
+}
+
+.ns-item span {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 10px;
+}
+
+@media (max-width: 640px) {
+  .numbers-strip { grid-template-columns: 1fr 1fr; }
+  .ns-item:nth-child(2) { border-right: none; }
+  .ns-item:nth-child(1), .ns-item:nth-child(2) { border-bottom: 1px solid var(--brass-line); }
+}
 </style>
 </head>
 <body>
@@ -260,7 +327,11 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
 <main class="page">
   <p class="eyebrow fade">Together with their families</p>
 
-  <h1 class="names fade">Lucie<span class="amp">&amp;</span>Simon</h1>
+  <div class="names-parallax">
+    <h1 class="names fade">Lucie<span class="amp">&amp;</span>Simon</h1>
+  </div>
+
+  <img src="/images/wax-seal.svg" alt="" class="hero-seal fade" aria-hidden="true">
 
   <div class="rule fade" aria-hidden="true"></div>
 
@@ -273,7 +344,10 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
     <div><b id="m">—</b><span>Minutes</span></div>
   </div>
 
-  <a class="rsvp fade" href="/rsvp">RSVP</a>
+  <div class="fade" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+    <a class="rsvp" href="/rsvp">RSVP</a>
+    <button id="share-btn" class="rsvp" style="background:transparent;color:var(--ink);border:1px solid var(--ink);display:none;">Share</button>
+  </div>
 
   <p class="fade" id="ticker" style="font-size:12px;letter-spacing:.14em;color:var(--brass);margin-top:22px;min-height:16px;animation-delay:1.3s;"></p>
 
@@ -286,6 +360,13 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   <p class="foot fade">St Mary&rsquo;s Church &middot; Manor House Lindley</p>
 </main>
 
+<section class="numbers-strip">
+  <div class="ns-item"><b>3<sup>yrs</sup></b><span>Since New York</span></div>
+  <div class="ns-item"><b>20<sup>min</sup></b><span>Between venues</span></div>
+  <div class="ns-item"><b>4<sup>courses</sup></b><span>Wedding breakfast</span></div>
+  <div class="ns-item"><b>1<sup>st</sup></b><span>Dance at 8pm</span></div>
+</section>
+
 <script>
 (function(){
   var t = new Date('2027-06-26T12:00:00+01:00');
@@ -295,6 +376,7 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   var dayStart = new Date('2027-06-26T00:00:00+01:00');
   var dayEnd = new Date('2027-06-27T02:00:00+01:00');
   if (now >= dayStart && now < dayEnd) {
+    document.title = 'Today! \u00b7 Lucie & Simon';
     var countEl = document.querySelector('.count');
     if (countEl) {
       countEl.outerHTML =
@@ -315,11 +397,38 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   function tick(){
     var n = new Date(), diff = t - n;
     if (diff < 0) diff = 0;
-    document.getElementById('d').textContent = Math.floor(diff/864e5);
+    var dd = Math.floor(diff/864e5);
+    document.getElementById('d').textContent = dd;
     document.getElementById('h').textContent = Math.floor(diff%864e5/36e5);
     document.getElementById('m').textContent = Math.floor(diff%36e5/6e4);
+    document.title = dd + ' days \u00b7 Lucie & Simon';
   }
   tick(); setInterval(tick, 30000);
+
+  // ── Cursor parallax on names (desktop only, respects reduced motion) ──
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.matchMedia('(hover: hover)').matches) {
+    var np = document.querySelector('.names-parallax');
+    if (np) {
+      document.addEventListener('mousemove', function(e){
+        var x = (e.clientX / window.innerWidth - .5) * -10;
+        var y = (e.clientY / window.innerHeight - .5) * -6;
+        np.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+      });
+    }
+  }
+
+  // ── Native share ──
+  if (navigator.share) {
+    var sb = document.getElementById('share-btn');
+    sb.style.display = 'inline-block';
+    sb.addEventListener('click', function(){
+      navigator.share({
+        title: 'Lucie & Simon — 26 June 2027',
+        text: 'Join us as we celebrate our wedding!',
+        url: 'https://lucieandsimon.wedding'
+      }).catch(function(){});
+    });
+  }
 
   // Live guest count
   fetch('https://uvvtdqltmdzbwchbtvbj.supabase.co/rest/v1/rpc/get_rsvp_count', {
@@ -333,6 +442,28 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   }).then(function(r){ return r.json(); }).then(function(n){
     if (n >= 10) document.getElementById('ticker').textContent = n + ' guests are coming — join them';
   }).catch(function(){});
+
+  // ── Reveal the numbers strip on scroll ──
+  var nsItems = document.querySelectorAll('.ns-item');
+  if (nsItems.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    nsItems.forEach(function(el, i){
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(16px)';
+      el.style.transition = 'opacity .7s ease ' + (i*.08) + 's, transform .7s cubic-bezier(.2,.6,.2,1) ' + (i*.08) + 's';
+    });
+    var nsIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          document.querySelectorAll('.ns-item').forEach(function(el){
+            el.style.opacity = '1'; el.style.transform = 'none';
+          });
+          nsIo.disconnect();
+        }
+      });
+    }, { threshold: .3 });
+    var stripEl = document.querySelector('.numbers-strip');
+    if (stripEl) nsIo.observe(stripEl);
+  }
 })();
 </script>
 
