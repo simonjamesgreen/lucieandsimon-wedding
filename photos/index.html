@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photo Wall — Lucie & Simon</title>
+<title>Photos — Lucie & Simon</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <meta property="og:title" content="Lucie & Simon — 26 June 2027">
 <meta property="og:description" content="Join us as we celebrate our wedding. St Mary's Church, Honley & Manor House, Lindley, West Yorkshire.">
@@ -13,46 +13,163 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/style.css">
 <style>
-.upload-zone {
-  max-width: 560px;
-  margin: 0 auto 50px;
-  text-align: center;
-}
+/* ── Disposable camera card ── */
+.camera-wrap { max-width: 420px; margin: 0 auto 56px; text-align: center; }
 
-.upload-btn {
-  display: inline-block;
-  cursor: pointer;
-}
-
-#file-input { display: none; }
-
-.up-status { font-size: 13px; color: var(--brass); margin-top: 16px; min-height: 18px; }
-
-.gallery {
-  columns: 3;
-  column-gap: 14px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.gallery figure {
-  break-inside: avoid;
-  margin-bottom: 14px;
+.camera-card {
   border: 1px solid var(--brass-line);
-  padding: 7px;
+  padding: 34px 30px;
   background: var(--ivory);
+  position: relative;
 }
 
-.gallery img { width: 100%; height: auto; display: block; }
+.camera-card::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--brass-faint);
+  pointer-events: none;
+}
 
-.empty-note {
+.camera-card .cc-label {
+  font-size: 10px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 10px;
+}
+
+.camera-card .cc-shots {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(46px, 8vw, 60px);
+  line-height: 1;
+}
+
+.camera-card .cc-shots sup {
+  font-size: .32em;
+  font-style: italic;
+  color: var(--ink-dim);
+  letter-spacing: .05em;
+  margin-left: 6px;
+}
+
+.camera-card .cc-sub {
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  margin-top: 8px;
+}
+
+.camera-card .cc-bar {
+  height: 3px;
+  background: var(--brass-faint);
+  margin: 18px 0 22px;
+  overflow: hidden;
+}
+
+.camera-card .cc-bar-fill {
+  height: 100%;
+  background: var(--brass);
+  transition: width .5s ease;
+}
+
+/* ── Reveal lock state ── */
+.reveal-lock {
+  max-width: 640px;
+  margin: 0 auto 60px;
   text-align: center;
+  border-top: 1px solid var(--brass-faint);
+  padding-top: clamp(40px, 6vh, 64px);
+}
+
+.reveal-lock .rl-count {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(52px, 9vw, 84px);
+  line-height: 1;
+  color: var(--brass);
+}
+
+.reveal-lock .rl-count-label {
+  font-size: 11px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 10px;
+}
+
+.reveal-lock .rl-note {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 20px;
-  color: var(--ink-dim);
-  padding: 40px 0;
+  font-size: clamp(18px, 2.4vw, 23px);
+  color: var(--ink);
+  max-width: 44ch;
+  margin: 30px auto 0;
+  line-height: 1.55;
 }
+
+.reveal-lock .rl-timer {
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-top: 20px;
+}
+
+.locked-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 8px;
+  max-width: 640px;
+  margin: 40px auto 0;
+}
+
+.locked-tile {
+  aspect-ratio: 1;
+  background:
+    repeating-linear-gradient(135deg, var(--brass-faint) 0 2px, transparent 2px 10px),
+    var(--cream, #EDE8DE);
+  border: 1px solid var(--brass-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--brass);
+  opacity: .6;
+}
+
+/* ── Reveal moment ── */
+.reveal-burst {
+  text-align: center;
+  padding: 40px 0 20px;
+}
+
+.reveal-burst .rb-eyebrow {
+  font-size: 11px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 14px;
+}
+
+.reveal-burst h2 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(30px, 5vw, 46px);
+}
+
+/* ── Gallery (post-reveal) ── */
+.upload-zone { max-width: 560px; margin: 0 auto 50px; text-align: center; }
+.upload-btn { display: inline-block; cursor: pointer; }
+#file-input { display: none; }
+.up-status { font-size: 13px; color: var(--brass); margin-top: 16px; min-height: 18px; }
+
+.gallery { columns: 3; column-gap: 14px; max-width: 1100px; margin: 0 auto; }
+.gallery figure { break-inside: avoid; margin-bottom: 14px; border: 1px solid var(--brass-line); padding: 7px; background: var(--ivory); }
+.gallery img { width: 100%; height: auto; display: block; }
+
+.empty-note { text-align: center; font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-dim); padding: 40px 0; }
 
 @media (max-width: 860px) { .gallery { columns: 2; } }
 @media (max-width: 520px) { .gallery { columns: 1; } }
@@ -74,28 +191,53 @@
 </nav>
 
 <header class="page-head">
-  <span class="eyebrow">The photo wall</span>
+  <span class="eyebrow">The disposable camera</span>
   <h1 class="page-title">Pho<em>tos</em></h1>
-  <p class="page-sub">Took a great photo on the day? Add it to the wall — it appears here instantly for everyone to enjoy.</p>
+  <p class="page-sub" id="page-sub">You&rsquo;ve got 36 shots. Make them count — nobody sees a single one until the morning after.</p>
   <div class="rule-v" aria-hidden="true"></div>
 </header>
 
 <div class="wrap-wide">
 
-  <div class="upload-zone">
-    <label class="btn upload-btn" for="file-input">Add your photos</label>
-    <input type="file" id="file-input" accept="image/*" multiple>
-    <p class="up-status" id="up-status"></p>
+  <!-- Disposable camera card: always visible -->
+  <div class="camera-wrap">
+    <div class="camera-card">
+      <p class="cc-label">Your camera</p>
+      <p class="cc-shots"><span id="shots-left">36</span><sup>shots left</sup></p>
+      <div class="cc-bar"><div class="cc-bar-fill" id="cc-fill" style="width:100%;"></div></div>
+      <label class="btn upload-btn" for="file-input" id="upload-label">Take a photo</label>
+      <input type="file" id="file-input" accept="image/*" multiple>
+      <p class="up-status" id="up-status"></p>
+      <p class="cc-sub" style="margin-top:14px;">Every guest gets their own roll of 36. Choose your moments carefully &mdash; just like the old days.</p>
+    </div>
   </div>
 
-  <div class="gallery" id="gallery"></div>
-  <p class="empty-note" id="empty" style="display:none;">No photos yet — be the first to add one.</p>
+  <!-- Locked state: shown before reveal time -->
+  <div id="locked-state" style="display:none;">
+    <div class="reveal-lock">
+      <p class="rl-count" id="rl-count">&mdash;</p>
+      <p class="rl-count-label">Photos captured so far</p>
+      <p class="rl-note">Nobody&rsquo;s seen a single one yet &mdash; not even us. The whole album unlocks together, all at once, the morning after. Just like we did, over bagels.</p>
+      <p class="rl-timer" id="rl-timer">Revealing in &mdash;</p>
+      <div class="locked-grid" id="locked-grid"></div>
+    </div>
+  </div>
 
-  <div style="text-align:center;margin-top:clamp(48px,8vh,80px);padding-top:clamp(36px,6vh,56px);border-top:1px solid var(--brass-faint);">
-    <span class="eyebrow">On the day</span>
-    <p style="font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.4vw,23px);max-width:40ch;margin:0 auto 26px;line-height:1.5;">Scan to open the photo wall on your phone — then point, shoot, and share.</p>
-    <div style="display:inline-block;border:1px solid var(--brass-line);padding:14px;background:var(--ivory);">
-      <img src="/images/photo-wall-qr.png" alt="QR code linking to the photo wall" style="width:180px;height:180px;display:block;" loading="lazy" decoding="async">
+  <!-- Revealed state: shown after reveal time -->
+  <div id="revealed-state" style="display:none;">
+    <div class="reveal-burst">
+      <p class="rb-eyebrow">The album has unlocked</p>
+      <h2>Every shot, from everyone.</h2>
+    </div>
+    <div class="gallery" id="gallery"></div>
+    <p class="empty-note" id="empty" style="display:none;">No photos yet — be the first to add one.</p>
+
+    <div style="text-align:center;margin-top:clamp(48px,8vh,80px);padding-top:clamp(36px,6vh,56px);border-top:1px solid var(--brass-faint);">
+      <span class="eyebrow">On the day</span>
+      <p style="font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.4vw,23px);max-width:40ch;margin:0 auto 26px;line-height:1.5;">Scan to open your camera roll — then point, shoot, and share.</p>
+      <div style="display:inline-block;border:1px solid var(--brass-line);padding:14px;background:var(--ivory);">
+        <img src="/images/photo-wall-qr.png" alt="QR code linking to the photo wall" style="width:180px;height:180px;display:block;">
+      </div>
     </div>
   </div>
 
@@ -118,12 +260,69 @@
 
 <script>
 (function(){
-  var URL_BASE = 'https://uvvtdqltmdzbwchbtvbj.supabase.co/storage/v1';
+  var SUPABASE_URL = 'https://uvvtdqltmdzbwchbtvbj.supabase.co';
   var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
   var BUCKET = 'wedding-photos';
+  var STORAGE = SUPABASE_URL + '/storage/v1';
+  var MAX_SHOTS = 36;
 
+  // Reveal moment: the morning after the wedding — echoes "over bagels" from Our Story
+  var REVEAL_AT = new Date('2027-06-27T09:00:00+01:00');
+
+  // ── Shots-remaining counter (per browser, honesty system — like a real disposable camera) ──
+  var used = parseInt(localStorage.getItem('ls_shots_used') || '0', 10);
+  function updateShotsUI(){
+    var left = Math.max(0, MAX_SHOTS - used);
+    document.getElementById('shots-left').textContent = left;
+    document.getElementById('cc-fill').style.width = (left / MAX_SHOTS * 100) + '%';
+    var label = document.getElementById('upload-label');
+    if (left <= 0) {
+      label.textContent = 'Roll finished';
+      label.style.opacity = '.4';
+      label.style.pointerEvents = 'none';
+    }
+  }
+  updateShotsUI();
+
+  // ── Reveal state check ──
+  var now = new Date();
+  var revealed = now >= REVEAL_AT;
+  document.getElementById(revealed ? 'revealed-state' : 'locked-state').style.display = 'block';
+  if (revealed) {
+    document.getElementById('page-sub').textContent = 'The album has unlocked — every shot, from everyone, all at once.';
+  }
+
+  function esc(s){ return String(s||'').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  // ── Locked view: live photo count + countdown + decorative locked grid ──
+  if (!revealed) {
+    fetch(SUPABASE_URL + '/rest/v1/rpc/get_photo_count', {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+      body: '{}'
+    }).then(function(r){ return r.json(); }).then(function(n){
+      document.getElementById('rl-count').textContent = n;
+      var grid = document.getElementById('locked-grid');
+      var tiles = Math.min(24, Math.max(6, n));
+      grid.innerHTML = Array(tiles).fill('<div class="locked-tile">&#128274;</div>').join('');
+    }).catch(function(){
+      document.getElementById('rl-count').textContent = '\u2014';
+    });
+
+    function tick(){
+      var diff = REVEAL_AT - new Date();
+      if (diff <= 0) { location.reload(); return; }
+      var h = Math.floor(diff / 36e5);
+      var m = Math.floor(diff % 36e5 / 6e4);
+      document.getElementById('rl-timer').textContent = 'Revealing in ' + h + 'h ' + m + 'm';
+    }
+    tick();
+    setInterval(tick, 30000);
+  }
+
+  // ── Gallery (revealed state only) ──
   async function listPhotos() {
-    var res = await fetch(URL_BASE + '/object/list/' + BUCKET, {
+    var res = await fetch(STORAGE + '/object/list/' + BUCKET, {
       method: 'POST',
       headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
       body: JSON.stringify({ prefix: '', limit: 500, sortBy: { column: 'created_at', order: 'desc' } })
@@ -133,46 +332,62 @@
     return items.filter(function(i){ return i.name && !i.name.startsWith('.'); });
   }
 
-  function render(items) {
+  function renderGallery(items) {
     var g = document.getElementById('gallery');
     document.getElementById('empty').style.display = items.length ? 'none' : 'block';
     g.innerHTML = items.map(function(i){
-      var src = URL_BASE + '/object/public/' + BUCKET + '/' + encodeURIComponent(i.name);
+      var src = STORAGE + '/object/public/' + BUCKET + '/' + encodeURIComponent(i.name);
       return '<figure><img src="' + src + '" loading="lazy" alt="Wedding guest photo"></figure>';
     }).join('');
   }
 
-  async function refresh(){ render(await listPhotos()); }
-  refresh();
+  async function refreshGallery(){ if (revealed) renderGallery(await listPhotos()); }
+  refreshGallery();
 
+  // ── Upload (works in both states — photos just stay hidden until reveal) ──
   document.getElementById('file-input').addEventListener('change', async function(){
     var files = Array.from(this.files || []);
     if (!files.length) return;
+    var left = MAX_SHOTS - used;
+    if (left <= 0) {
+      document.getElementById('up-status').textContent = 'Your roll is finished — 36 shots used!';
+      this.value = ''; return;
+    }
+    if (files.length > left) files = files.slice(0, left);
+
     var status = document.getElementById('up-status');
     var done = 0;
     for (var f of files) {
-      status.textContent = 'Uploading ' + (done + 1) + ' of ' + files.length + '\u2026';
+      status.textContent = 'Developing ' + (done + 1) + ' of ' + files.length + '\u2026';
       var ext = (f.name.split('.').pop() || 'jpg').toLowerCase();
       var name = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
       try {
-        var res = await fetch(URL_BASE + '/object/' + BUCKET + '/' + name, {
+        var res = await fetch(STORAGE + '/object/' + BUCKET + '/' + name, {
           method: 'POST',
           headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': f.type || 'image/jpeg' },
           body: f
         });
-        if (res.ok) done++;
+        if (res.ok) { done++; used++; }
       } catch(e){}
     }
+    localStorage.setItem('ls_shots_used', String(used));
+    updateShotsUI();
     status.textContent = done === files.length
-      ? 'Added ' + done + ' photo' + (done === 1 ? '' : 's') + ' — thank you!'
-      : 'Added ' + done + ' of ' + files.length + ' — try the rest again?';
+      ? 'Captured ' + done + ' shot' + (done === 1 ? '' : 's') + ' \u2014 safely tucked away.'
+      : 'Captured ' + done + ' of ' + files.length + '.';
     this.value = '';
-    refresh();
+    refreshGallery();
+    if (!revealed) {
+      // bump the locked count optimistically
+      var cEl = document.getElementById('rl-count');
+      var cur = parseInt(cEl.textContent, 10);
+      if (!isNaN(cur)) cEl.textContent = cur + done;
+    }
   });
 })();
 </script>
-
 <script src="/reveal.js" defer></script>
 <script src="/site.js" defer></script>
+
 </body>
 </html>
