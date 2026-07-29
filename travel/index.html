@@ -41,83 +41,142 @@
   line-height: 1.8;
 }
 
-/* Route visual */
+/* Route visual — full-bleed photos, info overlaid on the image */
 .route {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: clamp(30px, 5vh, 56px) var(--pad) clamp(56px, 9vh, 90px);
+  padding: clamp(20px, 4vh, 40px) var(--pad) clamp(56px, 9vh, 90px);
+  position: relative;
+}
+
+.route-grid {
   display: grid;
-  grid-template-columns: 1fr minmax(150px, 220px) 1fr;
-  gap: clamp(16px, 3vw, 36px);
-  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 2.4vw, 28px);
+  position: relative;
+}
+
+.route .stop {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  border: 1px solid var(--brass-line);
 }
 
 .route .stop img {
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 1.4s cubic-bezier(.2,.7,.2,1);
+}
+
+.route .stop:hover img { transform: scale(1.045); }
+
+.route .stop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15,13,9,.86) 0%, rgba(15,13,9,.5) 32%, rgba(15,13,9,0) 58%);
+  pointer-events: none;
+}
+
+.route .stop .s-num {
+  position: absolute;
+  top: 22px; left: 24px;
+  z-index: 2;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ivory);
+  letter-spacing: .04em;
+  text-shadow: 0 1px 8px rgba(0,0,0,.4);
+}
+
+.route .stop .s-info {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  padding: clamp(20px, 3vw, 32px) clamp(22px, 3vw, 32px);
+  color: var(--ivory);
 }
 
 .route .stop .s-tag {
   font-size: 10px;
-  letter-spacing: .3em;
+  letter-spacing: .28em;
   text-transform: uppercase;
-  color: var(--brass);
-  margin: 16px 0 4px;
+  color: var(--gold, #D9BE8C);
+  margin-bottom: 8px;
+  display: block;
 }
 
 .route .stop h2 {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(20px, 2.6vw, 28px);
-  line-height: 1.15;
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.1;
+  color: var(--ivory);
 }
 
 .route .stop .s-addr {
-  font-size: 13px;
-  color: var(--ink-dim);
-  margin-top: 6px;
+  font-size: 12.5px;
+  color: rgba(247,244,236,.72);
+  margin-top: 8px;
+  line-height: 1.6;
 }
 
-.route .stop .s-links { margin-top: 12px; display: flex; gap: 18px; }
+.route .stop .s-links { margin-top: 14px; display: flex; gap: 20px; }
 
 .route .stop .s-links a {
   font-size: 10px;
   letter-spacing: .2em;
   text-transform: uppercase;
-  border-bottom: 1px solid var(--brass);
+  color: var(--ivory);
+  border-bottom: 1px solid rgba(247,244,236,.55);
   padding-bottom: 2px;
+  transition: border-color .2s;
 }
 
-.route .leg {
-  text-align: center;
-  position: relative;
-  align-self: start;
-  padding-top: clamp(60px, 9vw, 110px);
+.route .stop .s-links a:hover { border-color: var(--ivory); }
+
+/* Journey connector — sits across both photos as one continuous element */
+.route-leg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: clamp(20px, 3.5vh, 32px);
 }
 
-.route .leg::before {
-  content: '';
-  position: absolute;
-  top: clamp(80px, 12vw, 140px);
-  left: -8%; right: -8%;
+.route-leg .rl-line {
+  flex: 1;
+  max-width: 220px;
   border-top: 2px dotted var(--brass);
 }
 
-.route .leg .l-time {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  background: var(--ivory);
-  padding: 8px 16px;
+.route-leg .rl-time {
   font-family: var(--serif);
   font-style: italic;
   font-size: clamp(17px, 2vw, 22px);
   color: var(--brass);
-  border: 1px solid var(--brass-line);
+  white-space: nowrap;
 }
 
+.route-leg .rl-note {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  margin-left: 4px;
+}
+
+@media (max-width: 700px) {
+  .route-grid { grid-template-columns: 1fr; }
+  .route .stop { aspect-ratio: 16/11; }
+  .route-leg { flex-wrap: wrap; }
+  .route-leg .rl-line { max-width: 60px; }
+}
 .route .leg .l-note {
   font-size: 11px;
   letter-spacing: .18em;
@@ -319,31 +378,41 @@
 </header>
 
 <div class="route">
-  <div class="stop">
-    <img src="/images/church-village.jpg" alt="St Mary's Church tower above Honley village street">
-    <p class="s-tag">First — the ceremony · 12 noon</p>
-    <h2>St Mary&rsquo;s Church, Honley</h2>
-    <p class="s-addr">Church Street, Honley HD9 6AH · seated by 11:45</p>
-    <div class="s-links">
-      <a href="https://maps.google.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Google Maps</a>
-      <a href="https://maps.apple.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Apple Maps</a>
+  <div class="route-grid">
+    <div class="stop">
+      <span class="s-num"><em>I.</em></span>
+      <img src="/images/church-village.jpg" alt="St Mary's Church tower above Honley village street">
+      <div class="s-info">
+        <span class="s-tag">The ceremony · 12 noon</span>
+        <h2>St Mary&rsquo;s Church, Honley</h2>
+        <p class="s-addr">Church Street, Honley HD9 6AH · seated by 11:45</p>
+        <div class="s-links">
+          <a href="https://maps.google.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://maps.apple.com/?q=St+Mary%27s+Church+Honley+HD9+6AH" target="_blank" rel="noopener">Apple Maps</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <span class="s-num"><em>II.</em></span>
+      <img src="/images/manor-house.jpg" alt="Manor House Lindley, Georgian front and gates">
+      <div class="s-info">
+        <span class="s-tag">The reception · from 1:30 pm</span>
+        <h2>Manor House, Lindley</h2>
+        <p class="s-addr">Lidget Street, Lindley HD3 3JB · parking on site</p>
+        <div class="s-links">
+          <a href="https://maps.google.com/?q=Manor+House+Lidget+Street+Lindley+Huddersfield+HD3+3JB" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://maps.apple.com/?q=Manor+House+Lindley+HD3+3JB" target="_blank" rel="noopener">Apple Maps</a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="leg" aria-label="Twenty minutes by car between the venues">
-    <span class="l-time">20 minutes</span>
-    <p class="l-note">over the hill, by car</p>
-  </div>
-
-  <div class="stop">
-    <img src="/images/manor-house.jpg" alt="Manor House Lindley, Georgian front and gates">
-    <p class="s-tag">Then — the reception · from 1:30 pm</p>
-    <h2>Manor House, Lindley</h2>
-    <p class="s-addr">Lidget Street, Lindley HD3 3JB · parking on site</p>
-    <div class="s-links">
-      <a href="https://maps.google.com/?q=Manor+House+Lidget+Street+Lindley+Huddersfield+HD3+3JB" target="_blank" rel="noopener">Google Maps</a>
-      <a href="https://maps.apple.com/?q=Manor+House+Lindley+HD3+3JB" target="_blank" rel="noopener">Apple Maps</a>
-    </div>
+  <div class="route-leg" aria-label="Twenty minutes by car between the venues">
+    <span class="rl-line"></span>
+    <span class="rl-time">20 minutes</span>
+    <span class="rl-note">over the hill, by car</span>
+    <span class="rl-line"></span>
   </div>
 </div>
 

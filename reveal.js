@@ -3,7 +3,7 @@
   var els = document.querySelectorAll(
     '.info-row, .order-row, .order-part, .photo-pair, .photo-full, .hotel-card, .cat-head, ' +
     '.prose, .names-grid, .faq-item, .stamp, .venue-map-block, .next-block, .form-wrap, ' +
-    '.route .stop, .route .leg, .tt, .mode, .tr-maps'
+    '.route .stop, .route-leg, .tt, .mode, .tr-maps'
   );
   els.forEach(function(el){
     el.style.opacity = '0';
