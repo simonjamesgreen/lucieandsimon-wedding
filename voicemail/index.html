@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voicemail Booth — Lucie & Simon</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta property="og:title" content="Lucie & Simon — 26 June 2027">
+<meta property="og:description" content="Join us as we celebrate our wedding. St Mary's Church, Honley & Manor House, Lindley, West Yorkshire.">
+<meta property="og:image" content="https://lucieandsimon.wedding/images/og-share.jpg">
+<meta property="og:url" content="https://lucieandsimon.wedding">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/style.css">
+<style>
+.vm-wrap { max-width: 480px; margin: 0 auto 56px; text-align: center; }
+
+.vm-card {
+  border: 1px solid var(--brass-line);
+  padding: 40px 32px;
+  background: var(--ivory);
+  position: relative;
+}
+
+.vm-card::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--brass-faint);
+  pointer-events: none;
+}
+
+.vm-card .vc-label {
+  font-size: 10px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 18px;
+}
+
+.vm-dial {
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  border: 1.5px solid var(--brass);
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  transition: background .25s, transform .15s;
+  position: relative;
+}
+
+.vm-dial:active { transform: scale(.96); }
+.vm-dial.recording { background: rgba(168,131,75,.12); animation: pulse-ring 1.6s ease-in-out infinite; }
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(168,131,75,.35); }
+  50% { box-shadow: 0 0 0 14px rgba(168,131,75,0); }
+}
+
+.vm-dial svg { width: 34px; height: 34px; }
+
+.vm-timer {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink);
+  min-height: 28px;
+  margin-bottom: 8px;
+}
+
+.vm-hint { font-size: 12.5px; color: var(--ink-dim); margin-bottom: 22px; }
+
+.vm-actions { display: flex; gap: 12px; justify-content: center; }
+.vm-actions button {
+  border: 1px solid var(--brass-line);
+  background: none;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+.vm-actions button:hover { border-color: var(--brass); color: var(--brass); }
+.vm-actions button:disabled { opacity: .3; cursor: default; pointer-events: none; }
+
+.vm-status { font-size: 12.5px; color: var(--brass); margin-top: 16px; min-height: 18px; }
+
+/* ── Reveal lock (shared visual language with Photos) ── */
+.reveal-lock { max-width: 640px; margin: 0 auto 60px; text-align: center; border-top: 1px solid var(--brass-faint); padding-top: clamp(40px, 6vh, 64px); }
+.reveal-lock .rl-count { font-family: var(--serif); font-weight: 400; font-size: clamp(52px, 9vw, 84px); line-height: 1; color: var(--brass); }
+.reveal-lock .rl-count-label { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--ink-dim); margin-top: 10px; }
+.reveal-lock .rl-note { font-family: var(--serif); font-style: italic; font-size: clamp(18px, 2.4vw, 23px); color: var(--ink); max-width: 44ch; margin: 30px auto 0; line-height: 1.55; }
+.reveal-lock .rl-timer { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--brass); margin-top: 20px; }
+
+.reveal-burst { text-align: center; padding: 40px 0 20px; }
+.reveal-burst .rb-eyebrow { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--brass); margin-bottom: 14px; }
+.reveal-burst h2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(30px, 5vw, 46px); }
+
+/* ── Voicemail list (post-reveal) ── */
+.vm-list { max-width: 680px; margin: 0 auto; }
+.vm-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid var(--brass-line);
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  background: var(--ivory);
+}
+.vm-item button {
+  flex-shrink: 0;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--brass);
+  background: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.vm-item button svg { width: 16px; height: 16px; }
+.vm-item .vm-meta { font-size: 12px; color: var(--ink-dim); letter-spacing: .04em; }
+
+.empty-note { text-align: center; font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-dim); padding: 40px 0; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">Lucie <span>&amp;</span> Simon</a>
+  <div class="nav-links">
+    <a href="/our-story">Our Story</a>
+    <a href="/the-day">The Day</a>
+    <a href="/travel">Travel</a>
+    <a href="/accommodation">Accommodation</a>
+    <a href="/rsvp">RSVP</a>
+    <a href="/photos">Photos</a>
+    <a href="/voicemail" class="active">Voicemail</a>
+    <a href="/faqs">FAQs</a>
+  </div>
+</nav>
+
+<header class="page-head">
+  <span class="eyebrow">Leave us a message</span>
+  <h1 class="page-title">Voice<em>mail</em></h1>
+  <p class="page-sub" id="page-sub">A minute is all it takes. Nobody hears a single one until the morning after &mdash; just like the photos.</p>
+  <div class="rule-v" aria-hidden="true"></div>
+</header>
+
+<div class="wrap-wide">
+
+  <div class="vm-wrap">
+    <div class="vm-card">
+      <p class="vc-label">Press to record</p>
+      <div class="vm-dial" id="vm-dial" role="button" aria-label="Start recording">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#A8834B" stroke-width="1.5"><path id="mic-icon" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path id="mic-icon2" d="M19 11a7 7 0 01-14 0M12 19v3"/></svg>
+      </div>
+      <p class="vm-timer" id="vm-timer">0:00</p>
+      <p class="vm-hint" id="vm-hint">Up to 90 seconds</p>
+      <div class="vm-actions" id="vm-actions" style="display:none;">
+        <button id="vm-redo">Record again</button>
+        <button id="vm-send">Send it</button>
+      </div>
+      <p class="vm-status" id="vm-status"></p>
+    </div>
+  </div>
+
+  <div id="locked-state" style="display:none;">
+    <div class="reveal-lock">
+      <p class="rl-count" id="rl-count">&mdash;</p>
+      <p class="rl-count-label">Voicemails left so far</p>
+      <p class="rl-note">Not one has been played &mdash; not even by us. They all unlock together, the morning after. Just like we did, over bagels.</p>
+      <p class="rl-timer" id="rl-timer">Revealing in &mdash;</p>
+    </div>
+  </div>
+
+  <div id="revealed-state" style="display:none;">
+    <div class="reveal-burst">
+      <p class="rb-eyebrow">The messages have unlocked</p>
+      <h2>Every voice, from everyone.</h2>
+    </div>
+    <div class="vm-list" id="vm-list"></div>
+    <p class="empty-note" id="empty" style="display:none;">No messages yet — be the first.</p>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <img src="/images/wax-seal.svg" alt="" aria-hidden="true" style="width:44px;height:44px;margin:0 auto 18px;display:block;">
+  <p class="f-names">Lucie <span>&amp;</span> Simon</p>
+  <p class="f-date">Saturday 26 June 2027 · Honley &amp; Lindley</p>
+  <nav class="f-nav">
+    <a href="/our-story">Our Story</a>
+    <a href="/the-day">The Day</a>
+    <a href="/travel">Travel</a>
+    <a href="/accommodation">Accommodation</a>
+    <a href="/rsvp">RSVP</a>
+    <a href="/photos">Photos</a>
+    <a href="/voicemail">Voicemail</a>
+    <a href="/faqs">FAQs</a>
+  </nav>
+</footer>
+
+<script>
+(function(){
+  var SUPABASE_URL = 'https://uvvtdqltmdzbwchbtvbj.supabase.co';
+  var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
+  var BUCKET = 'wedding-voicemails';
+  var STORAGE = SUPABASE_URL + '/storage/v1';
+  var MAX_SECONDS = 90;
+
+  var REVEAL_AT = new Date('2027-06-27T09:00:00+01:00');
+  var now = new Date();
+  var revealed = now >= REVEAL_AT;
+  document.getElementById(revealed ? 'revealed-state' : 'locked-state').style.display = 'block';
+  if (revealed) document.getElementById('page-sub').textContent = 'Every message has unlocked — press play on any of them below.';
+
+  // ── Recorder ──
+  var mediaRecorder, chunks = [], blob, timerInt, seconds = 0, stream;
+  var dial = document.getElementById('vm-dial');
+  var timerEl = document.getElementById('vm-timer');
+  var hintEl = document.getElementById('vm-hint');
+  var actionsEl = document.getElementById('vm-actions');
+  var statusEl = document.getElementById('vm-status');
+
+  function fmt(s){ return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+
+  dial.addEventListener('click', async function(){
+    if (dial.classList.contains('recording')) { stopRecording(); return; }
+    if (blob) return; // already have a take queued, use Record Again
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      chunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = function(e){ chunks.push(e.data); };
+      mediaRecorder.onstop = function(){
+        blob = new Blob(chunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+        stream.getTracks().forEach(function(t){ t.stop(); });
+        actionsEl.style.display = 'flex';
+        hintEl.textContent = 'Ready to send';
+      };
+      mediaRecorder.start();
+      dial.classList.add('recording');
+      hintEl.textContent = 'Recording\u2026 tap to stop';
+      seconds = 0;
+      timerEl.textContent = fmt(seconds);
+      timerInt = setInterval(function(){
+        seconds++;
+        timerEl.textContent = fmt(seconds);
+        if (seconds >= MAX_SECONDS) stopRecording();
+      }, 1000);
+    } catch(e) {
+      statusEl.textContent = 'Couldn\u2019t access your microphone \u2014 check permissions and try again.';
+    }
+  });
+
+  function stopRecording(){
+    clearInterval(timerInt);
+    dial.classList.remove('recording');
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+  }
+
+  document.getElementById('vm-redo').addEventListener('click', function(){
+    blob = null; chunks = [];
+    actionsEl.style.display = 'none';
+    timerEl.textContent = '0:00';
+    hintEl.textContent = 'Up to 90 seconds';
+    statusEl.textContent = '';
+  });
+
+  document.getElementById('vm-send').addEventListener('click', async function(){
+    if (!blob) return;
+    statusEl.textContent = 'Sending\u2026';
+    this.disabled = true;
+    var name = Date.now() + '-' + Math.random().toString(36).slice(2,8) + '.webm';
+    try {
+      var res = await fetch(STORAGE + '/object/' + BUCKET + '/' + name, {
+        method: 'POST',
+        headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': blob.type },
+        body: blob
+      });
+      if (!res.ok) throw new Error();
+      statusEl.textContent = 'Sent \u2014 tucked safely away until the reveal.';
+      actionsEl.style.display = 'none';
+      blob = null;
+      timerEl.textContent = '0:00';
+      hintEl.textContent = 'Record another?';
+      if (!revealed) {
+        var cEl = document.getElementById('rl-count');
+        var cur = parseInt(cEl.textContent, 10);
+        if (!isNaN(cur)) cEl.textContent = cur + 1;
+      }
+    } catch(e) {
+      statusEl.textContent = 'Something went wrong \u2014 please try again.';
+    }
+    this.disabled = false;
+  });
+
+  // ── Locked state: count + countdown ──
+  if (!revealed) {
+    fetch(SUPABASE_URL + '/rest/v1/rpc/get_voicemail_count', {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+      body: '{}'
+    }).then(function(r){ return r.json(); }).then(function(n){
+      document.getElementById('rl-count').textContent = n;
+    }).catch(function(){ document.getElementById('rl-count').textContent = '\u2014'; });
+
+    function tick(){
+      var diff = REVEAL_AT - new Date();
+      if (diff <= 0) { location.reload(); return; }
+      var h = Math.floor(diff / 36e5), m = Math.floor(diff % 36e5 / 6e4);
+      document.getElementById('rl-timer').textContent = 'Revealing in ' + h + 'h ' + m + 'm';
+    }
+    tick(); setInterval(tick, 30000);
+  }
+
+  // ── Revealed: list + inline playback ──
+  if (revealed) {
+    fetch(STORAGE + '/object/list/' + BUCKET, {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prefix: '', limit: 500, sortBy: { column: 'created_at', order: 'desc' } })
+    }).then(function(r){ return r.json(); }).then(function(items){
+      items = (items || []).filter(function(i){ return i.name && !i.name.startsWith('.'); });
+      var list = document.getElementById('vm-list');
+      document.getElementById('empty').style.display = items.length ? 'none' : 'block';
+      list.innerHTML = items.map(function(i, idx){
+        var src = STORAGE + '/object/public/' + BUCKET + '/' + encodeURIComponent(i.name);
+        return '<div class="vm-item"><button data-src="' + src + '" aria-label="Play voicemail">' +
+          '<svg viewBox="0 0 24 24" fill="#A8834B"><path d="M8 5v14l11-7z"/></svg></button>' +
+          '<span class="vm-meta">Voicemail ' + (idx+1) + '</span></div>';
+      }).join('');
+      var currentAudio = null;
+      list.querySelectorAll('button').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          if (currentAudio) { currentAudio.pause(); }
+          currentAudio = new Audio(btn.dataset.src);
+          currentAudio.play();
+        });
+      });
+    }).catch(function(){});
+  }
+})();
+</script>
+<script src="/reveal.js" defer></script>
+<script src="/site.js" defer></script>
+
+</body>
+</html>

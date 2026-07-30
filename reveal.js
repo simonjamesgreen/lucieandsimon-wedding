@@ -4,7 +4,7 @@
     '.info-row, .order-row, .order-part, .photo-pair, .photo-full, .hotel-card, ' +
     '.prose, .names-grid, .stamp, .venue-map-block, .next-block, .form-wrap, ' +
     '.route .stop, .route-leg, .tt, .mode, .tr-maps, .camera-wrap, .reveal-lock, ' +
-    '.ac-cat, .ac-dist, .fq-row'
+    '.ac-cat, .ac-dist, .fq-row, .vm-wrap, .vm-item, .wk-day, .wk-card'
   );
   els.forEach(function(el){
     el.style.opacity = '0';

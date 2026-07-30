@@ -24,6 +24,7 @@
     <a href="/accommodation">Accommodation</a>
     <a href="/rsvp">RSVP</a>
     <a href="/photos">Photos</a>
+    <a href="/voicemail">Voicemail</a>
     <a href="/faqs">FAQs</a>
   </div>
 </nav>
@@ -200,6 +201,7 @@
     <a href="/accommodation">Accommodation</a>
     <a href="/rsvp">RSVP</a>
     <a href="/photos">Photos</a>
+    <a href="/voicemail">Voicemail</a>
     <a href="/faqs">FAQs</a>
   </nav>
 </footer>
@@ -208,22 +210,56 @@
 (function(){
   var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
 
-  // Jukebox wall
-  fetch('https://uvvtdqltmdzbwchbtvbj.supabase.co/rest/v1/rpc/get_song_requests', {
-    method: 'POST',
-    headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY, 'Content-Type': 'application/json' },
-    body: '{}'
-  }).then(function(r){ return r.json(); }).then(function(rows){
-    var jb = document.getElementById('jukebox');
-    if (!rows || !rows.length) {
-      jb.innerHTML = '<p style="font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-dim);">No requests yet — the dancefloor is yours to shape.</p>';
-      return;
-    }
-    jb.innerHTML = rows.map(function(r){
-      var s = String(r.song || '').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; });
-      return '<span style="border:1px solid var(--brass-line);padding:9px 18px;font-size:13px;">♪&nbsp; ' + s + '</span>';
-    }).join('');
-  }).catch(function(){});
+  // Jukebox wall — vote-enabled
+  var votedSongs = JSON.parse(localStorage.getItem('ls_voted_songs') || '[]');
+  var voterToken = localStorage.getItem('ls_voter_token');
+  if (!voterToken) {
+    voterToken = Math.random().toString(36).slice(2) + Date.now();
+    localStorage.setItem('ls_voter_token', voterToken);
+  }
+
+  function esc(s){ return String(s||'').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function loadJukebox(){
+    fetch('https://uvvtdqltmdzbwchbtvbj.supabase.co/rest/v1/rpc/get_jukebox', {
+      method: 'POST',
+      headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY, 'Content-Type': 'application/json' },
+      body: '{}'
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      var jb = document.getElementById('jukebox');
+      if (!rows || !rows.length) {
+        jb.innerHTML = '<p style="font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-dim);">No requests yet — the dancefloor is yours to shape.</p>';
+        return;
+      }
+      jb.innerHTML = rows.map(function(r){
+        var song = esc(r.song);
+        var voted = votedSongs.indexOf(r.song) !== -1;
+        return '<span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--brass-line);padding:9px 10px 9px 18px;font-size:13px;">' +
+          '\u266a&nbsp; ' + song +
+          '<button class="jb-vote" data-song="' + song.replace(/"/g,'&quot;') + '" style="border:none;background:none;cursor:pointer;color:' + (voted ? 'var(--brass)' : 'var(--ink-dim)') + ';font-size:13px;padding:2px 4px;display:inline-flex;align-items:center;gap:4px;" ' + (voted ? 'disabled' : '') + '>' +
+          (voted ? '\u2665' : '\u2661') + ' <span>' + r.votes + '</span></button></span>';
+      }).join('');
+      jb.querySelectorAll('.jb-vote').forEach(function(btn){
+        btn.addEventListener('click', async function(){
+          var song = btn.dataset.song;
+          btn.disabled = true;
+          try {
+            var res = await fetch('https://uvvtdqltmdzbwchbtvbj.supabase.co/rest/v1/wedding_song_votes', {
+              method: 'POST',
+              headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+              body: JSON.stringify({ song_request: song, voter_token: voterToken })
+            });
+            if (res.ok) {
+              votedSongs.push(song);
+              localStorage.setItem('ls_voted_songs', JSON.stringify(votedSongs));
+              loadJukebox();
+            }
+          } catch(e){}
+        });
+      });
+    }).catch(function(){});
+  }
+  loadJukebox();
 
   // Happening now — only on the wedding day
   var now = new Date();

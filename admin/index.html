@@ -220,6 +220,7 @@
         (r.transport_seats ? '<p class="note">🚌 ' + r.transport_seats + ' transport seat' + (r.transport_seats === 1 ? '' : 's') + ' requested</p>' : '') +
         (r.song_request ? '<p class="note">♪ ' + esc(r.song_request) + '</p>' : '') +
         (r.message ? '<p class="note">“' + esc(r.message) + '”</p>' : '') +
+        (r.mailing_address ? '<p class="note">✉ ' + esc(r.mailing_address) + '</p>' : '') +
         '</div>';
     }).join('');
 
@@ -250,7 +251,7 @@
   };
 
   document.getElementById('csv').onclick = function(){
-    var rows = [['Date','Contact','Email','Phone','Attending','Party','Dietary','Transport seats','Song','Message']];
+    var rows = [['Date','Contact','Email','Phone','Attending','Party','Dietary','Transport seats','Song','Message','Mailing Address']];
     data.forEach(function(r){
       rows.push([
         new Date(r.created_at).toISOString().slice(0,16).replace('T',' '),
@@ -259,7 +260,7 @@
         (r.party_members||[]).map(function(m){return m.name;}).join('; '),
         (r.party_members||[]).filter(function(m){return m.dietary;}).map(function(m){return m.name+': '+m.dietary;}).join('; '),
         r.transport_seats || 0,
-        r.song_request || '', r.message || ''
+        r.song_request || '', r.message || '', r.mailing_address || ''
       ]);
     });
     var csv = rows.map(function(r){
