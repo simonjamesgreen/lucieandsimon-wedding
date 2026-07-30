@@ -581,7 +581,7 @@ body.page-exit { opacity: 0; transition: opacity .26s ease; }
   font-family: var(--sans);
   font-weight: 300;
   font-size: 34px;
-  color: var(--ivory);
+  color: #F7F4EC;
   cursor: pointer;
   line-height: 1;
 }
