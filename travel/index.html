@@ -63,6 +63,14 @@
   border: 1px solid var(--brass-line);
 }
 
+.route .stop.wide {
+  aspect-ratio: 4/3;
+}
+
+.route .stop.wider {
+  aspect-ratio: 16/10;
+}
+
 .route .stop img {
   width: 100%;
   height: 100%;
@@ -173,7 +181,9 @@
 
 @media (max-width: 700px) {
   .route-grid { grid-template-columns: 1fr; }
-  .route .stop { aspect-ratio: 16/11; }
+  .route .stop { aspect-ratio: 2/3; }
+  .route .stop.wide { aspect-ratio: 4/3; }
+  .route .stop.wider { aspect-ratio: 16/10; }
   .route-leg { flex-wrap: wrap; }
   .route-leg .rl-line { max-width: 60px; }
 }
@@ -380,7 +390,7 @@
 
 <div class="route">
   <div class="route-grid">
-    <div class="stop">
+    <div class="stop wide">
       <span class="s-num"><em>I.</em></span>
       <img src="/images/church-village.webp" alt="St Mary's Church tower above Honley village street" loading="lazy" decoding="async">
       <div class="s-info">
@@ -394,7 +404,7 @@
       </div>
     </div>
 
-    <div class="stop">
+    <div class="stop wider">
       <span class="s-num"><em>II.</em></span>
       <img src="/images/manor-house.webp" alt="Manor House Lindley, Georgian front and gates" loading="lazy" decoding="async">
       <div class="s-info">
