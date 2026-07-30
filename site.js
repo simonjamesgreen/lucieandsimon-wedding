@@ -62,6 +62,12 @@
       '--brass:#D9BE8C!important;--brass-line:rgba(217,190,140,.5)!important;--brass-faint:rgba(217,190,140,.2)!important;}' +
       'body::before{opacity:.05!important;}';
     document.head.appendChild(eve);
+
+    // Externally-referenced SVGs (the seal) can't inherit page CSS variables —
+    // swap to a matching dark variant so the monogram stays legible.
+    document.querySelectorAll('img[src="/images/wax-seal.svg"]').forEach(function(img){
+      img.src = '/images/wax-seal-dark.svg';
+    });
   }
 
   /* ── Scroll progress bar ── */
