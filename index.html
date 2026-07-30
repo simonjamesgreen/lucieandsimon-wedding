@@ -350,6 +350,7 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
   </div>
 
   <p class="fade" id="ticker" style="font-size:12px;letter-spacing:.14em;color:var(--brass);margin-top:22px;min-height:16px;animation-delay:1.3s;"></p>
+  <p class="fade" id="photo-teaser" style="font-size:11px;letter-spacing:.16em;color:var(--ink-dim);margin-top:6px;min-height:14px;animation-delay:1.35s;"></p>
 
   <p class="fade" style="margin-top:6px;animation-delay:1.42s;">
     <a href="/lucie-and-simon-wedding.ics" style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-dim);border-bottom:1px solid var(--brass-line);padding-bottom:2px;">Apple Calendar</a>
@@ -441,6 +442,19 @@ a:focus-visible { outline: 1.5px solid var(--brass); outline-offset: 4px; }
     body: '{}'
   }).then(function(r){ return r.json(); }).then(function(n){
     if (n >= 10) document.getElementById('ticker').textContent = n + ' guests are coming — join them';
+  }).catch(function(){});
+
+  // Photo-count teaser (builds anticipation without spoiling the reveal)
+  fetch('https://uvvtdqltmdzbwchbtvbj.supabase.co/rest/v1/rpc/get_photo_count', {
+    method: 'POST',
+    headers: {
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c',
+      'Content-Type': 'application/json'
+    },
+    body: '{}'
+  }).then(function(r){ return r.json(); }).then(function(n){
+    if (n > 0) document.getElementById('photo-teaser').textContent = n + ' photo' + (n===1?'':'s') + ' already captured \u2014 all revealed the morning after';
   }).catch(function(){});
 
   // ── Reveal the numbers strip on scroll ──

@@ -458,6 +458,41 @@
 
 </div>
 
+<div class="wrap" style="text-align:center;padding-top:0;padding-bottom:clamp(48px,8vh,80px);">
+  <span class="eyebrow">Wherever you're reading this from</span>
+  <p style="font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.6vw,25px);max-width:44ch;margin:16px auto 22px;line-height:1.5;" id="dist-result">Curious how far you are from Manor House?</p>
+  <button class="btn" id="dist-btn" style="border:none;cursor:pointer;">How far am I?</button>
+  <p style="font-size:11px;color:var(--ink-dim);margin-top:14px;">Uses your location just once, on this device \u2014 nothing is stored.</p>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('dist-btn');
+  var out = document.getElementById('dist-result');
+  if (!btn) return;
+  btn.addEventListener('click', function(){
+    if (!navigator.geolocation) { out.textContent = 'Your browser doesn\u2019t support location \u2014 but we\u2019d guess it\u2019s a while yet.'; return; }
+    btn.textContent = 'Finding you\u2026';
+    navigator.geolocation.getCurrentPosition(function(pos){
+      var lat1 = pos.coords.latitude, lon1 = pos.coords.longitude;
+      var lat2 = 53.6549, lon2 = -1.8246; // Manor House, Lindley
+      var R = 6371;
+      var dLat = (lat2-lat1) * Math.PI/180, dLon = (lon2-lon1) * Math.PI/180;
+      var a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+      var km = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var miles = Math.round(km * 0.621371);
+      out.textContent = miles < 1
+        ? 'You\u2019re practically next door \u2014 under a mile from Manor House!'
+        : 'You\u2019re roughly ' + miles + ' mile' + (miles===1?'':'s') + ' from Manor House, as the crow flies.';
+      btn.style.display = 'none';
+    }, function(){
+      out.textContent = 'Couldn\u2019t find you \u2014 no matter, we\u2019ll see you there on the day.';
+      btn.style.display = 'none';
+    });
+  });
+})();
+</script>
+
 <div class="tr-maps">
   <span class="t-label">Pin them now</span>
   <div class="maps-pair">

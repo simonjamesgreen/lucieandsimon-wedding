@@ -10,8 +10,59 @@
     '#lightbox.open{opacity:1;pointer-events:auto;}' +
     '#lightbox img{max-width:min(92vw,1100px);max-height:88vh;border:1px solid rgba(168,131,75,.5);padding:10px;background:#F7F4EC;transform:scale(.96);transition:transform .3s cubic-bezier(.2,.6,.2,1);}' +
     '#lightbox.open img{transform:scale(1);}' +
-    '#lb-close{position:absolute;top:20px;right:28px;font-weight:300;font-size:34px;color:#F7F4EC;cursor:pointer;line-height:1;font-family:sans-serif;}';
+    '#lb-close{position:absolute;top:20px;right:28px;font-weight:300;font-size:34px;color:#F7F4EC;cursor:pointer;line-height:1;font-family:sans-serif;}' +
+    '::-webkit-scrollbar{width:10px;height:10px;}' +
+    '::-webkit-scrollbar-track{background:#F7F4EC;}' +
+    '::-webkit-scrollbar-thumb{background:#A8834B;border:2px solid #F7F4EC;border-radius:6px;}' +
+    '::-webkit-scrollbar-thumb:hover{background:#8A6B39;}' +
+    'html{scrollbar-color:#A8834B #F7F4EC;scrollbar-width:thin;}' +
+    '#brass-cursor{position:fixed;width:22px;height:22px;border:1px solid #A8834B;border-radius:50%;pointer-events:none;z-index:500;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s,opacity .25s;opacity:0;}' +
+    '#brass-cursor.on{opacity:1;}' +
+    '#brass-cursor.hover{width:38px;height:38px;background:rgba(168,131,75,.12);}' +
+    '#chapter-mark{position:fixed;bottom:18px;right:22px;font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:12px;color:rgba(29,27,22,.35);z-index:90;letter-spacing:.06em;pointer-events:none;}' +
+    '@media (max-width:760px){#chapter-mark{display:none;}}';
   document.head.appendChild(css);
+
+  /* ── Custom brass cursor (desktop, fine-pointer only) ── */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced) {
+    var cur = document.createElement('div');
+    cur.id = 'brass-cursor';
+    document.body.appendChild(cur);
+    var curOn = false;
+    document.addEventListener('mousemove', function(e){
+      if (!curOn) { cur.classList.add('on'); curOn = true; }
+      cur.style.left = e.clientX + 'px';
+      cur.style.top = e.clientY + 'px';
+    });
+    document.addEventListener('mouseover', function(e){
+      cur.classList.toggle('hover', !!e.target.closest('a, button, .btn, input, textarea, .hotel-card, .nav-links a'));
+    });
+    document.addEventListener('mouseleave', function(){ cur.classList.remove('on'); curOn = false; });
+  }
+
+  /* ── Chapter mark: page position, like a printed book ── */
+  var CHAPTERS = { '/': 'I', '/our-story': 'II', '/the-day': 'III', '/travel': 'IV',
+    '/accommodation': 'V', '/rsvp': 'VI', '/photos': 'VII', '/faqs': 'VIII' };
+  var path = location.pathname.replace(/\/$/, '') || '/';
+  var num = CHAPTERS[path];
+  if (num) {
+    var ch = document.createElement('div');
+    ch.id = 'chapter-mark';
+    ch.textContent = num + ' / VIII';
+    document.body.appendChild(ch);
+  }
+
+  /* ── Evening mode: quietly shifts to the dark palette after 7pm local time ── */
+  var hr = new Date().getHours();
+  if ((hr >= 19 || hr < 5) && !sessionStorage.getItem('ls_evening_dismissed')) {
+    var eve = document.createElement('style');
+    eve.id = 'evening-mode';
+    eve.textContent =
+      ':root{--ivory:#12201B!important;--ink:#F2EFE6!important;--ink-dim:rgba(242,239,230,.6)!important;' +
+      '--brass:#D9BE8C!important;--brass-line:rgba(217,190,140,.5)!important;--brass-faint:rgba(217,190,140,.2)!important;}' +
+      'body::before{opacity:.05!important;}';
+    document.head.appendChild(eve);
+  }
 
   /* ── Scroll progress bar ── */
   var bar = document.createElement('div');

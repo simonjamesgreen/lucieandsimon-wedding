@@ -224,6 +224,31 @@ textarea { resize: vertical; min-height: 70px; }
 
 <script>
 (function(){
+  // ── Brass & ivory confetti burst on RSVP acceptance ──
+  window.brassConfetti = function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var colors = ['#A8834B', '#D9BE8C', '#F7F4EC', '#1D1B16'];
+    var n = 70;
+    for (var i = 0; i < n; i++) {
+      var p = document.createElement('div');
+      var size = 5 + Math.random() * 6;
+      var isCircle = Math.random() > .5;
+      p.style.cssText = 'position:fixed;top:-20px;left:' + (Math.random()*100) + 'vw;width:' + size + 'px;height:' + (isCircle?size:size*1.8) +
+        'px;background:' + colors[Math.floor(Math.random()*colors.length)] + ';opacity:.9;z-index:600;pointer-events:none;' +
+        (isCircle ? 'border-radius:50%;' : '') + 'transform:rotate(' + (Math.random()*360) + 'deg);';
+      document.body.appendChild(p);
+      var duration = 2200 + Math.random() * 1400;
+      var drift = (Math.random() - .5) * 160;
+      p.animate([
+        { transform: p.style.transform + ' translate(0,0)', opacity: .9 },
+        { transform: p.style.transform + ' translate(' + drift + 'px, 100vh)', opacity: .3 }
+      ], { duration: duration, easing: 'cubic-bezier(.25,.46,.45,.94)' });
+      (function(el, dur){ setTimeout(function(){ el.remove(); }, dur + 100); })(p, duration);
+    }
+  };
+})();
+
+(function(){
   var SUPABASE_URL = 'https://uvvtdqltmdzbwchbtvbj.supabase.co';
   var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
 
@@ -367,6 +392,8 @@ textarea { resize: vertical; min-height: 70px; }
       if (att.value === 'declines') {
         document.getElementById('success-title').textContent = 'We\u2019ll miss you';
         document.getElementById('success-body').textContent = 'Thank you for letting us know \u2014 you\u2019ll be with us in spirit.';
+      } else {
+        brassConfetti();
       }
       sv.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
