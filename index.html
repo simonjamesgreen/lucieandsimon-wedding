@@ -258,8 +258,19 @@ body.has-strip .topnav { top: 49px; }
 }
 
 @media (max-width: 640px) {
-  .topnav { gap: 12px; flex-wrap: wrap; padding: 14px 12px; }
-  .topnav a { font-size: 9px; letter-spacing: .18em; }
+  .topnav {
+    gap: 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    padding: 14px 20px;
+    mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+  }
+  .topnav::-webkit-scrollbar { display: none; }
+  .topnav a { flex-shrink: 0; font-size: 9px; letter-spacing: .18em; }
 }
 
 @media (max-width: 480px) {
