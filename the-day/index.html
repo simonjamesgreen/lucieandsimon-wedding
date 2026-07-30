@@ -33,6 +33,9 @@
   <span class="eyebrow">Saturday 26 June 2027</span>
   <h1 class="page-title">The <em>Day</em></h1>
   <p class="page-sub">Noon at St Mary&rsquo;s, carriages at one — everything in between, in order.</p>
+  <p class="no-print" style="margin-top:22px;">
+    <button id="print-order" style="background:none;border:1px solid var(--brass-line);color:var(--ink);font-family:var(--sans);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;padding:12px 24px;cursor:pointer;transition:border-color .2s,color .2s;">Download the order of service</button>
+  </p>
   <div class="rule-v" aria-hidden="true"></div>
 </header>
 
@@ -208,6 +211,12 @@
 
 <script>
 (function(){
+  var printBtn = document.getElementById('print-order');
+  if (printBtn) {
+    printBtn.addEventListener('mouseenter', function(){ this.style.borderColor = 'var(--brass)'; this.style.color = 'var(--brass)'; });
+    printBtn.addEventListener('mouseleave', function(){ this.style.borderColor = 'var(--brass-line)'; this.style.color = 'var(--ink)'; });
+    printBtn.addEventListener('click', function(){ window.print(); });
+  }
   var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2dnRkcWx0bWR6YndjaGJ0dmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTc1NDgsImV4cCI6MjA5MTk5MzU0OH0.qMHaphQXBRIZ2eZgyYFNEgRszRRM4V5jRSy3kPzLi5c';
 
   // Jukebox wall — vote-enabled

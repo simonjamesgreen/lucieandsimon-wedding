@@ -386,6 +386,7 @@
   <h1>Noon in Honley.<br>Half past one <em>in Lindley.</em></h1>
   <p class="intro">Two venues, one valley, twenty minutes between them. Everything you need to plan the journey — from wherever you&rsquo;re starting.</p>
   <p id="wx" style="display:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-top:22px;"></p>
+  <p id="sunset" style="display:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);margin-top:8px;"></p>
 </header>
 
 <div class="route">
@@ -553,6 +554,22 @@
                  code <= 67 ? 'Some rain' : code <= 82 ? 'Showers' : 'Stormy';
       var el = document.getElementById('wx');
       el.textContent = 'Saturday\u2019s forecast for Honley \u00b7 ' + t + '\u00b0 \u00b7 ' + desc + (rain >= 40 ? ' \u00b7 pack a brolly' : '');
+      el.style.display = 'block';
+    }).catch(function(){});
+})();
+</script>
+
+<script>
+(function(){
+  // Today's real sunset at Manor House — shown any time someone visits, not just near the wedding
+  fetch('https://api.sunrise-sunset.org/json?lat=53.6549&lng=-1.8246&formatted=0')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (!d || !d.results) return;
+      var sunset = new Date(d.results.sunset);
+      var timeStr = sunset.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', timeZone: 'Europe/London' });
+      var el = document.getElementById('sunset');
+      el.textContent = 'Tonight\u2019s sunset at Manor House \u00b7 ' + timeStr;
       el.style.display = 'block';
     }).catch(function(){});
 })();

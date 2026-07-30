@@ -498,6 +498,32 @@ figcaption {
 
 /* ── POLISH LAYER ── */
 
+#event-strip {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 210;
+  background: var(--ink);
+  color: var(--ivory);
+  text-align: center;
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+
+#event-strip a, #event-strip span.es-link {
+  color: var(--ivory);
+  border-bottom: 1px solid rgba(247,244,236,.5);
+}
+
+body.has-strip { padding-top: 34px; }
+body.has-strip .nav { top: 34px; }
+
+@media (max-width: 640px) {
+  #event-strip { font-size: 9.5px; padding: 8px 12px; }
+}
+
 #scroll-progress {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -511,7 +537,7 @@ figcaption {
 
 /* Nav: frosted on scroll, animated underlines */
 .nav {
-  transition: background .3s, box-shadow .3s, backdrop-filter .3s;
+  transition: background .3s, box-shadow .3s, backdrop-filter .3s, top .3s;
 }
 
 .nav.scrolled {

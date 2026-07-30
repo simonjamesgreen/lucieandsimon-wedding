@@ -178,6 +178,46 @@
 
 .empty-note { text-align: center; font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-dim); padding: 40px 0; }
 
+/* ── Montage overlay ── */
+#montage-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0F0D09;
+  z-index: 800;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#montage-overlay.open { display: flex; }
+#montage-img {
+  max-width: 88vw;
+  max-height: 78vh;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#montage-img.show { opacity: 1; }
+#montage-caption {
+  position: absolute;
+  bottom: 64px;
+  left: 0; right: 0;
+  text-align: center;
+  color: #F7F4EC;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: .04em;
+}
+#montage-close {
+  position: absolute;
+  top: 24px; right: 30px;
+  color: #F7F4EC;
+  font-size: 32px;
+  cursor: pointer;
+  font-family: sans-serif;
+  line-height: 1;
+}
+
 @media (max-width: 860px) { .gallery { columns: 2; } }
 @media (max-width: 520px) { .gallery { columns: 1; } }
 </style>
@@ -236,6 +276,7 @@
     <div class="reveal-burst">
       <p class="rb-eyebrow">The album has unlocked</p>
       <h2>Every shot, from everyone.</h2>
+      <button id="montage-btn" style="margin-top:26px;background:var(--ink);color:var(--ivory);border:none;font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;padding:16px 36px;cursor:pointer;">&#9654; Play the whole morning back</button>
     </div>
     <div class="gallery" id="gallery"></div>
     <p class="empty-note" id="empty" style="display:none;">No photos yet — be the first to add one.</p>
@@ -247,6 +288,12 @@
         <img src="/images/photo-wall-qr.png" alt="QR code linking to the photo wall" style="width:180px;height:180px;display:block;">
       </div>
     </div>
+  </div>
+
+  <div id="montage-overlay">
+    <span id="montage-close" aria-label="Close">&times;</span>
+    <img id="montage-img" alt="">
+    <p id="montage-caption"></p>
   </div>
 
 </div>
@@ -377,6 +424,66 @@
 
   async function refreshGallery(){ if (revealed) renderGallery(await listPhotos()); }
   refreshGallery();
+
+  // ── "Play the whole morning back" — photo slideshow + sequential voicemail playback ──
+  var montageBtn = document.getElementById('montage-btn');
+  if (montageBtn) {
+    montageBtn.addEventListener('click', async function(){
+      var overlay = document.getElementById('montage-overlay');
+      var imgEl = document.getElementById('montage-img');
+      var captionEl = document.getElementById('montage-caption');
+      overlay.classList.add('open');
+      captionEl.textContent = 'Gathering the morning\u2026';
+
+      var photoItems = await listPhotos();
+      var vmRes = await fetch(STORAGE + '/object/list/wedding-voicemails', {
+        method: 'POST',
+        headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prefix: '', limit: 500, sortBy: { column: 'created_at', order: 'asc' } })
+      });
+      var vmItems = vmRes.ok ? (await vmRes.json()).filter(function(i){ return i.name && !i.name.startsWith('.'); }) : [];
+
+      var stopped = false;
+      var photoIdx = 0, photoTimer = null;
+
+      function showNextPhoto(){
+        if (stopped || !photoItems.length) return;
+        var src = STORAGE + '/object/public/' + BUCKET + '/' + encodeURIComponent(photoItems[photoIdx % photoItems.length].name);
+        imgEl.classList.remove('show');
+        setTimeout(function(){
+          imgEl.src = src;
+          imgEl.classList.add('show');
+        }, 300);
+        photoIdx++;
+        photoTimer = setTimeout(showNextPhoto, 4200);
+      }
+
+      var vmIdx = 0, currentAudio = null;
+      function playNextVoicemail(){
+        if (stopped) return;
+        if (!vmItems.length) { captionEl.textContent = 'No voicemails yet \u2014 just the photos for now.'; return; }
+        if (vmIdx >= vmItems.length) { captionEl.textContent = 'That\u2019s every voice \u2014 thank you all.'; return; }
+        var src = STORAGE + '/object/public/wedding-voicemails/' + encodeURIComponent(vmItems[vmIdx].name);
+        captionEl.textContent = 'Playing voicemail ' + (vmIdx + 1) + ' of ' + vmItems.length;
+        currentAudio = new Audio(src);
+        currentAudio.play().catch(function(){});
+        vmIdx++;
+        currentAudio.onended = playNextVoicemail;
+      }
+
+      if (photoItems.length) showNextPhoto();
+      else captionEl.textContent = vmItems.length ? '' : 'Nothing to play yet.';
+      playNextVoicemail();
+
+      document.getElementById('montage-close').onclick = function(){
+        stopped = true;
+        clearTimeout(photoTimer);
+        if (currentAudio) currentAudio.pause();
+        overlay.classList.remove('open');
+        imgEl.classList.remove('show');
+      };
+    });
+  }
 
   // ── Upload (works in both states — photos just stay hidden until reveal) ──
   document.getElementById('file-input').addEventListener('change', async function(){

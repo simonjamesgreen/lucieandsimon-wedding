@@ -70,6 +70,60 @@
     });
   }
 
+  /* ── Live event strip: one persistent thread across every page ── */
+  (function(){
+    var WEDDING_START = new Date('2027-06-26T00:00:00+01:00');
+    var DAY_END = new Date('2027-06-27T02:00:00+01:00');
+    var REVEAL_AT = new Date('2027-06-27T09:00:00+01:00');
+    var n = new Date();
+
+    var SCHEDULE = [
+      ['2027-06-26T12:00:00+01:00', 'The ceremony is happening now'],
+      ['2027-06-26T13:00:00+01:00', 'Photographs at the church'],
+      ['2027-06-26T13:30:00+01:00', 'Doors open at Manor House'],
+      ['2027-06-26T14:00:00+01:00', 'Drinks reception & tea ceremony'],
+      ['2027-06-26T15:30:00+01:00', 'Guests are taking their seats'],
+      ['2027-06-26T15:45:00+01:00', 'Mr & Mrs have just been announced'],
+      ['2027-06-26T18:00:00+01:00', 'Speeches'],
+      ['2027-06-26T18:30:00+01:00', 'A short interval'],
+      ['2027-06-26T19:30:00+01:00', 'The evening has begun'],
+      ['2027-06-26T20:00:00+01:00', 'Cake cutting & first dance'],
+      ['2027-06-26T20:45:00+01:00', 'The band — first set'],
+      ['2027-06-26T21:30:00+01:00', 'Evening food'],
+      ['2027-06-26T22:15:00+01:00', 'The band — second set, then the DJ'],
+      ['2027-06-27T00:00:00+01:00', 'Last orders at the bar'],
+      ['2027-06-27T00:30:00+01:00', 'The bar has closed'],
+      ['2027-06-27T01:00:00+01:00', 'Carriages'],
+    ];
+
+    var text = null, href = '/the-day';
+
+    if (n < WEDDING_START) {
+      var days = Math.ceil((WEDDING_START - n) / 864e5);
+      text = days + ' day' + (days===1?'':'s') + ' to go &middot; RSVP';
+      href = '/rsvp';
+    } else if (n < DAY_END) {
+      var current = null;
+      for (var i = 0; i < SCHEDULE.length; i++) {
+        if (n >= new Date(SCHEDULE[i][0])) current = SCHEDULE[i][1];
+      }
+      text = (current || 'The day has begun') + ' &middot; See the full schedule';
+      href = '/the-day';
+    } else if (n < REVEAL_AT) {
+      text = 'The reveal is almost here &middot; Add your last photos';
+      href = '/photos';
+    }
+
+    if (text) {
+      var strip = document.createElement('div');
+      strip.id = 'event-strip';
+      strip.innerHTML = text;
+      strip.addEventListener('click', function(){ window.location.href = href; });
+      document.body.insertBefore(strip, document.body.firstChild);
+      document.body.classList.add('has-strip');
+    }
+  })();
+
   /* ── Scroll progress bar ── */
   var bar = document.createElement('div');
   bar.id = 'scroll-progress';
