@@ -12,6 +12,20 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/style.css">
+<style>
+.kb-frame { overflow: hidden; }
+.kb-photo {
+  animation: kenburns 14s ease-in-out infinite alternate;
+  transform-origin: 62% 38%;
+}
+@keyframes kenburns {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.09); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kb-photo { animation: none; }
+}
+</style>
 </head>
 <body>
 
@@ -49,7 +63,7 @@
 
   <div class="photo-full">
     <figure>
-      <img src="/images/statue-liberty.jpg" alt="Lucie and Simon on the ferry past the Statue of Liberty, New York" loading="lazy" decoding="async">
+      <img src="/images/statue-liberty.webp" alt="Lucie and Simon on the ferry past the Statue of Liberty, New York" loading="lazy" decoding="async">
       <figcaption>New York — the trip that changed everything</figcaption>
     </figure>
   </div>
@@ -61,11 +75,11 @@
 
   <div class="photo-pair">
     <figure>
-      <img src="/images/sunny-selfie.jpg" alt="Lucie and Simon in the sunshine" loading="lazy" decoding="async">
+      <img src="/images/sunny-selfie.webp" alt="Lucie and Simon in the sunshine" loading="lazy" decoding="async">
       <figcaption>Somewhere along the way</figcaption>
     </figure>
     <figure>
-      <img src="/images/restaurant.jpg" alt="Lucie and Simon celebrating over drinks in a candlelit brasserie" loading="lazy" decoding="async">
+      <img src="/images/restaurant.webp" alt="Lucie and Simon celebrating over drinks in a candlelit brasserie" loading="lazy" decoding="async">
       <figcaption>Drinks, dinners &amp; everything in between</figcaption>
     </figure>
   </div>
@@ -76,9 +90,9 @@
     <p>As the sun set over Manhattan, Simon asked Lucie to step onto the balcony and turn around so he could take some photos of her against the view. When she turned back, he was on one knee.</p>
   </div>
 
-  <div class="photo-full">
+  <div class="photo-full kb-frame">
     <figure>
-      <img src="/images/proposal-skyline.jpg" alt="Lucie and Simon moments after the proposal, the Manhattan skyline glowing behind them" loading="lazy" decoding="async">
+      <img src="/images/proposal-skyline.webp" alt="Lucie and Simon moments after the proposal, the Manhattan skyline glowing behind them" loading="lazy" decoding="async" class="kb-photo">
       <figcaption>She said yes — Brooklyn, golden hour</figcaption>
     </figure>
   </div>
@@ -90,11 +104,11 @@
 
   <div class="photo-pair">
     <figure>
-      <img src="/images/ring-skyline.jpg" alt="Lucie showing her engagement ring against the New York skyline" loading="lazy" decoding="async">
+      <img src="/images/ring-skyline.webp" alt="Lucie showing her engagement ring against the New York skyline" loading="lazy" decoding="async">
       <figcaption>The ring</figcaption>
     </figure>
     <figure>
-      <img src="/images/night-skyline.jpg" alt="Lucie and Simon at night, Manhattan lit up behind them" loading="lazy" decoding="async">
+      <img src="/images/night-skyline.webp" alt="Lucie and Simon at night, Manhattan lit up behind them" loading="lazy" decoding="async">
       <figcaption>Later that night</figcaption>
     </figure>
   </div>

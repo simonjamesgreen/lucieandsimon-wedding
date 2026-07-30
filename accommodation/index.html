@@ -13,30 +13,135 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/style.css">
 <style>
-.cat-head {
-  text-align: center;
-  padding: clamp(44px, 7vh, 72px) 0 clamp(22px, 3.5vh, 34px);
+.ac-head {
+  padding: clamp(140px, 20vh, 190px) var(--pad) clamp(44px, 7vh, 72px);
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.cat-head .num {
+.ac-head .eyebrow { margin-bottom: 20px; }
+
+.ac-head h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(38px, 6.4vw, 76px);
+  line-height: 1.06;
+  max-width: 18ch;
+}
+
+.ac-head h1 em { font-style: italic; color: var(--brass); }
+
+.ac-head .intro {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--ink-dim);
+  max-width: 54ch;
+  margin-top: 24px;
+  line-height: 1.8;
+}
+
+/* Distance strip — echoes Travel's numeral grid */
+.ac-dist {
+  border-top: 1px solid var(--brass-faint);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(44px, 7vh, 72px) var(--pad);
+}
+
+.ac-dist .t-label {
+  font-size: 11px;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: clamp(24px, 4vh, 36px);
+  display: block;
+}
+
+.ad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: var(--brass-faint);
+  border: 1px solid var(--brass-faint);
+}
+
+.ad-item {
+  background: var(--ivory);
+  padding: clamp(22px, 3.2vw, 36px) clamp(14px, 2.2vw, 26px);
+}
+
+.ad-item b {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(26px, 3.6vw, 40px);
+  line-height: .95;
+}
+
+.ad-item b sup { font-size: .32em; font-style: italic; color: var(--brass); letter-spacing: 0; }
+
+.ad-item span {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 12px;
+}
+
+/* Category intro — replaces the old .cat-head with narrative framing */
+.ac-cat {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(20px, 3vh, 32px) var(--pad) 0;
+}
+
+.ac-cat .roman {
   font-family: var(--serif);
   font-style: italic;
   font-size: 15px;
   color: var(--brass);
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.cat-head h2 {
+.ac-cat h2 {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(26px, 3.6vw, 36px);
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.05;
 }
 
-.cat-head p {
-  font-size: 13.5px;
+.ac-cat h2 em { font-style: italic; color: var(--brass); }
+
+.ac-cat p {
+  font-size: 14.5px;
   color: var(--ink-dim);
-  margin-top: 8px;
+  max-width: 56ch;
+  margin-top: 10px;
+  line-height: 1.7;
+}
+
+.ac-note {
+  border-top: 1px solid var(--brass-faint);
+  max-width: 1100px;
+  margin: clamp(20px, 3vh, 32px) auto 0;
+  padding: clamp(40px, 6vh, 64px) var(--pad);
+  text-align: center;
+}
+
+.ac-note p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(19px, 2.6vw, 25px);
+  max-width: 46ch;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+.ac-note p span { color: var(--brass); }
+
+@media (max-width: 640px) {
+  .ad-grid { grid-template-columns: 1fr 1fr; }
 }
 
 .hotel-grid {
@@ -52,10 +157,7 @@
   flex-direction: column;
   position: relative;
   background: var(--ivory);
-  transition: border-color .2s;
 }
-
-.hotel-card:hover { border-color: var(--brass); }
 
 .hotel-card .dist {
   font-size: 9.5px;
@@ -128,22 +230,30 @@
   </div>
 </nav>
 
-<header class="page-head">
+<header class="ac-head">
   <span class="eyebrow">Where to stay</span>
-  <h1 class="page-title">Accommo<em>dation</em></h1>
-  <p class="page-sub">Hand-picked places within easy reach of Manor House — from a two-minute stroll to countryside inns. Google ratings and guide prices included; book direct for the best rates.</p>
-  <div class="rule-v" aria-hidden="true"></div>
+  <h1>A two-minute walk. <em>Or a proper countryside inn.</em></h1>
+  <p class="intro">Hand-picked places within easy reach of Manor House — from doorstep-close apartments to hilltop pubs worth the drive. Google ratings pulled fresh; book direct for the best rates.</p>
 </header>
 
-<div class="wrap-wide">
+<section class="ac-dist">
+  <span class="t-label">At a glance</span>
+  <div class="ad-grid">
+    <div class="ad-item"><b>2<sup>min</sup></b><span>Closest option, on foot</span></div>
+    <div class="ad-item"><b>4.6<sup>&#9733;</sup></b><span>Top-rated nearby stay</span></div>
+    <div class="ad-item"><b>&pound;45<sup>+</sup></b><span>Best value, per night</span></div>
+    <div class="ad-item"><b>7<sup>mi</sup></b><span>Furthest — worth the drive</span></div>
+  </div>
+</section>
 
-  <!-- CLOSEST -->
-  <div class="cat-head">
-    <span class="num">I.</span>
-    <h2>Closest to the Venue</h2>
+<div class="wrap-wide" style="padding-top:0;">
+
+  <div class="ac-cat">
+    <span class="roman">I.</span>
+    <h2>Closest to <em>the venue</em></h2>
     <p>Walk home from the reception — no taxi required.</p>
   </div>
-  <div class="hotel-grid">
+  <div class="hotel-grid" style="margin-top:28px;">
 
     <div class="hotel-card">
       <p class="dist">2 min walk · Lindley</p>
@@ -183,13 +293,12 @@
 
   </div>
 
-  <!-- BUDGET -->
-  <div class="cat-head">
-    <span class="num">II.</span>
-    <h2>Best on a Budget</h2>
+  <div class="ac-cat">
+    <span class="roman">II.</span>
+    <h2>Best on <em>a budget</em></h2>
     <p>Clean, reliable, and kind to the wallet.</p>
   </div>
-  <div class="hotel-grid">
+  <div class="hotel-grid" style="margin-top:28px;">
 
     <div class="hotel-card">
       <p class="dist">1.5 miles · Ainley Top</p>
@@ -229,13 +338,12 @@
 
   </div>
 
-  <!-- FAMILY -->
-  <div class="cat-head">
-    <span class="num">III.</span>
-    <h2>Family-Friendly</h2>
+  <div class="ac-cat">
+    <span class="roman">III.</span>
+    <h2>Family <em>friendly</em></h2>
     <p>Space to spread out, kitchens, and room for the kids.</p>
   </div>
-  <div class="hotel-grid">
+  <div class="hotel-grid" style="margin-top:28px;">
 
     <div class="hotel-card">
       <p class="dist">10 min walk · Lindley</p>
@@ -275,13 +383,12 @@
 
   </div>
 
-  <!-- CHARACTER -->
-  <div class="cat-head">
-    <span class="num">IV.</span>
-    <h2>Country Inns &amp; Character</h2>
-    <p>A little further out, but worth every mile — and handy for the church.</p>
+  <div class="ac-cat">
+    <span class="roman">IV.</span>
+    <h2>Country inns <em>&amp; character</em></h2>
+    <p>A little further out, but worth every mile.</p>
   </div>
-  <div class="hotel-grid">
+  <div class="hotel-grid" style="margin-top:28px;">
 
     <div class="hotel-card">
       <p class="dist">7 miles · Thunder Bridge</p>
@@ -321,10 +428,10 @@
 
   </div>
 
-  <div class="prose" style="margin-top:clamp(48px,8vh,80px);">
-    <p class="lede">One honest tip: <span>book early.</span> Late June is peak season in the valley, and the closest options have very few rooms.</p>
-  </div>
+</div>
 
+<div class="ac-note">
+  <p>One honest tip: <span>book early.</span> Late June is peak season in the valley, and the closest options have very few rooms.</p>
 </div>
 
 <section class="next-block">
@@ -350,5 +457,6 @@
 
 <script src="/reveal.js" defer></script>
 <script src="/site.js" defer></script>
+
 </body>
 </html>

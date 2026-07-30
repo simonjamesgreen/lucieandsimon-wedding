@@ -1,9 +1,10 @@
 (function(){
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var els = document.querySelectorAll(
-    '.info-row, .order-row, .order-part, .photo-pair, .photo-full, .hotel-card, .cat-head, ' +
-    '.prose, .names-grid, .faq-item, .stamp, .venue-map-block, .next-block, .form-wrap, ' +
-    '.route .stop, .route-leg, .tt, .mode, .tr-maps, .camera-wrap, .reveal-lock'
+    '.info-row, .order-row, .order-part, .photo-pair, .photo-full, .hotel-card, ' +
+    '.prose, .names-grid, .stamp, .venue-map-block, .next-block, .form-wrap, ' +
+    '.route .stop, .route-leg, .tt, .mode, .tr-maps, .camera-wrap, .reveal-lock, ' +
+    '.ac-cat, .ac-dist, .fq-row'
   );
   els.forEach(function(el){
     el.style.opacity = '0';

@@ -12,6 +12,98 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/style.css">
+<style>
+.fq-head {
+  padding: clamp(140px, 20vh, 190px) var(--pad) clamp(44px, 7vh, 72px);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.fq-head .eyebrow { margin-bottom: 20px; }
+
+.fq-head h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(38px, 6.4vw, 76px);
+  line-height: 1.06;
+  max-width: 18ch;
+}
+
+.fq-head h1 em { font-style: italic; color: var(--brass); }
+
+.fq-head .intro {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--ink-dim);
+  max-width: 54ch;
+  margin-top: 24px;
+  line-height: 1.8;
+}
+
+.fq-list {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--pad) clamp(72px, 12vh, 120px);
+  border-top: 1px solid var(--ink);
+}
+
+.fq-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: clamp(16px, 3.5vw, 40px);
+  border-bottom: 1px solid var(--brass-faint);
+}
+
+.fq-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(22px, 3vw, 30px);
+  color: var(--brass);
+  padding: clamp(22px, 3.2vh, 30px) 0;
+}
+
+.fq-body { padding: clamp(4px, 0.5vh, 6px) 0; }
+
+.fq-row summary {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(19px, 2.6vw, 25px);
+  padding: clamp(22px, 3.2vh, 30px) 40px clamp(22px, 3.2vh, 30px) 0;
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  transition: color .2s;
+}
+
+.fq-row summary::-webkit-details-marker { display: none; }
+
+.fq-row summary::after {
+  content: '+';
+  position: absolute;
+  right: 4px;
+  top: clamp(22px, 3.2vh, 30px);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 26px;
+  color: var(--brass);
+  transition: transform .25s;
+  line-height: 1;
+}
+
+details[open] .fq-row summary::after,
+.fq-row[data-open] summary::after { transform: rotate(45deg); }
+
+.fq-row summary:hover { color: var(--brass); }
+
+.fq-a {
+  padding: 0 40px clamp(26px, 3.6vh, 36px) 0;
+  font-size: 15px;
+  color: var(--ink-dim);
+  max-width: 62ch;
+  line-height: 1.8;
+}
+
+.fq-a a { border-bottom: 1px solid var(--brass); }
+</style>
 </head>
 <body>
 
@@ -28,63 +120,92 @@
   </div>
 </nav>
 
-<header class="page-head">
+<header class="fq-head">
   <span class="eyebrow">Good questions</span>
-  <h1 class="page-title">FA<em>Qs</em></h1>
-  <p class="page-sub">Everything you were going to email us about, answered in advance.</p>
-  <div class="rule-v" aria-hidden="true"></div>
+  <h1>Everything you were going to <em>email us about.</em></h1>
+  <p class="intro">Answered in advance — dress code, children, photos, and all the practical bits in between.</p>
 </header>
 
-<div class="wrap">
+<div class="fq-list">
 
-  <details class="faq-item">
-    <summary>What&rsquo;s the dress code?</summary>
-    <p class="faq-a">Formal / cocktail attire — suits and ties for the gents, dresses or tailoring for the ladies.</p>
+  <details class="fq-row">
+    <div class="fq-num">01</div>
+    <div class="fq-body">
+      <summary>What&rsquo;s the dress code?</summary>
+      <p class="fq-a">Formal / cocktail attire — suits and ties for the gents, dresses or tailoring for the ladies.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>Are children invited?</summary>
-    <p class="faq-a">We love your little ones, but apart from immediate family this is an adults-only celebration. Consider it a night off.</p>
+  <details class="fq-row">
+    <div class="fq-num">02</div>
+    <div class="fq-body">
+      <summary>Are children invited?</summary>
+      <p class="fq-a">We love your little ones, but apart from immediate family this is an adults-only celebration. Consider it a night off.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>Can I bring a plus one?</summary>
-    <p class="faq-a">Invitations are addressed to everyone included — if your invitation names a guest, they&rsquo;re very welcome. If you&rsquo;re unsure, just ask us.</p>
+  <details class="fq-row">
+    <div class="fq-num">03</div>
+    <div class="fq-body">
+      <summary>Can I bring a plus one?</summary>
+      <p class="fq-a">Invitations are addressed to everyone included — if your invitation names a guest, they&rsquo;re very welcome. If you&rsquo;re unsure, just ask us.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>What time should I arrive?</summary>
-    <p class="faq-a">Please be seated in St Mary&rsquo;s by 11:45 for a 12 noon start.</p>
+  <details class="fq-row">
+    <div class="fq-num">04</div>
+    <div class="fq-body">
+      <summary>What time should I arrive?</summary>
+      <p class="fq-a">Please be seated in St Mary&rsquo;s by 11:45 for a 12 noon start. If you&rsquo;re joining us for the evening only, we&rsquo;d love to see you at Manor House from 7:30pm.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>Where do I park?</summary>
-    <p class="faq-a">Manor House has parking on site. Parking in Honley village is limited, so please car-share where possible, or take a taxi to the church. Cars can be left at Manor House overnight if you&rsquo;re taxiing home — just collect them the next morning.</p>
+  <details class="fq-row">
+    <div class="fq-num">05</div>
+    <div class="fq-body">
+      <summary>Where do I park?</summary>
+      <p class="fq-a">Manor House has parking on site. Parking in Honley village is limited, so please car-share where possible, or take a taxi to the church. Cars can be left at Manor House overnight if you&rsquo;re taxiing home — just collect them the next morning.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>How do I get between the church and Manor House?</summary>
-    <p class="faq-a">It&rsquo;s around a 20-minute drive. Most guests will drive or share lifts; if you need a taxi, please book it in advance — see the <a href="/travel" style="border-bottom:1px solid var(--brass);">Travel page</a>.</p>
+  <details class="fq-row">
+    <div class="fq-num">06</div>
+    <div class="fq-body">
+      <summary>How do I get between the church and Manor House?</summary>
+      <p class="fq-a">It&rsquo;s around a 20-minute drive. Most guests will drive or share lifts; if you need a taxi, please book it in advance — see the <a href="/travel">Travel page</a>.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>What&rsquo;s the deal with gifts?</summary>
-    <p class="faq-a">Your presence is honestly the gift. If you&rsquo;d like to give something, a contribution towards our honeymoon would mean the world — details will follow with the invitations.</p>
+  <details class="fq-row">
+    <div class="fq-num">07</div>
+    <div class="fq-body">
+      <summary>What&rsquo;s the deal with gifts?</summary>
+      <p class="fq-a">Your presence is honestly the gift. If you&rsquo;d like to give something, a contribution towards our honeymoon would mean the world — details will follow with the invitations.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>Can I take photos during the ceremony?</summary>
-    <p class="faq-a">You&rsquo;re very welcome to take photos — but please do enjoy the moment. We have a photographer capturing the day, and we&rsquo;d much rather look back at your lovely faces than the backs of your phones.</p>
+  <details class="fq-row">
+    <div class="fq-num">08</div>
+    <div class="fq-body">
+      <summary>Can I take photos during the day?</summary>
+      <p class="fq-a">You&rsquo;re very welcome to take photos — but please do enjoy the moment. We have a photographer capturing the day, and we&rsquo;d much rather look back at your lovely faces than the backs of your phones.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>I have a dietary requirement — what do I do?</summary>
-    <p class="faq-a">There&rsquo;s a dietary field for every guest on the RSVP form &mdash; fill it in and we&rsquo;ll make sure the kitchen looks after you. Manor House&rsquo;s food is genuinely excellent — you&rsquo;re in good hands.</p>
+  <details class="fq-row">
+    <div class="fq-num">09</div>
+    <div class="fq-body">
+      <summary>I have a dietary requirement — what do I do?</summary>
+      <p class="fq-a">There&rsquo;s a dietary field for every guest on the RSVP form — fill it in and we&rsquo;ll make sure the kitchen looks after you. Manor House&rsquo;s food is genuinely excellent — you&rsquo;re in good hands.</p>
+    </div>
   </details>
 
-  <details class="faq-item">
-    <summary>When&rsquo;s the RSVP deadline?</summary>
-    <p class="faq-a">The first of April 2027.</p>
+  <details class="fq-row">
+    <div class="fq-num">10</div>
+    <div class="fq-body">
+      <summary>When&rsquo;s the RSVP deadline?</summary>
+      <p class="fq-a">The first of April 2027.</p>
+    </div>
   </details>
 
 </div>
@@ -112,5 +233,6 @@
 
 <script src="/reveal.js" defer></script>
 <script src="/site.js" defer></script>
+
 </body>
 </html>
