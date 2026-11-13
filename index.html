@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lucie & Simon — 26 June 2027</title>
+<title>Lucie & Simon · 26 June 2027</title>
 <link rel="icon" type="image/png" href="/favicon.png">
-<meta property="og:title" content="Lucie & Simon — 26 June 2027">
-<meta property="og:description" content="Join us as we celebrate our wedding. St Mary's Church, Honley & Manor House, Lindley, West Yorkshire.">
+<meta property="og:title" content="Lucie & Simon · 26 June 2027">
+<meta property="og:description" content="Join us as we celebrate our wedding. St Mary’s Church, Honley & Manor House, Lindley, West Yorkshire.">
 <meta property="og:image" content="https://lucieandsimon.wedding/images/og-share.jpg">
 <meta property="og:url" content="https://lucieandsimon.wedding">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Lucie & Simon are getting married. Saturday 26 June 2027 — Honley & Lindley, West Yorkshire.">
+<meta name="description" content="Lucie & Simon are getting married. Saturday 26 June 2027, Honley & Lindley, West Yorkshire.">
 <link rel="preload" href="/fonts/BodoniModa.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/Jost.woff2" as="font" type="font/woff2" crossorigin>
 <style>@import url('/fonts.css');</style>
@@ -376,9 +376,9 @@ body.has-strip .topnav { top: 49px; }
   <p class="where fade">Honley &middot; Lindley &middot; West Yorkshire</p>
 
   <div class="count fade" role="timer" aria-label="Countdown to the wedding">
-    <div><b id="d">—</b><span>Days</span></div>
-    <div><b id="h">—</b><span>Hours</span></div>
-    <div><b id="m">—</b><span>Minutes</span></div>
+    <div><b id="d">–</b><span>Days</span></div>
+    <div><b id="h">–</b><span>Hours</span></div>
+    <div><b id="m">–</b><span>Minutes</span></div>
   </div>
 
   <div class="fade" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
@@ -461,7 +461,7 @@ body.has-strip .topnav { top: 49px; }
     sb.style.display = 'inline-block';
     sb.addEventListener('click', function(){
       navigator.share({
-        title: 'Lucie & Simon — 26 June 2027',
+        title: 'Lucie & Simon · 26 June 2027',
         text: 'Join us as we celebrate our wedding!',
         url: 'https://lucieandsimon.wedding'
       }).catch(function(){});
@@ -478,7 +478,7 @@ body.has-strip .topnav { top: 49px; }
     },
     body: '{}'
   }).then(function(r){ return r.json(); }).then(function(n){
-    if (n >= 10) document.getElementById('ticker').textContent = n + ' guests are coming — join them';
+    if (n >= 10) document.getElementById('ticker').textContent = n + ' guests are coming. Join them!';
   }).catch(function(){});
 
   // Photo-count teaser (builds anticipation without spoiling the reveal)
@@ -491,7 +491,7 @@ body.has-strip .topnav { top: 49px; }
     },
     body: '{}'
   }).then(function(r){ return r.json(); }).then(function(n){
-    if (n > 0) document.getElementById('photo-teaser').textContent = n + ' photo' + (n===1?'':'s') + ' already captured \u2014 all revealed the morning after';
+    if (n > 0) document.getElementById('photo-teaser').textContent = n + ' photo' + (n===1?'':'s') + ' already captured, all revealed the morning after';
   }).catch(function(){});
 
   // ── Reveal the numbers strip on scroll ──

@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photos — Lucie & Simon</title>
+<title>Photos · Lucie & Simon</title>
 <link rel="icon" type="image/png" href="/favicon.png">
-<meta property="og:title" content="Lucie & Simon — 26 June 2027">
-<meta property="og:description" content="Join us as we celebrate our wedding. St Mary's Church, Honley & Manor House, Lindley, West Yorkshire.">
+<meta property="og:title" content="Lucie & Simon · 26 June 2027">
+<meta property="og:description" content="Join us as we celebrate our wedding. St Mary’s Church, Honley & Manor House, Lindley, West Yorkshire.">
 <meta property="og:image" content="https://lucieandsimon.wedding/images/og-share.jpg">
 <meta property="og:url" content="https://lucieandsimon.wedding">
 <meta property="og:type" content="website">
@@ -240,7 +240,7 @@
 <header class="page-head">
   <span class="eyebrow">The disposable camera</span>
   <h1 class="page-title">Pho<em>tos</em></h1>
-  <p class="page-sub" id="page-sub">You&rsquo;ve got 36 shots. Make them count — nobody sees a single one until the morning after.</p>
+  <p class="page-sub" id="page-sub">You&rsquo;ve got 36 shots. Make them count. Nobody sees a single one until the morning after.</p>
   <div class="rule-v" aria-hidden="true"></div>
 </header>
 
@@ -255,17 +255,17 @@
       <label class="btn upload-btn" for="file-input" id="upload-label">Take a photo</label>
       <input type="file" id="file-input" accept="image/*" multiple>
       <p class="up-status" id="up-status"></p>
-      <p class="cc-sub" style="margin-top:14px;">Every guest gets their own roll of 36. Choose your moments carefully &mdash; just like the old days.</p>
+      <p class="cc-sub" style="margin-top:14px;">Every guest gets their own roll of 36. Choose your moments carefully, just like the old days.</p>
     </div>
   </div>
 
   <!-- Locked state: shown before reveal time -->
   <div id="locked-state" style="display:none;">
     <div class="reveal-lock">
-      <p class="rl-count" id="rl-count">&mdash;</p>
+      <p class="rl-count" id="rl-count">–</p>
       <p class="rl-count-label">Photos captured so far</p>
-      <p class="rl-note">Nobody&rsquo;s seen a single one yet &mdash; not even us. The whole album unlocks together, all at once, the morning after. Just like we did, over bagels.</p>
-      <p class="rl-timer" id="rl-timer">Revealing in &mdash;</p>
+      <p class="rl-note">Nobody&rsquo;s seen a single one yet, not even us. The whole album unlocks together, all at once, the morning after. Just like we did, over bagels.</p>
+      <p class="rl-timer" id="rl-timer">Revealing soon</p>
       <div class="locked-grid" id="locked-grid"></div>
     </div>
   </div>
@@ -278,11 +278,11 @@
       <button id="montage-btn" style="margin-top:26px;background:var(--ink);color:var(--ivory);border:none;font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;padding:16px 36px;cursor:pointer;">&#9654; Play the whole morning back</button>
     </div>
     <div class="gallery" id="gallery"></div>
-    <p class="empty-note" id="empty" style="display:none;">No photos yet — be the first to add one.</p>
+    <p class="empty-note" id="empty" style="display:none;">No photos yet. Be the first to add one.</p>
 
     <div style="text-align:center;margin-top:clamp(48px,8vh,80px);padding-top:clamp(36px,6vh,56px);border-top:1px solid var(--brass-faint);">
       <span class="eyebrow">On the day</span>
-      <p style="font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.4vw,23px);max-width:40ch;margin:0 auto 26px;line-height:1.5;">Scan to open your camera roll — then point, shoot, and share.</p>
+      <p style="font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.4vw,23px);max-width:40ch;margin:0 auto 26px;line-height:1.5;">Scan to open your camera roll, then point, shoot, and share.</p>
       <div style="display:inline-block;border:1px solid var(--brass-line);padding:14px;background:var(--ivory);">
         <img src="/images/photo-wall-qr.png" alt="QR code linking to the photo wall" style="width:180px;height:180px;display:block;">
       </div>
@@ -368,7 +368,7 @@
   var revealed = now >= REVEAL_AT;
   document.getElementById(revealed ? 'revealed-state' : 'locked-state').style.display = 'block';
   if (revealed) {
-    document.getElementById('page-sub').textContent = 'The album has unlocked — every shot, from everyone, all at once.';
+    document.getElementById('page-sub').textContent = 'The album has unlocked: every shot, from everyone, all at once.';
   }
 
   function esc(s){ return String(s||'').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -385,7 +385,7 @@
       var tiles = Math.min(24, Math.max(6, n));
       grid.innerHTML = Array(tiles).fill('<div class="locked-tile">&#128274;</div>').join('');
     }).catch(function(){
-      document.getElementById('rl-count').textContent = '\u2014';
+      document.getElementById('rl-count').textContent = '\u2013';
     });
 
     function tick(){
@@ -467,7 +467,7 @@
     if (!files.length) return;
     var left = MAX_SHOTS - used;
     if (left <= 0) {
-      document.getElementById('up-status').textContent = 'Your roll is finished — 36 shots used!';
+      document.getElementById('up-status').textContent = 'Your roll is finished: all 36 shots used!';
       this.value = ''; return;
     }
     if (files.length > left) files = files.slice(0, left);
@@ -490,7 +490,7 @@
     localStorage.setItem('ls_shots_used', String(used));
     updateShotsUI();
     status.textContent = done === files.length
-      ? 'Captured ' + done + ' shot' + (done === 1 ? '' : 's') + ' \u2014 safely tucked away.'
+      ? 'Captured ' + done + ' shot' + (done === 1 ? '' : 's') + ', safely tucked away.'
       : 'Captured ' + done + ' of ' + files.length + '.';
     this.value = '';
     refreshGallery();

@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RSVP — Lucie & Simon</title>
+<title>RSVP · Lucie & Simon</title>
 <link rel="icon" type="image/png" href="/favicon.png">
-<meta property="og:title" content="Lucie & Simon — 26 June 2027">
-<meta property="og:description" content="Join us as we celebrate our wedding. St Mary's Church, Honley & Manor House, Lindley, West Yorkshire.">
+<meta property="og:title" content="Lucie & Simon · 26 June 2027">
+<meta property="og:description" content="Join us as we celebrate our wedding. St Mary’s Church, Honley & Manor House, Lindley, West Yorkshire.">
 <meta property="og:image" content="https://lucieandsimon.wedding/images/og-share.jpg">
 <meta property="og:url" content="https://lucieandsimon.wedding">
 <meta property="og:type" content="website">
@@ -166,13 +166,13 @@ textarea { resize: vertical; min-height: 70px; }
 
     <label class="f-label">Will you be joining us?</label>
     <div class="att-opts" id="att-opts">
-      <label class="att-opt"><input type="radio" name="attending" value="whole_day"><span>Joyfully accepts — the whole day</span></label>
+      <label class="att-opt"><input type="radio" name="attending" value="whole_day"><span>Joyfully accepts the whole day</span></label>
       <label class="att-opt"><input type="radio" name="attending" value="declines"><span>Regretfully declines</span></label>
     </div>
 
     <div id="party-section">
       <label class="f-label">Your party</label>
-      <p style="font-size:13.5px;color:var(--ink-dim);margin-bottom:16px;">Everyone attending, including yourself — with any dietary requirements or allergies.</p>
+      <p style="font-size:13.5px;color:var(--ink-dim);margin-bottom:16px;">Everyone attending, including yourself, with any dietary requirements or allergies.</p>
       <div id="guests"></div>
       <button type="button" class="add-guest" id="add-guest">+ Add a guest</button>
     </div>
@@ -181,7 +181,7 @@ textarea { resize: vertical; min-height: 70px; }
       <label class="f-label">Transport from the church</label>
       <p style="font-size:13.5px;color:var(--ink-dim);margin-bottom:16px;">We&rsquo;re looking at arranging transport from St Mary&rsquo;s to Manor House after the ceremony. Would you like seats, or will you make your own way?</p>
       <div class="att-opts">
-        <label class="att-opt"><input type="radio" name="transport" value="yes"><span>Yes please — save us seats</span></label>
+        <label class="att-opt"><input type="radio" name="transport" value="yes"><span>Yes please, save us seats</span></label>
         <label class="att-opt"><input type="radio" name="transport" value="no"><span>We&rsquo;ll make our own way</span></label>
       </div>
       <div id="seat-count" style="display:none;margin-top:16px;">
@@ -191,7 +191,7 @@ textarea { resize: vertical; min-height: 70px; }
     </div>
 
     <label class="f-label" for="address">Postal address <span style="opacity:.5;letter-spacing:.1em;">(optional)</span></label>
-    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:12px;">So we can send you a proper thank-you card once we're back from honeymoon.</p>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:12px;">So we can send you a proper thank-you card once we&rsquo;re back from honeymoon.</p>
     <textarea id="address" placeholder="Address, including postcode" style="min-height:56px;"></textarea>
 
     <label class="f-label" for="song">Song request <span style="opacity:.5;letter-spacing:.1em;">(optional)</span></label>
@@ -333,7 +333,7 @@ textarea { resize: vertical; min-height: 70px; }
         var rows = res.ok ? await res.json() : [];
         if (rows.length) {
           var g = rows[0];
-          fm.textContent = 'Found you on the guest list, ' + g.first_name + ' \u2014 lovely to have you.';
+          fm.textContent = 'Found you on the guest list, ' + g.first_name + '. Lovely to have you.';
           var first = guests.querySelector('.g-name');
           if (first && !first.dataset.touched) first.value = g.first_name + ' ' + g.last_name;
         } else {
@@ -396,14 +396,14 @@ textarea { resize: vertical; min-height: 70px; }
       var sv = document.getElementById('success-view');
       if (att.value === 'declines') {
         document.getElementById('success-title').textContent = 'We\u2019ll miss you';
-        document.getElementById('success-body').textContent = 'Thank you for letting us know \u2014 you\u2019ll be with us in spirit.';
+        document.getElementById('success-body').textContent = 'Thank you for letting us know. You\u2019ll be with us in spirit.';
       } else {
         brassConfetti();
       }
       sv.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (e) {
-      msg.textContent = 'Something went wrong \u2014 please try again, or email lucieandsimonwedding@gmail.com';
+      msg.textContent = 'Something went wrong. Please try again, or email lucieandsimonwedding@gmail.com';
       this.disabled = false;
     }
   };

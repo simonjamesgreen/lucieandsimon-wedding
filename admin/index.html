@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — L&S</title>
+<title>Admin · L&S</title>
 <link rel="icon" type="image/png" href="/favicon.png">
-<meta property="og:title" content="Lucie & Simon — 26 June 2027">
-<meta property="og:description" content="Join us as we celebrate our wedding. St Mary's Church, Honley & Manor House, Lindley, West Yorkshire.">
+<meta property="og:title" content="Lucie & Simon · 26 June 2027">
+<meta property="og:description" content="Join us as we celebrate our wedding. St Mary’s Church, Honley & Manor House, Lindley, West Yorkshire.">
 <meta property="og:image" content="https://lucieandsimon.wedding/images/og-share.jpg">
 <meta property="og:url" content="https://lucieandsimon.wedding">
 <meta property="og:type" content="website">
@@ -209,7 +209,7 @@
     var html = data.map(function(r){
       var members = (r.party_members || []).map(function(m){
         if (m.dietary) dietary.push(m.name + ': ' + m.dietary);
-        return '<li><b>' + esc(m.name) + '</b>' + (m.dietary ? ' — <span>' + esc(m.dietary) + '</span>' : '') + '</li>';
+        return '<li><b>' + esc(m.name) + '</b>' + (m.dietary ? ': <span>' + esc(m.dietary) + '</span>' : '') + '</li>';
       }).join('');
       return '<div class="rsvp-card">' +
         '<div class="top"><h3>' + esc(r.contact_name) + '</h3>' +
@@ -344,7 +344,7 @@
     el.innerHTML = rows.map(function(r){
       return '<div class="rsvp-card" style="cursor:pointer;" data-id="' + r.id + '">' +
         '<p style="font-family:var(--serif);font-style:italic;font-size:17px;">“' + esc(r.message) + '”</p>' +
-        '<p class="meta">— ' + esc(r.author) + ' · ' + new Date(r.created_at).toLocaleDateString('en-GB') + '</p></div>';
+        '<p class="meta">' + esc(r.author) + ' · ' + new Date(r.created_at).toLocaleDateString('en-GB') + '</p></div>';
     }).join('');
     el.querySelectorAll('.rsvp-card').forEach(function(card){
       card.onclick = async function(){
@@ -386,7 +386,7 @@
           body: JSON.stringify({ p_password: pw, p_name: fig.dataset.name })
         });
         if (res.ok) fig.remove();
-        else alert('Delete failed — try refreshing.');
+        else alert('Delete failed. Try refreshing.');
       };
     });
   }
