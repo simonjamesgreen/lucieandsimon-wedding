@@ -217,7 +217,7 @@ input[type="number"]:focus { border-bottom-color: var(--brass); }
       </div>
     </fieldset>
 
-    <div id="party-section" hidden>
+    <div id="party-section">
       <p class="f-label" id="party-label">Your party</p>
       <p class="f-note" id="party-note">Everyone attending, including yourself, with any dietary requirements or allergies.</p>
       <div id="guests"></div>
@@ -353,12 +353,13 @@ input[type="number"]:focus { border-bottom-color: var(--brass); }
     var att = attending();
     document.querySelectorAll('#att-opts .att-opt').forEach(function(o){ o.classList.toggle('sel', o.querySelector('input').checked); });
     document.querySelectorAll('#transport-section .att-opt').forEach(function(o){ o.classList.toggle('sel', o.querySelector('input').checked); });
-    $('party-section').hidden = !att;
+    $('party-section').hidden = false;
     var dec = att === 'declines';
     $('party-label').textContent = dec ? 'Who is this reply for?' : 'Your party';
     $('party-note').textContent = dec
       ? 'Add everyone this reply covers, so we know not to save them a seat.'
-      : 'Everyone attending, including yourself, with any dietary requirements or allergies.';
+      : (att ? 'Everyone attending, including yourself, with any dietary requirements or allergies.'
+             : 'Replying for more than one person? Add everyone this reply is for, including yourself.');
     guests.querySelectorAll('.g-diet-wrap').forEach(function(w){ w.style.display = dec ? 'none' : ''; });
     $('add-guest').textContent = dec ? '+ Add another name' : '+ Add a guest';
     $('transport-section').hidden = att !== 'whole_day';

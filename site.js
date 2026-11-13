@@ -60,7 +60,11 @@
     eve.textContent =
       ':root{--ivory:#12201B!important;--ink:#F2EFE6!important;--ink-dim:rgba(242,239,230,.8)!important;--brass-ink:#D9BE8C!important;' +
       '--brass:#D9BE8C!important;--brass-line:rgba(217,190,140,.5)!important;--brass-faint:rgba(217,190,140,.2)!important;}' +
-      'body::before{opacity:.05!important;}';
+      'body::before{opacity:.05!important;}' +
+      '.nav{background:linear-gradient(to bottom,#12201B 60%,rgba(18,32,27,0))!important;}' +
+      '.nav.scrolled{background:rgba(18,32,27,.9)!important;}' +
+      '#event-strip{background:#0B1511!important;color:#F2EFE6!important;}' +
+      '#event-strip .es-link{color:#D9BE8C!important;border-bottom-color:rgba(217,190,140,.6)!important;}';
     document.head.appendChild(eve);
 
     // Externally-referenced SVGs (the seal) can't inherit page CSS variables —
