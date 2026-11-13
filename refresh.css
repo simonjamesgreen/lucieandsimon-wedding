@@ -1,0 +1,240 @@
+/* ─────────────────────────────────────────────────────────────
+   Refresh layer (Nov 2026): readability, phone navigation,
+   tap targets and spacing. Loaded last on every page, so it
+   overrides the shared stylesheet and each page's own styles.
+   Remove the <link> to refresh.css to roll everything back.
+   ───────────────────────────────────────────────────────────── */
+
+/* 1. Readability: darker secondary text, slightly heavier body */
+:root {
+  --ink-dim: rgba(29,27,22,.74);
+  --brass-ink: #8A6A35;            /* darker brass for small text on ivory */
+}
+body { font-weight: 350; }
+
+/* Small gold labels use the darker brass so they stay legible */
+.eyebrow, .info-key, .t-label, .stamp .k, .f-label, .add-guest,
+.hotel-card .dist, .wk-card .wk-tag, .cc-label, .rb-eyebrow,
+.order-time sup, .ac-dist .t-label { color: var(--brass-ink); }
+
+/* 2. Minimum sizes for small uppercase text */
+.nav-links a { font-size: 11.5px; }
+.order-part .venue-tag, .footer .f-date, .footer .f-nav a { font-size: 11.5px; }
+.stamp .k { font-size: 11px; }
+.ad-item span { font-size: 11.5px; letter-spacing: .14em; }
+.hotel-card .dist { font-size: 11px; letter-spacing: .18em; }
+.hotel-card .stars span { font-size: 13px; }
+.hotel-card .desc { font-size: 15px; }
+.f-label, .add-guest { font-size: 11.5px; }
+.cc-label { font-size: 11px; }
+.wk-card .wk-tag { font-size: 11px; }
+.route .stop .s-tag { font-size: 11px; }
+.route-leg .rl-note, .route .leg .l-note { font-size: 11.5px; }
+.uber-cta { font-size: 11.5px; }
+.order-note, .info-val p, .info-val li, .faq-item .faq-a { font-size: 15.5px; }
+.footer .f-date { text-wrap: balance; }
+
+/* Homepage small text */
+.count span { font-size: 11.5px; }
+.ns-item span { font-size: 11.5px; letter-spacing: .14em; }
+.foot { font-size: 11px; }
+.topnav a { font-size: 11.5px; }
+main.page a[href$=".ics"], main.page a[href*="calendar.google"] { font-size: 11.5px !important; }
+#photo-teaser { font-size: 12px !important; }
+
+/* 3. Tap targets: proper buttons instead of thin text links */
+.hotel-card .links { gap: 10px; }
+.hotel-card .links a,
+.maps-pair .mp-cap a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--brass-line);
+  font-size: 11.5px;
+  letter-spacing: .2em;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.hotel-card .links a:first-child { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+.hotel-card .links a:hover, .maps-pair .mp-cap a:hover { border-color: var(--brass); color: var(--brass); }
+.hotel-card .links a:first-child:hover { background: var(--brass); border-color: var(--brass); color: var(--ivory); }
+.maps-pair .mp-cap { align-items: center; }
+
+.route .stop .s-links { gap: 10px; flex-wrap: wrap; }
+.route .stop .s-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 16px;
+  font-size: 11px;
+  border: 1px solid rgba(247,244,236,.6);
+  background: rgba(15,13,9,.25);
+}
+.route .stop .s-links a:hover { background: rgba(247,244,236,.15); }
+
+/* 4. Venue photos on Travel: stronger shade so text reads over bright sky */
+.route .stop::after {
+  background: linear-gradient(to top, rgba(15,13,9,.92) 0%, rgba(15,13,9,.8) 45%, rgba(15,13,9,.35) 72%, rgba(15,13,9,0) 92%);
+}
+.route .stop .s-tag { color: #F0DDB4; font-weight: 400; }
+.route .stop h2, .route .stop .s-tag, .route .stop .s-addr { text-shadow: 0 1px 10px rgba(0,0,0,.45); }
+.route .stop .s-addr { color: rgba(247,244,236,.88); font-size: 13.5px; }
+
+/* 5. RSVP: you can't remove yourself from your own party */
+.guest-row:first-child .rm { visibility: hidden; }
+
+/* ── Accommodation: filter buttons over one list ── */
+.ac-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vh, 48px) 0 0;
+}
+.ac-filter button {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--brass-line);
+  min-height: 44px;
+  padding: 0 18px;
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.ac-filter button:hover { border-color: var(--brass); }
+.ac-filter button.on { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+.ac-filter-note {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(17px, 2vw, 20px);
+  color: var(--ink-dim);
+  margin: 18px 0 26px;
+}
+.hotel-card[hidden] { display: none !important; }
+.hc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.hc-tags span {
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--brass-ink);
+  border: 1px solid var(--brass-faint);
+  padding: 4px 9px;
+}
+.hotel-card h3 small { font-family: var(--sans); font-size: 13px; color: var(--ink-dim); }
+@media (min-width: 900px) {
+  .ac-list .hotel-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
+
+/* ── Homepage: four quick links under the hero ── */
+.plan {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: clamp(10px, 3vh, 30px) 24px clamp(48px, 8vh, 80px);
+  position: relative;
+  z-index: 1;
+}
+.plan-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 132px;
+  padding: 22px 20px 18px;
+  border: 1px solid var(--brass-line);
+  background: var(--ivory);
+  text-align: left;
+  position: relative;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+}
+.plan-card:hover { border-color: var(--brass); transform: translateY(-2px); box-shadow: 0 14px 36px rgba(168,131,75,.14); }
+.plan-card .pc-k {
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--brass-ink);
+}
+.plan-card .pc-t {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--ink);
+  padding-right: 18px;
+}
+.plan-card .pc-a { margin-top: auto; align-self: flex-end; color: var(--brass); font-size: 18px; line-height: 1; }
+.plan-card.dark { background: var(--ink); border-color: var(--ink); }
+.plan-card.dark .pc-t { color: var(--ivory); }
+.plan-card.dark .pc-k, .plan-card.dark .pc-a { color: #D9BE8C; }
+@media (max-width: 760px) {
+  .plan { grid-template-columns: 1fr 1fr; gap: 10px; padding-left: 16px; padding-right: 16px; }
+  .plan-card { min-height: 118px; padding: 18px 16px 14px; }
+  .plan-card .pc-t { font-size: 17px; }
+}
+
+/* Homepage hero: keep names, date, countdown and RSVP on the first screen on desktop */
+@media (min-width: 761px) {
+  .names { font-size: clamp(56px, min(11vw, 12.5vh), 150px); }
+  .rule { height: clamp(24px, 4vh, 48px); margin: clamp(14px, 2.6vh, 36px) 0; }
+  .count { margin: clamp(22px, 3.6vh, 52px) 0; }
+  main.page .eyebrow { margin-bottom: clamp(18px, 3.4vh, 44px); }
+  .hero-seal { margin-top: clamp(10px, 2vh, 22px); width: clamp(48px, 6.5vh, 76px); }
+}
+
+/* ── Phone: navigation ── */
+.nav-rsvp { display: none; }
+@media (max-width: 640px) {
+  .nav { padding-top: 12px; padding-bottom: 10px; }
+  .nav-links a { font-size: 11px; letter-spacing: .14em; padding-top: 6px; padding-bottom: 8px; }
+  .nav-links, .topnav {
+    mask-image: linear-gradient(to right, transparent, black 10px, black calc(100% - 44px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10px, black calc(100% - 44px), transparent);
+    padding-right: 40px;
+  }
+  .nav-links a.active::after { bottom: 2px; }
+  .nav-rsvp {
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    right: 14px;
+    top: 9px;
+    min-height: 34px;
+    padding: 0 14px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    background: var(--ink);
+  }
+  .topnav a { font-size: 11px; letter-spacing: .14em; }
+  #event-strip { font-size: 10.5px; letter-spacing: .12em; }
+
+  /* ── Phone: tighter vertical rhythm ── */
+  .page-head { padding-top: 128px; padding-bottom: 28px; }
+  .rule-v { height: 26px; margin-top: 18px; }
+  .next-block { padding-top: 44px; padding-bottom: 48px; }
+  .order-part { padding-top: 30px; padding-bottom: 14px; }
+  .order-row { padding: 16px 0; }
+  .info-row { padding: 24px 0; }
+  .footer { padding-top: 40px; padding-bottom: 44px; }
+  .eyebrow { letter-spacing: .32em; }
+  .ac-head { padding-top: 128px; padding-bottom: 32px; }
+  .ac-dist { padding-top: 32px; padding-bottom: 8px; }
+  .hotel-card { padding: 22px; }
+  .ac-filter { padding-top: 24px; }
+  .ac-filter button { padding: 0 14px; font-size: 11.5px; letter-spacing: .12em; }
+}
+
+/* Footer date: on phones, place goes on its own line instead of a stray dot */
+@media (max-width: 640px) {
+  .footer .f-sep { display: none; }
+  .footer .f-place { display: block; margin-top: 4px; }
+}

@@ -58,7 +58,7 @@
     var eve = document.createElement('style');
     eve.id = 'evening-mode';
     eve.textContent =
-      ':root{--ivory:#12201B!important;--ink:#F2EFE6!important;--ink-dim:rgba(242,239,230,.6)!important;' +
+      ':root{--ivory:#12201B!important;--ink:#F2EFE6!important;--ink-dim:rgba(242,239,230,.8)!important;--brass-ink:#D9BE8C!important;' +
       '--brass:#D9BE8C!important;--brass-line:rgba(217,190,140,.5)!important;--brass-faint:rgba(217,190,140,.2)!important;}' +
       'body::before{opacity:.05!important;}';
     document.head.appendChild(eve);
@@ -135,6 +135,21 @@
   }
   document.addEventListener('scroll', progress, { passive: true });
   progress();
+
+  /* ── Phone menu: RSVP always one tap away, current page scrolled into view ── */
+  var navEl = document.querySelector('.nav');
+  if (navEl && path !== '/rsvp' && !navEl.querySelector('.nav-rsvp') && navEl.querySelector('.nav-links a[href="/rsvp"]')) {
+    var pill = document.createElement('a');
+    pill.className = 'nav-rsvp';
+    pill.href = '/rsvp';
+    pill.textContent = 'RSVP';
+    navEl.appendChild(pill);
+  }
+  var links = document.querySelector('.nav-links');
+  var active = links && links.querySelector('a.active');
+  if (links && active && links.scrollWidth > links.clientWidth) {
+    links.scrollLeft += active.getBoundingClientRect().left - links.getBoundingClientRect().left - (links.clientWidth - active.offsetWidth) / 2;
+  }
 
   /* ── Nav scroll state ── */
   var nav = document.querySelector('.nav');

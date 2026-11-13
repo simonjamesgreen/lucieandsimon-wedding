@@ -26,6 +26,7 @@
   .kb-photo { animation: none; }
 }
 </style>
+<link rel="stylesheet" href="/refresh.css">
 </head>
 <body>
 
@@ -126,9 +127,9 @@
     <p style="font-size:14px;color:var(--ink-dim);max-width:44ch;margin:0 auto 30px;">A line of advice, a memory, or just hello. It appears on the wall below for everyone to read.</p>
 
     <div style="max-width:520px;margin:0 auto 44px;text-align:left;">
-      <label class="eyebrow" style="font-size:10px;letter-spacing:.32em;margin-bottom:8px;display:block;" for="gb-name">Your name</label>
+      <label class="eyebrow" style="font-size:11.5px;letter-spacing:.26em;margin-bottom:8px;display:block;" for="gb-name">Your name</label>
       <input type="text" id="gb-name" maxlength="80" placeholder="Who's writing?" style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--brass-line);font-family:var(--sans);font-weight:300;font-size:16px;color:var(--ink);padding:10px 2px;outline:none;border-radius:0;">
-      <label class="eyebrow" style="font-size:10px;letter-spacing:.32em;margin:24px 0 8px;display:block;" for="gb-msg">Your note</label>
+      <label class="eyebrow" style="font-size:11.5px;letter-spacing:.26em;margin:24px 0 8px;display:block;" for="gb-msg">Your note</label>
       <textarea id="gb-msg" maxlength="500" placeholder="Write something lovely (or funny)…" style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--brass-line);font-family:var(--sans);font-weight:300;font-size:16px;color:var(--ink);padding:10px 2px;outline:none;resize:vertical;min-height:64px;border-radius:0;"></textarea>
       <button class="btn" id="gb-send" style="border:none;cursor:pointer;margin-top:24px;width:100%;">Sign the guestbook</button>
       <p id="gb-status" style="font-size:13px;color:var(--brass);text-align:center;margin-top:12px;min-height:18px;"></p>
@@ -198,7 +199,7 @@
 <footer class="footer">
   <img src="/images/wax-seal.svg" alt="" aria-hidden="true" style="width:44px;height:44px;margin:0 auto 18px;display:block;">
   <p class="f-names">Lucie <span>&amp;</span> Simon</p>
-  <p class="f-date">Saturday 26 June 2027 · Honley &amp; Lindley</p>
+  <p class="f-date">Saturday 26 June 2027<span class="f-sep"> · </span><span class="f-place">Honley &amp; Lindley</span></p>
   <nav class="f-nav">
     <a href="/our-story">Our Story</a>
     <a href="/the-day">The Day</a>
