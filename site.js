@@ -100,7 +100,9 @@
 
     if (n < WEDDING_START) {
       var days = Math.ceil((WEDDING_START - n) / 864e5);
-      text = days + ' day' + (days===1?'':'s') + ' to go &middot; RSVP';
+      var replied = false; try { replied = !!localStorage.getItem('ls_rsvp_sent'); } catch(e){}
+      text = days + ' day' + (days===1?'':'s') + ' to go &middot; ' +
+        (replied ? 'You&rsquo;ve replied &#10003;' : (n < new Date('2027-04-02T00:00:00+01:00') ? '<span class="es-link">RSVP by 1 April</span>' : '<span class="es-link">RSVP</span>'));
       href = '/rsvp';
     } else if (n < DAY_END) {
       var current = null;
@@ -145,6 +147,24 @@
     pill.textContent = 'RSVP';
     navEl.appendChild(pill);
   }
+
+  /* ── RSVP everywhere: a filled button in the menu, and a "replied" state once sent ── */
+  function rsvpState(){
+    var replied = false; try { replied = !!localStorage.getItem('ls_rsvp_sent'); } catch(e){}
+    document.documentElement.classList.toggle('rsvp-replied', replied);
+    document.querySelectorAll('.nav-links a[href="/rsvp"], .topnav a[href="/rsvp"]').forEach(function(a){
+      a.classList.add('menu-rsvp');
+      a.innerHTML = replied ? 'RSVP &#10003;' : 'RSVP';
+    });
+    var p = document.querySelector('.nav-rsvp');
+    if (p) { p.innerHTML = replied ? 'Replied &#10003;' : 'RSVP'; p.setAttribute('aria-label', replied ? 'You have replied. View or change your RSVP' : 'RSVP'); }
+    var hero = document.querySelector('main.page a.rsvp[href="/rsvp"]');
+    if (hero) hero.innerHTML = replied ? 'Your RSVP &#10003;' : 'RSVP';
+    var card = document.querySelector('.plan-card[href="/rsvp"] .pc-t');
+    if (card && replied) card.textContent = 'You\u2019ve replied. Change it any time.';
+  }
+  rsvpState();
+  document.addEventListener('rsvp-sent', rsvpState);
   var links = document.querySelector('.nav-links');
   var active = links && links.querySelector('a.active');
   if (links && active && links.scrollWidth > links.clientWidth) {

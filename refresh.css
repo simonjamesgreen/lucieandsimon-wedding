@@ -238,3 +238,31 @@ main.page a[href$=".ics"], main.page a[href*="calendar.google"] { font-size: 11.
   .footer .f-sep { display: none; }
   .footer .f-place { display: block; margin-top: 4px; }
 }
+
+/* ── RSVP, prominent everywhere ── */
+/* Desktop menu: RSVP as a filled button */
+@media (min-width: 641px) {
+  .nav-links a.menu-rsvp, .topnav a.menu-rsvp {
+    background: var(--ink);
+    color: var(--ivory) !important;
+    padding: 8px 16px 7px 18px;
+    margin-top: -8px;
+    align-self: center;
+    transition: background .2s;
+  }
+  .nav-links a.menu-rsvp::after { display: none; }
+  .nav-links a.menu-rsvp:hover, .topnav a.menu-rsvp:hover { background: var(--brass); }
+  .nav-links a.menu-rsvp.active { background: var(--brass); }
+  .rsvp-replied .nav-links a.menu-rsvp, .rsvp-replied .topnav a.menu-rsvp {
+    background: transparent; color: var(--ink) !important; box-shadow: inset 0 0 0 1px var(--brass-line);
+  }
+}
+/* Phone menu: inside the scrolling list the pill already covers RSVP */
+@media (max-width: 640px) {
+  .nav-links a.menu-rsvp { color: var(--brass-ink); font-weight: 500; }
+  .nav-rsvp { box-shadow: 0 4px 14px rgba(29,27,22,.18); }
+  .rsvp-replied .nav-rsvp { background: var(--ivory); color: var(--ink); box-shadow: inset 0 0 0 1px var(--brass-line); }
+}
+/* Event strip: the RSVP part reads as a link */
+#event-strip .es-link { border-bottom: 1px solid rgba(247,244,236,.6); padding-bottom: 1px; }
+#event-strip:hover .es-link { border-bottom-color: #D9BE8C; color: #F0DDB4; }
