@@ -113,6 +113,29 @@
 .toolbar button:hover { border-color: var(--brass); color: var(--brass); }
 
 #err { color: #a05252; font-size: 14px; text-align: center; margin-top: 14px; min-height: 18px; }
+
+.inv-box{max-width:520px;margin:0 auto 34px;border:1px solid var(--brass-line);padding:24px 22px}
+.inv-intro{font-size:14px;color:var(--ink-dim);margin-bottom:6px;line-height:1.6}
+.inv-label{display:block;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass-ink,var(--brass));margin:20px 0 8px}
+.inv-input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--brass-line);font-family:var(--sans);font-size:17px;color:var(--ink);padding:10px 2px;outline:none;border-radius:0}
+.inv-input:focus{border-bottom-color:var(--brass)}
+.inv-greet{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--brass-ink,var(--brass));margin-top:8px;min-height:20px}
+.inv-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:26px}
+.inv-btn{display:flex;align-items:center;justify-content:center;min-height:52px;padding:0 12px;font-family:var(--sans);font-size:12px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;text-align:center;text-decoration:none}
+.inv-btn.primary{background:var(--ink);color:var(--ivory)}
+.inv-btn.wa{border-color:#1F8A4C;color:#1F8A4C}
+.inv-btn[disabled],.inv-btn.off{opacity:.45;pointer-events:none}
+.inv-msg{font-size:14px;margin-top:14px;min-height:20px;text-align:center}
+.inv-preview{text-align:center;font-size:13px;margin-top:4px}
+.inv-preview a{color:var(--brass-ink,var(--brass));border-bottom:1px solid var(--brass-line)}
+.inv-count{text-align:center;font-size:13px;color:var(--ink-dim);margin-bottom:14px}
+.inv-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--brass-faint)}
+.inv-row .nm{font-family:var(--serif);font-size:18px}
+.inv-row .sub{font-size:12.5px;color:var(--ink-dim);margin-top:2px}
+.inv-tag{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--brass-line);white-space:nowrap}
+.inv-tag.whatsapp{color:#1F8A4C;border-color:rgba(31,138,76,.45)}
+.inv-tag.failed{color:#A33A2B;border-color:rgba(163,58,43,.45)}
+@media (max-width:520px){.inv-actions{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="/refresh.css">
 </head>
@@ -137,6 +160,7 @@
     <div class="stats" id="stats"></div>
     <div class="toolbar" style="justify-content:center;margin-bottom:26px;">
       <button class="tab-btn" data-tab="rsvps" style="border-color:var(--brass);color:var(--brass);">RSVPs</button>
+      <button class="tab-btn" data-tab="invites">Invitations</button>
       <button class="tab-btn" data-tab="guests">Guest list</button>
       <button class="tab-btn" data-tab="photos">Photo wall</button>
       <button class="tab-btn" data-tab="gbook">Guestbook</button>
@@ -147,6 +171,24 @@
         <button id="csv">Download CSV</button>
       </div>
       <div id="cards"></div>
+    </div>
+    <div id="tab-invites" style="display:none;">
+      <div class="inv-box">
+        <p class="inv-intro">Send a guest their personal invitation. Their names appear on the envelope.</p>
+        <label class="inv-label" for="inv-name">Names on the invitation</label>
+        <input type="text" id="inv-name" class="inv-input" placeholder="e.g. Jane &amp; John Smith" maxlength="60" autocapitalize="words">
+        <p class="inv-greet" id="inv-greet"></p>
+        <label class="inv-label" for="inv-email">Email <span style="opacity:.6;">(for email only)</span></label>
+        <input type="email" id="inv-email" class="inv-input" placeholder="jane@example.com" autocapitalize="off" spellcheck="false" inputmode="email">
+        <div class="inv-actions">
+          <button type="button" class="inv-btn primary" id="inv-send-email">Send by email</button>
+          <a class="inv-btn wa" id="inv-send-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+        </div>
+        <p class="inv-msg" id="inv-msg" role="status"></p>
+        <p class="inv-preview"><a id="inv-preview" href="/invite" target="_blank" rel="noopener">Preview their invitation &rarr;</a></p>
+      </div>
+      <p class="inv-count" id="inv-count"></p>
+      <div id="inv-list"></div>
     </div>
     <div id="tab-guests" style="display:none;">
       <div class="toolbar">
@@ -273,15 +315,81 @@
     a.click();
   };
 
+
+  // ── Invitations ──
+  var FN = SUPABASE_URL + '/functions/v1/wedding-send-invite';
+  var SITE = 'https://lucieandsimon.wedding';
+  function invName(){ return document.getElementById('inv-name').value.replace(/\s+/g, ' ').trim().slice(0, 60); }
+  function invGreeting(n){ return n.split(/\s*(?:&|\band\b|,)\s*/i).filter(Boolean).map(function(p){ return p.split(' ')[0]; }).join(' & '); }
+  function invLink(n){ return SITE + '/invite' + (n ? '?to=' + encodeURIComponent(n) : ''); }
+  function waText(n){
+    var g = invGreeting(n);
+    return 'Hi ' + (g || 'there') + ',\n\nWe\u2019d love you to join us for our wedding on Saturday 26th June 2027. Tap below to open your invitation:\n\n' + invLink(n) + '\n\nLove, Lucie & Simon';
+  }
+  function invRefresh(){
+    var n = invName();
+    var g = invGreeting(n);
+    document.getElementById('inv-greet').textContent = n ? 'Their invitation will say \u201cDear ' + g + ',\u201d' : '';
+    document.getElementById('inv-preview').href = invLink(n);
+    var wa = document.getElementById('inv-send-wa');
+    wa.href = n ? 'https://wa.me/?text=' + encodeURIComponent(waText(n)) : '#';
+    wa.classList.toggle('off', !n);
+  }
+  document.getElementById('inv-name').addEventListener('input', invRefresh);
+  invRefresh();
+
+  function invMsg(text, bad){ var m = document.getElementById('inv-msg'); m.textContent = text; m.style.color = bad ? '#A33A2B' : 'var(--brass-ink, var(--brass))'; }
+
+  document.getElementById('inv-send-email').onclick = async function(){
+    var n = invName(), e = document.getElementById('inv-email').value.trim();
+    if (!n) { invMsg('Add the names first.', true); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)) { invMsg('Please check the email address.', true); return; }
+    var btn = this; btn.disabled = true; invMsg('Sending\u2026');
+    try {
+      var res = await fetch(FN, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: pw, name: n, to: e }) });
+      var out = await res.json().catch(function(){ return {}; });
+      if (!res.ok) throw new Error(out.error || 'Couldn\u2019t send just now. Please try again.');
+      invMsg('Sent to ' + e + ' \u2713');
+      document.getElementById('inv-name').value = ''; document.getElementById('inv-email').value = ''; invRefresh();
+      loadInvites();
+    } catch(err) { invMsg(err.message, true); }
+    btn.disabled = false;
+  };
+
+  document.getElementById('inv-send-wa').addEventListener('click', function(){
+    var n = invName(); if (!n) return;
+    fetch(FN, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: pw, name: n, action: 'whatsapp' }) })
+      .then(function(){ setTimeout(loadInvites, 600); }).catch(function(){});
+    invMsg('Opening WhatsApp. Pick who to send it to, then wait for the envelope preview before pressing send.');
+  });
+
+  async function loadInvites(){
+    var res = await fetch(SUPABASE_URL + '/rest/v1/rpc/get_invites_sent', {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_password: pw })
+    });
+    var rows = res.ok ? await res.json() : [];
+    var em = rows.filter(function(r){ return r.channel === 'email' && r.status === 'sent'; }).length;
+    var wa = rows.filter(function(r){ return r.channel === 'whatsapp'; }).length;
+    document.getElementById('inv-count').textContent = rows.length ? (em + wa) + ' invitations sent \u00b7 ' + em + ' by email \u00b7 ' + wa + ' on WhatsApp' : 'No invitations sent yet.';
+    document.getElementById('inv-list').innerHTML = rows.map(function(r){
+      var when = new Date(r.created_at).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+      var tag = r.status === 'failed' ? '<span class="inv-tag failed">Failed</span>' : '<span class="inv-tag ' + r.channel + '">' + (r.channel === 'email' ? 'Email' : 'WhatsApp') + '</span>';
+      return '<div class="inv-row"><div><div class="nm">' + esc(r.name || '(no name)') + '</div><div class="sub">' + (r.email ? esc(r.email) + ' \u00b7 ' : '') + when + '</div></div>' + tag + '</div>';
+    }).join('');
+  }
+
   // ── Tabs ──
   var tabs = document.querySelectorAll('.tab-btn');
   tabs.forEach(function(b){
     b.onclick = function(){
       tabs.forEach(function(x){ x.style.borderColor=''; x.style.color=''; });
       b.style.borderColor = 'var(--brass)'; b.style.color = 'var(--brass)';
-      ['rsvps','guests','photos','gbook'].forEach(function(t){
+      ['rsvps','invites','guests','photos','gbook'].forEach(function(t){
         document.getElementById('tab-' + t).style.display = t === b.dataset.tab ? 'block' : 'none';
       });
+      if (b.dataset.tab === 'invites') loadInvites();
       if (b.dataset.tab === 'guests') loadGuests();
       if (b.dataset.tab === 'photos') loadModGallery();
       if (b.dataset.tab === 'gbook') loadGuestbookAdmin();
