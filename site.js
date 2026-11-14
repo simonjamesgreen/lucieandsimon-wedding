@@ -86,7 +86,7 @@
       ['2027-06-26T12:00:00+01:00', 'The ceremony is happening now'],
       ['2027-06-26T13:00:00+01:00', 'Photographs at the church'],
       ['2027-06-26T13:30:00+01:00', 'Doors open at Manor House'],
-      ['2027-06-26T14:00:00+01:00', 'Drinks reception & tea ceremony'],
+      ['2027-06-26T14:00:00+01:00', 'Drinks reception'],
       ['2027-06-26T15:30:00+01:00', 'Guests are taking their seats'],
       ['2027-06-26T15:45:00+01:00', 'Mr & Mrs have just been announced'],
       ['2027-06-26T18:00:00+01:00', 'Speeches'],
