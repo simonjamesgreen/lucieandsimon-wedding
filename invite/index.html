@@ -9,11 +9,11 @@
 <meta name="theme-color" content="#F7F4EC">
 <meta property="og:title" content="You&rsquo;re invited: Lucie &amp; Simon">
 <meta property="og:description" content="Saturday 26th June 2027. Tap to open your invitation.">
-<meta property="og:image" content="https://lucieandsimon.wedding/images/invite-preview-v4.jpg">
+<meta property="og:image" content="https://lucieandsimon.wedding/images/invite-preview-v5.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://lucieandsimon.wedding/invite">
-<meta name="twitter:image" content="https://lucieandsimon.wedding/images/invite-preview-v4.jpg">
+<meta name="twitter:image" content="https://lucieandsimon.wedding/images/invite-preview-v5.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/fonts.css">
@@ -37,24 +37,28 @@ a{color:inherit;text-decoration:none}
 .hint::before,.hint::after{content:'';width:26px;height:1px;background:var(--brass);opacity:.6}
 .datefoot{font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-size:17px;color:var(--dim);margin-top:14px;transition:opacity .4s}
 
+/* photographic finish: grain + vignette over the opening scene */
+.stage::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:30;
+  background-image:radial-gradient(ellipse 75% 65% at 50% 48%,rgba(0,0,0,0) 55%,rgba(60,45,20,.16) 100%),var(--noise);mix-blend-mode:multiply;opacity:.9}
 /* ── Envelope ── */
 :root{
   --noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42  0 0 0 0 .33  0 0 0 0 .2  0 0 0 .11 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   --fibre:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.012 .55' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .4  0 0 0 0 .25  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+  --mottle:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='2' seed='8'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .27  0 0 0 0 .15  0 0 0 .10 0'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>");
   --linen:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='l'><feTurbulence type='turbulence' baseFrequency='.9 .02' numOctaves='2' seed='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .32  0 0 0 0 .2  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23l)'/></svg>");
 }
 .stage{background-color:#EEE7D9;background-image:radial-gradient(ellipse 80% 60% at 40% 30%,rgba(255,252,244,.6),rgba(255,252,244,0) 70%),var(--linen),var(--noise)}
 .env-wrap{position:relative;width:min(86vw,420px);aspect-ratio:1.5;perspective:1600px;transition:transform 1s cubic-bezier(.3,.7,.2,1),opacity .8s}
 .env-tilt{position:absolute;inset:0;transform:rotate(-2.2deg);transform-style:preserve-3d}
-.paper{background-color:#F3EBDB;background-image:linear-gradient(128deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,0) 45%,rgba(120,90,40,.04) 75%,rgba(90,65,25,.08) 100%),var(--fibre),var(--noise)}
-.env-back{position:absolute;inset:0;border-radius:2px;background-color:#E6DAC2;
+.paper{background-color:#F3EBDB;background-image:linear-gradient(128deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,0) 45%,rgba(120,90,40,.04) 75%,rgba(90,65,25,.08) 100%),var(--mottle),var(--fibre),var(--noise);background-size:auto,100% 100%,auto,auto}
+.env-back{position:absolute;inset:0;border-radius:3px;background-color:#E6DAC2;
   box-shadow:0 0 0 .5px rgba(150,115,60,.35),0 1px 1px rgba(60,45,20,.22),0 5px 9px -2px rgba(60,45,20,.16),0 22px 36px -10px rgba(60,45,20,.32),0 55px 70px -34px rgba(60,45,20,.30)}
 .env-liner{position:absolute;left:2.5%;right:2.5%;top:2.5%;height:57%;clip-path:polygon(0 0,100% 0,50% 100%);background-color:#13241E;
   background-image:linear-gradient(to bottom,rgba(0,0,0,.25),rgba(0,0,0,0) 40%),repeating-linear-gradient(45deg,rgba(217,190,140,.24) 0 1px,transparent 1px 12px),repeating-linear-gradient(-45deg,rgba(217,190,140,.24) 0 1px,transparent 1px 12px)}
 .peek{position:absolute;left:6%;right:6%;top:6%;bottom:5%;z-index:2;background:var(--paper);box-shadow:0 1px 2px rgba(60,45,20,.15);padding:7px;transition:transform 1s cubic-bezier(.3,.7,.2,1) .5s}
 .peek i{display:flex;align-items:flex-start;justify-content:center;height:100%;border:1px solid var(--brass);outline:1px solid rgba(168,131,75,.3);outline-offset:-5px;font-family:'Bodoni Moda',Georgia,serif;font-size:22px;color:var(--ink);padding-top:12%;font-style:normal}
 .env-pocket{position:absolute;inset:0;z-index:3;pointer-events:none}
-.env-pocket .pk{position:absolute;inset:0;clip-path:polygon(0 0,50% 57%,100% 0,100% 100%,0 100%)}
+.env-pocket .pk{position:absolute;inset:0;border-radius:3px;clip-path:polygon(0 0,50% 57%,100% 0,100% 100%,0 100%)}
 .seams{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:visible}
 .flap-shadow{position:absolute;left:0;top:0;width:100%;height:100%;z-index:3;pointer-events:none;transition:opacity .3s}
 .env-flap{position:absolute;left:0;right:0;top:0;height:59%;z-index:4;transform-origin:top center;transform-style:preserve-3d;transition:transform .95s cubic-bezier(.5,0,.25,1),z-index 0s .45s}
@@ -66,9 +70,9 @@ a{color:inherit;text-decoration:none}
 .top-crease{position:absolute;left:0;right:0;top:0;height:2px;z-index:5;background:linear-gradient(to bottom,rgba(255,255,255,.45),rgba(150,115,60,.14));pointer-events:none;transition:opacity .25s}
 
 /* wax seal: matte wax, colour set here */
-.seal{--w1:#3C5A4B;--w2:#24392F;--w3:#13211B}
-.wax-gold .seal{--w1:#C9AD7A;--w2:#A4864F;--w3:#6F5631}
-.wax-burgundy .seal{--w1:#9A4545;--w2:#722B2E;--w3:#46181B}
+.seal{--w1:#CCB17E;--w2:#A7884F;--w3:#6E5532;--e1:#EEDDB2;--e2:#C6A76C}
+.wax-green .seal{--w1:#3C5A4B;--w2:#24392F;--w3:#13211B;--e1:#5B7A69;--e2:#3A5547}
+.wax-burgundy .seal{--w1:#9A4545;--w2:#722B2E;--w3:#46181B;--e1:#B86464;--e2:#8C3B3E}
 /* wax seal */
 .seal{position:absolute;left:50%;top:59%;transform:translate(-50%,-50%) rotate(8deg);z-index:6;width:112px;height:112px;border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 2px 1.5px rgba(50,30,5,.45)) drop-shadow(0 8px 10px rgba(50,30,5,.28));transition:transform .5s,opacity .5s}
 .seal svg{display:block;width:100%;height:100%;overflow:visible}
@@ -161,36 +165,29 @@ a{color:inherit;text-decoration:none}
       <button class="seal" id="seal" type="button" aria-label="Open your invitation">
         <svg viewBox="0 0 200 200" aria-hidden="true">
           <defs>
-            <radialGradient id="wx" cx="38%" cy="32%" r="80%"><stop offset="0" style="stop-color:var(--w1)"/><stop offset=".45" style="stop-color:var(--w2)"/><stop offset="1" style="stop-color:var(--w3)"/></radialGradient>
-            <radialGradient id="wxin" cx="44%" cy="40%" r="75%"><stop offset="0" style="stop-color:var(--w2)"/><stop offset="1" style="stop-color:var(--w3)"/></radialGradient>
-            <linearGradient id="emb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--w1)"/><stop offset="1" style="stop-color:var(--w2)"/></linearGradient>
-            <filter id="blob" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".028" numOctaves="2" seed="11" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter>
-            <filter id="gloss" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur in="SourceAlpha" stdDeviation="5" result="b"/><feDiffuseLighting in="b" surfaceScale="5" diffuseConstant="1.05" lighting-color="#FFFFFF" result="d"><feDistantLight azimuth="235" elevation="55"/></feDiffuseLighting><feComposite in="SourceGraphic" in2="d" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="5" result="g"/><feColorMatrix in="g" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .18 0" result="g2"/><feComposite in="g2" in2="SourceAlpha" operator="in" result="g3"/><feMerge><feMergeNode in="lit"/><feMergeNode in="g3"/></feMerge></filter>
-            <filter id="soft"><feGaussianBlur stdDeviation="3.5"/></filter>
-            <path id="ring" d="M100,100 m-47,0 a47,47 0 1,1 94,0 a47,47 0 1,1 -94,0"/>
+            <radialGradient id="wx" cx="40%" cy="34%" r="80%"><stop offset="0" style="stop-color:var(--w1)"/><stop offset=".5" style="stop-color:var(--w2)"/><stop offset="1" style="stop-color:var(--w3)"/></radialGradient>
+            <radialGradient id="wxin" cx="46%" cy="42%" r="70%"><stop offset="0" style="stop-color:var(--w2)"/><stop offset="1" style="stop-color:var(--w3)"/></radialGradient>
+            <linearGradient id="emb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--e1)"/><stop offset="1" style="stop-color:var(--e2)"/></linearGradient>
+            <filter id="blob" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="3" seed="19" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="15" xChannelSelector="R" yChannelSelector="G"/></filter>
+            <filter id="press" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="3" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="3.5" xChannelSelector="R" yChannelSelector="G"/></filter>
+            <filter id="matte" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b"/><feDiffuseLighting in="b" surfaceScale="4" diffuseConstant="1.08" lighting-color="#FFFFFF" result="d"><feDistantLight azimuth="235" elevation="58"/></feDiffuseLighting><feComposite in="SourceGraphic" in2="d" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="2" seed="5" result="g"/><feColorMatrix in="g" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .14 0" result="g2"/><feComposite in="g2" in2="SourceAlpha" operator="in" result="g3"/><feMerge><feMergeNode in="lit"/><feMergeNode in="g3"/></feMerge></filter>
+            <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
           </defs>
-          <g filter="url(#gloss)"><g filter="url(#blob)">
+          <g filter="url(#matte)"><g filter="url(#blob)">
             <circle cx="100" cy="100" r="80" fill="url(#wx)"/>
-            <ellipse cx="166" cy="146" rx="15" ry="10" style="fill:var(--w3)"/>
-            <ellipse cx="38" cy="62" rx="11" ry="8" style="fill:var(--w2)"/>
-            <ellipse cx="54" cy="160" rx="9" ry="7" style="fill:var(--w3)"/>
+            <ellipse cx="160" cy="138" rx="12" ry="9" style="fill:var(--w2)"/>
           </g></g>
-          <circle cx="100" cy="100" r="61" fill="url(#wxin)"/>
-          <circle cx="100" cy="98.6" r="61" fill="none" stroke="rgba(50,30,5,.55)" stroke-width="3"/>
-          <circle cx="100" cy="101.6" r="61.5" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.6"/>
-          <circle cx="100" cy="100" r="35" fill="none" stroke="rgba(50,30,5,.35)" stroke-width="1"/>
-          <circle cx="100" cy="100.8" r="35" fill="none" stroke="rgba(255,255,255,.14)" stroke-width=".8"/>
-          <g font-family="Jost, sans-serif" font-size="8.6" letter-spacing="2.6" text-anchor="middle">
-            <text fill="rgba(50,30,5,.6)" dy="1"><textPath href="#ring" startOffset="50%">LUCIE · SIMON · 26 · VI · 2027 ·</textPath></text>
-            <text style="fill:var(--w1)" opacity=".85"><textPath href="#ring" startOffset="50%">LUCIE · SIMON · 26 · VI · 2027 ·</textPath></text>
+          <g filter="url(#press)">
+            <circle cx="100" cy="100" r="58" fill="url(#wxin)"/>
+            <circle cx="100" cy="98.4" r="58" fill="none" stroke="rgba(45,28,6,.55)" stroke-width="3.2"/>
+            <circle cx="100" cy="101.8" r="58.6" fill="none" stroke="rgba(255,250,232,.22)" stroke-width="1.8"/>
           </g>
-          <g font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-size="36" text-anchor="middle">
-            <text x="100" y="114.8" fill="rgba(45,25,0,.7)">L&amp;S</text>
-            <text x="99.4" y="111.8" fill="rgba(255,255,255,.2)">L&amp;S</text>
-            <text x="100" y="113" fill="url(#emb)">L&amp;S</text>
+          <g font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-size="50" text-anchor="middle">
+            <text x="100.6" y="120.4" fill="rgba(40,24,4,.72)">L&amp;S</text>
+            <text x="99.3" y="116.6" fill="rgba(255,252,238,.38)">L&amp;S</text>
+            <text x="100" y="118" fill="url(#emb)">L&amp;S</text>
           </g>
-          <ellipse cx="72" cy="58" rx="22" ry="9" fill="#FFFFFF" opacity=".07" filter="url(#soft)" transform="rotate(-32 72 58)"/>
-          
+          <ellipse cx="74" cy="60" rx="20" ry="8" fill="#FFFFFF" opacity=".06" filter="url(#soft)" transform="rotate(-32 74 60)"/>
         </svg>
       </button>
     </div>
@@ -242,7 +239,7 @@ a{color:inherit;text-decoration:none}
 
   // Personal greeting from ?to=Jane%20%26%20John (plain text only, never HTML)
   var params = new URLSearchParams(location.search);
-  var wax = params.get('wax'); if (wax === 'gold' || wax === 'burgundy') document.body.classList.add('wax-' + wax);
+  var wax = params.get('wax'); if (wax === 'green' || wax === 'burgundy') document.body.classList.add('wax-' + wax);
   var to = (params.get('to') || '').replace(/\s+/g, ' ').trim().slice(0, 60);
   if (!to) document.getElementById('for').textContent = 'Lucie & Simon';
   if (to) {
