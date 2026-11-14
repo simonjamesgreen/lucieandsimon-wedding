@@ -266,3 +266,62 @@ main.page a[href$=".ics"], main.page a[href*="calendar.google"] { font-size: 11.
 /* Event strip: the RSVP part reads as a link */
 #event-strip .es-link { border-bottom: 1px solid rgba(247,244,236,.6); padding-bottom: 1px; }
 #event-strip:hover .es-link { border-bottom-color: #D9BE8C; color: #F0DDB4; }
+
+/* ── Homepage quick links v2: an invitation-style list, no boxes ── */
+.plan {
+  display: block;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: clamp(18px, 4vh, 40px) 28px clamp(56px, 9vh, 90px);
+  border: none;
+}
+.plan-card, .plan-card.dark {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  align-items: baseline;
+  gap: 14px;
+  min-height: 0;
+  padding: 20px 2px 19px;
+  border: none;
+  border-top: 1px solid rgba(168,131,75,.38);
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  text-align: left;
+}
+.plan-card:last-child { border-bottom: 1px solid rgba(168,131,75,.38); }
+.plan-card:hover { border-color: rgba(168,131,75,.38); box-shadow: none; transform: none; }
+.plan-card .pc-k, .plan-card.dark .pc-k {
+  font-size: 11px;
+  letter-spacing: .24em;
+  color: var(--brass-ink);
+}
+.plan-card .pc-t, .plan-card.dark .pc-t {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.35;
+  color: var(--ink);
+  padding-right: 0;
+}
+.plan-card .pc-a, .plan-card.dark .pc-a {
+  margin: 0;
+  align-self: center;
+  color: var(--brass);
+  font-size: 17px;
+  transition: transform .25s;
+}
+.plan-card:hover .pc-a { transform: translateX(4px); }
+.plan-card:hover .pc-t { color: var(--brass); }
+.plan-card.dark .pc-k, .plan-card.dark .pc-t { color: var(--ink); }
+.plan-card.dark .pc-k { color: var(--brass-ink); font-weight: 500; }
+@media (max-width: 760px) {
+  .plan { padding-left: 24px; padding-right: 24px; }
+  .plan-card, .plan-card.dark { grid-template-columns: 1fr auto; gap: 4px 12px; padding: 18px 2px 17px; }
+  .plan-card .pc-k { grid-column: 1; }
+  .plan-card .pc-t { grid-column: 1; font-size: 18px; }
+  .plan-card .pc-a { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+/* Homepage menu: solid backing so it doesn't overlap the page as you scroll */
+.topnav { background: linear-gradient(to bottom, var(--ivory) 72%, rgba(247,244,236,0)); }

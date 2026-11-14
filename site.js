@@ -63,6 +63,7 @@
       'body::before{opacity:.05!important;}' +
       '.nav{background:linear-gradient(to bottom,#12201B 60%,rgba(18,32,27,0))!important;}' +
       '.nav.scrolled{background:rgba(18,32,27,.9)!important;}' +
+      '.topnav{background:linear-gradient(to bottom,#12201B 72%,rgba(18,32,27,0))!important;}' +
       '#event-strip{background:#0B1511!important;color:#F2EFE6!important;}' +
       '#event-strip .es-link{color:#D9BE8C!important;border-bottom-color:rgba(217,190,140,.6)!important;}';
     document.head.appendChild(eve);
