@@ -9,11 +9,11 @@
 <meta name="theme-color" content="#F7F4EC">
 <meta property="og:title" content="You&rsquo;re invited: Lucie &amp; Simon">
 <meta property="og:description" content="Saturday 26th June 2027. Tap to open your invitation.">
-<meta property="og:image" content="https://lucieandsimon.wedding/images/invite-preview-v5.jpg">
+<meta property="og:image" content="https://lucieandsimon.wedding/images/invite-preview-v6.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://lucieandsimon.wedding/invite">
-<meta name="twitter:image" content="https://lucieandsimon.wedding/images/invite-preview-v5.jpg">
+<meta name="twitter:image" content="https://lucieandsimon.wedding/images/invite-preview-v6.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/fonts.css">
@@ -49,7 +49,7 @@ a{color:inherit;text-decoration:none}
 }
 .stage{background-color:#EEE7D9;background-image:radial-gradient(ellipse 80% 60% at 40% 30%,rgba(255,252,244,.6),rgba(255,252,244,0) 70%),var(--linen),var(--noise)}
 .env-wrap{position:relative;width:min(86vw,420px);aspect-ratio:1.5;perspective:1600px;transition:transform 1s cubic-bezier(.3,.7,.2,1),opacity .8s}
-.env-tilt{position:absolute;inset:0;transform:rotate(-2.2deg);transform-style:preserve-3d}
+.env-tilt{position:absolute;inset:0;transform:none;transform-style:preserve-3d}
 .paper{background-color:#F3EBDB;background-image:linear-gradient(128deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,0) 45%,rgba(120,90,40,.04) 75%,rgba(90,65,25,.08) 100%),var(--mottle),var(--fibre),var(--noise);background-size:auto,100% 100%,auto,auto}
 .env-back{position:absolute;inset:0;border-radius:3px;background-color:#E6DAC2;
   box-shadow:0 0 0 .5px rgba(150,115,60,.35),0 1px 1px rgba(60,45,20,.22),0 5px 9px -2px rgba(60,45,20,.16),0 22px 36px -10px rgba(60,45,20,.32),0 55px 70px -34px rgba(60,45,20,.30)}
@@ -74,9 +74,9 @@ a{color:inherit;text-decoration:none}
 .wax-green .seal{--w1:#3C5A4B;--w2:#24392F;--w3:#13211B;--e1:#5B7A69;--e2:#3A5547}
 .wax-burgundy .seal{--w1:#9A4545;--w2:#722B2E;--w3:#46181B;--e1:#B86464;--e2:#8C3B3E}
 /* wax seal */
-.seal{position:absolute;left:50%;top:59%;transform:translate(-50%,-50%) rotate(8deg);z-index:6;width:112px;height:112px;border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 2px 1.5px rgba(50,30,5,.45)) drop-shadow(0 8px 10px rgba(50,30,5,.28));transition:transform .5s,opacity .5s}
+.seal{position:absolute;left:50%;top:59%;transform:translate(-50%,-50%);z-index:6;width:112px;height:112px;border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 2px 1.5px rgba(50,30,5,.45)) drop-shadow(0 8px 10px rgba(50,30,5,.28));transition:transform .5s,opacity .5s}
 .seal svg{display:block;width:100%;height:100%;overflow:visible}
-.seal:hover{transform:translate(-50%,-50%) rotate(8deg) scale(1.04)}
+.seal:hover{transform:translate(-50%,-50%) scale(1.04)}
 .seal:focus-visible{outline:2px solid var(--brass);outline-offset:4px;border-radius:50%}
 .seal-pulse{position:absolute;left:50%;top:59%;width:118px;height:118px;transform:translate(-50%,-50%);border-radius:50%;z-index:5;border:1px solid rgba(168,131,75,.6);animation:pulse 2.6s ease-out infinite}
 @keyframes pulse{from{transform:translate(-50%,-50%) scale(1);opacity:.75}to{transform:translate(-50%,-50%) scale(1.7);opacity:0}}
@@ -84,7 +84,7 @@ a{color:inherit;text-decoration:none}
 /* ── Opened state ── */
 .opened .env-flap{transform:rotateX(178deg);z-index:1}
 .opened .flap-edge,.opened .flap-shadow,.opened .top-crease{opacity:0}
-.opened .seal{opacity:0;transform:translate(-50%,-50%) rotate(8deg) scale(.6);pointer-events:none}
+.opened .seal{opacity:0;transform:translate(-50%,-50%) scale(.6);pointer-events:none}
 .opened .seal-pulse{display:none}
 .opened .peek{transform:translateY(-58%)}
 .opened .hint,.opened .for,.opened .eyebrow,.opened .datefoot{opacity:0}
@@ -168,9 +168,9 @@ a{color:inherit;text-decoration:none}
             <radialGradient id="wx" cx="40%" cy="34%" r="80%"><stop offset="0" style="stop-color:var(--w1)"/><stop offset=".5" style="stop-color:var(--w2)"/><stop offset="1" style="stop-color:var(--w3)"/></radialGradient>
             <radialGradient id="wxin" cx="46%" cy="42%" r="70%"><stop offset="0" style="stop-color:var(--w2)"/><stop offset="1" style="stop-color:var(--w3)"/></radialGradient>
             <linearGradient id="emb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--e1)"/><stop offset="1" style="stop-color:var(--e2)"/></linearGradient>
-            <filter id="blob" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="3" seed="19" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="15" xChannelSelector="R" yChannelSelector="G"/></filter>
+            <filter id="blob" x="-40%" y="-40%" width="180%" height="180%"><feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="3" seed="19" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="15" xChannelSelector="R" yChannelSelector="G"/></filter>
             <filter id="press" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="3" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="3.5" xChannelSelector="R" yChannelSelector="G"/></filter>
-            <filter id="matte" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b"/><feDiffuseLighting in="b" surfaceScale="4" diffuseConstant="1.08" lighting-color="#FFFFFF" result="d"><feDistantLight azimuth="235" elevation="58"/></feDiffuseLighting><feComposite in="SourceGraphic" in2="d" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="2" seed="5" result="g"/><feColorMatrix in="g" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .14 0" result="g2"/><feComposite in="g2" in2="SourceAlpha" operator="in" result="g3"/><feMerge><feMergeNode in="lit"/><feMergeNode in="g3"/></feMerge></filter>
+            <filter id="matte" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b"/><feDiffuseLighting in="b" surfaceScale="4" diffuseConstant="1.08" lighting-color="#FFFFFF" result="d"><feDistantLight azimuth="235" elevation="58"/></feDiffuseLighting><feComposite in="SourceGraphic" in2="d" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="5" result="g"/><feColorMatrix in="g" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .22 -.02" result="g2"/><feComposite in="g2" in2="SourceAlpha" operator="in" result="grain"/><feTurbulence type="fractalNoise" baseFrequency=".035 .06" numOctaves="3" seed="23" result="sw"/><feColorMatrix in="sw" values="0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .84  .55 0 0 0 -.24" result="sw2"/><feComposite in="sw2" in2="SourceAlpha" operator="in" result="swirl"/><feTurbulence type="turbulence" baseFrequency=".28" numOctaves="1" seed="41" result="pt"/><feColorMatrix in="pt" values="0 0 0 0 .2  0 0 0 0 .13  0 0 0 0 .03  0 0 -1.6 0 .62" result="pt2"/><feComposite in="pt2" in2="SourceAlpha" operator="in" result="pits"/><feMerge><feMergeNode in="lit"/><feMergeNode in="swirl"/><feMergeNode in="pits"/><feMergeNode in="grain"/></feMerge></filter>
             <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
           </defs>
           <g filter="url(#matte)"><g filter="url(#blob)">
