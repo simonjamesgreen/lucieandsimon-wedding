@@ -521,7 +521,10 @@ input[type="number"]:focus { border-bottom-color: var(--brass); }
   } else if (draft) {
     fill(draft);
   } else {
-    guestRow();
+    var preName = (new URLSearchParams(location.search).get('name') || '').replace(/\s+/g, ' ').trim().slice(0, 100);
+    if (preName) $('contact_name').value = preName;
+    guestRow(preName || null);
+    if (preName) guests.querySelector('.g-name').dataset.touched = '';
     syncSections();
   }
 
