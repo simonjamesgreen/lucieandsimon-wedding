@@ -9,11 +9,11 @@
 <meta name="theme-color" content="#F7F4EC">
 <meta property="og:title" content="You&rsquo;re invited: Lucie &amp; Simon">
 <meta property="og:description" content="Saturday 26th June 2027. Tap to open your invitation.">
-<meta property="og:image" content="https://lucieandsimon.wedding/images/invite-preview-v2.jpg">
+<meta property="og:image" content="https://lucieandsimon.wedding/images/invite-preview-v3.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://lucieandsimon.wedding/invite">
-<meta name="twitter:image" content="https://lucieandsimon.wedding/images/invite-preview-v2.jpg">
+<meta name="twitter:image" content="https://lucieandsimon.wedding/images/invite-preview-v3.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/fonts.css">
@@ -38,42 +38,45 @@ a{color:inherit;text-decoration:none}
 .datefoot{font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-size:17px;color:var(--dim);margin-top:14px;transition:opacity .4s}
 
 /* ── Envelope ── */
-.env-wrap{position:relative;width:min(88vw,430px);aspect-ratio:1.48;perspective:1600px;transition:transform 1s cubic-bezier(.3,.7,.2,1),opacity .8s}
-.paper{background-color:#F1E9D8;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .36  0 0 0 0 .22  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-.env-back{position:absolute;inset:0;border:1px solid rgba(168,131,75,.4);box-shadow:0 2px 3px rgba(60,45,20,.06),0 22px 44px -8px rgba(60,45,20,.22),0 50px 80px -30px rgba(60,45,20,.18);background-color:#E7DCC4}
-.env-liner{position:absolute;left:3%;right:3%;top:3%;height:56%;clip-path:polygon(0 0,100% 0,50% 100%);background-color:#14251F;
-  background-image:repeating-linear-gradient(45deg,rgba(217,190,140,.22) 0 1px,transparent 1px 13px),repeating-linear-gradient(-45deg,rgba(217,190,140,.22) 0 1px,transparent 1px 13px)}
-.peek{position:absolute;left:6%;right:6%;top:6%;bottom:5%;z-index:2;background:var(--paper);box-shadow:0 1px 2px rgba(60,45,20,.12);padding:7px;transition:transform 1s cubic-bezier(.3,.7,.2,1) .5s}
+:root{
+  --noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42  0 0 0 0 .33  0 0 0 0 .2  0 0 0 .11 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --fibre:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.012 .55' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .4  0 0 0 0 .25  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+  --linen:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='l'><feTurbulence type='turbulence' baseFrequency='.9 .02' numOctaves='2' seed='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .32  0 0 0 0 .2  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23l)'/></svg>");
+}
+.stage{background-color:#EEE7D9;background-image:radial-gradient(ellipse 80% 60% at 40% 30%,rgba(255,252,244,.85),rgba(255,252,244,0) 70%),var(--linen),var(--noise)}
+.env-wrap{position:relative;width:min(86vw,420px);aspect-ratio:1.5;perspective:1600px;transition:transform 1s cubic-bezier(.3,.7,.2,1),opacity .8s}
+.env-tilt{position:absolute;inset:0;transform:rotate(-2.2deg);transform-style:preserve-3d}
+.paper{background-color:#F4ECDC;background-image:linear-gradient(128deg,rgba(255,255,255,.6) 0%,rgba(255,255,255,0) 40%,rgba(120,90,40,.05) 72%,rgba(90,65,25,.12) 100%),var(--fibre),var(--noise)}
+.env-back{position:absolute;inset:0;border-radius:2px;background-color:#E6DAC2;
+  box-shadow:0 0 0 .5px rgba(150,115,60,.35),0 1px 1px rgba(60,45,20,.22),0 5px 9px -2px rgba(60,45,20,.16),0 22px 36px -10px rgba(60,45,20,.32),0 55px 70px -34px rgba(60,45,20,.30)}
+.env-liner{position:absolute;left:2.5%;right:2.5%;top:2.5%;height:57%;clip-path:polygon(0 0,100% 0,50% 100%);background-color:#13241E;
+  background-image:linear-gradient(to bottom,rgba(0,0,0,.25),rgba(0,0,0,0) 40%),repeating-linear-gradient(45deg,rgba(217,190,140,.24) 0 1px,transparent 1px 12px),repeating-linear-gradient(-45deg,rgba(217,190,140,.24) 0 1px,transparent 1px 12px)}
+.peek{position:absolute;left:6%;right:6%;top:6%;bottom:5%;z-index:2;background:var(--paper);box-shadow:0 1px 2px rgba(60,45,20,.15);padding:7px;transition:transform 1s cubic-bezier(.3,.7,.2,1) .5s}
 .peek i{display:flex;align-items:flex-start;justify-content:center;height:100%;border:1px solid var(--brass);outline:1px solid rgba(168,131,75,.3);outline-offset:-5px;font-family:'Bodoni Moda',Georgia,serif;font-size:22px;color:var(--ink);padding-top:12%;font-style:normal}
-.env-pocket{position:absolute;inset:0;z-index:3;pointer-events:none;filter:drop-shadow(0 -1px 0 rgba(168,131,75,.35)) drop-shadow(0 -6px 8px rgba(60,45,20,.06))}
-.env-pocket div{position:absolute;inset:0;clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%)}
-.env-flap{position:absolute;left:0;right:0;top:0;height:60%;z-index:4;transform-origin:top center;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.5,0,.25,1),z-index 0s .45s}
+.env-pocket{position:absolute;inset:0;z-index:3;pointer-events:none}
+.env-pocket .pk{position:absolute;inset:0;clip-path:polygon(0 0,50% 57%,100% 0,100% 100%,0 100%)}
+.seams{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:visible}
+.flap-shadow{position:absolute;left:0;top:0;width:100%;height:100%;z-index:3;pointer-events:none;transition:opacity .3s}
+.env-flap{position:absolute;left:0;right:0;top:0;height:59%;z-index:4;transform-origin:top center;transform-style:preserve-3d;transition:transform .95s cubic-bezier(.5,0,.25,1),z-index 0s .45s}
 .env-flap .ff,.env-flap .fb{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%);backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.env-flap .ff{background-color:#F4EDDE}
-.env-flap .fb{transform:rotateX(180deg);background-color:#14251F;background-image:repeating-linear-gradient(45deg,rgba(217,190,140,.22) 0 1px,transparent 1px 13px),repeating-linear-gradient(-45deg,rgba(217,190,140,.22) 0 1px,transparent 1px 13px)}
-.flap-shade{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%);background:linear-gradient(to bottom,rgba(255,255,255,.45),rgba(255,255,255,0) 45%,rgba(150,115,60,.10))}
-.flap-edge{position:absolute;left:0;top:0;width:100%;height:60%;z-index:5;pointer-events:none;overflow:visible;transition:opacity .25s;filter:drop-shadow(0 2px 2px rgba(60,45,20,.16))}
-.flap-edge polyline{fill:none;stroke:rgba(168,131,75,.55);stroke-width:1}
+.env-flap .ff{background-color:#F6EFE1}
+.flap-shade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,.5),rgba(255,255,255,0) 30%,rgba(140,105,50,.0) 60%,rgba(140,105,50,.14))}
+.env-flap .fb{transform:rotateX(180deg);background-color:#13241E;background-image:linear-gradient(to top,rgba(0,0,0,.3),rgba(0,0,0,0) 50%),repeating-linear-gradient(45deg,rgba(217,190,140,.24) 0 1px,transparent 1px 12px),repeating-linear-gradient(-45deg,rgba(217,190,140,.24) 0 1px,transparent 1px 12px)}
+.flap-edge{position:absolute;left:0;top:0;width:100%;height:59%;z-index:5;pointer-events:none;overflow:visible;transition:opacity .25s}
+.top-crease{position:absolute;left:0;right:0;top:0;height:2px;z-index:5;background:linear-gradient(to bottom,rgba(255,255,255,.8),rgba(150,115,60,.18));pointer-events:none;transition:opacity .25s}
 
 /* wax seal */
-.seal{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);z-index:6;width:94px;height:92px;border:none;cursor:pointer;padding:0;
-  border-radius:47% 53% 49% 51% / 52% 47% 53% 48%;
-  background:radial-gradient(circle at 38% 32%,#D3AE70 0%,#A9823F 38%,#86632D 70%,#6B4E22 100%);
-  box-shadow:0 7px 14px rgba(60,40,10,.38),0 2px 3px rgba(60,40,10,.3),inset 0 2px 3px rgba(255,236,190,.35),inset 0 -4px 7px rgba(50,30,5,.45);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;color:#F4E3BE;transition:transform .5s,opacity .5s}
-.seal::before{content:'';position:absolute;inset:11px;border-radius:50%;box-shadow:inset 0 2px 3px rgba(40,25,5,.5),0 1px 0 rgba(255,236,190,.3);background:radial-gradient(circle at 40% 35%,#B78F4D,#8E6A31 70%)}
-.seal b,.seal span{position:relative}
-.seal b{font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-weight:400;font-size:25px;line-height:1;color:#F1DDB3;text-shadow:0 -1px 0 rgba(60,35,5,.6),0 1px 0 rgba(255,240,200,.25)}
-.seal span{font-size:7px;letter-spacing:.24em;margin-top:5px;color:#EBD3A3;text-shadow:0 -1px 0 rgba(60,35,5,.5)}
-.seal:hover{transform:translate(-50%,-50%) scale(1.04)}
-.seal:focus-visible{outline:2px solid var(--brass);outline-offset:5px}
-.seal-pulse{position:absolute;left:50%;top:60%;width:94px;height:94px;transform:translate(-50%,-50%);border-radius:50%;z-index:5;border:1px solid rgba(168,131,75,.7);animation:pulse 2.4s ease-out infinite}
-@keyframes pulse{from{transform:translate(-50%,-50%) scale(1);opacity:.8}to{transform:translate(-50%,-50%) scale(1.8);opacity:0}}
+.seal{position:absolute;left:50%;top:59%;transform:translate(-50%,-50%) rotate(8deg);z-index:6;width:112px;height:112px;border:none;background:none;cursor:pointer;padding:0;filter:drop-shadow(0 2px 1.5px rgba(50,30,5,.45)) drop-shadow(0 8px 10px rgba(50,30,5,.28));transition:transform .5s,opacity .5s}
+.seal svg{display:block;width:100%;height:100%;overflow:visible}
+.seal:hover{transform:translate(-50%,-50%) rotate(8deg) scale(1.04)}
+.seal:focus-visible{outline:2px solid var(--brass);outline-offset:4px;border-radius:50%}
+.seal-pulse{position:absolute;left:50%;top:59%;width:118px;height:118px;transform:translate(-50%,-50%);border-radius:50%;z-index:5;border:1px solid rgba(168,131,75,.6);animation:pulse 2.6s ease-out infinite}
+@keyframes pulse{from{transform:translate(-50%,-50%) scale(1);opacity:.75}to{transform:translate(-50%,-50%) scale(1.7);opacity:0}}
 
 /* ── Opened state ── */
 .opened .env-flap{transform:rotateX(178deg);z-index:1}
-.opened .flap-edge{opacity:0}
-.opened .seal{opacity:0;transform:translate(-50%,-50%) scale(.6);pointer-events:none}
+.opened .flap-edge,.opened .flap-shadow,.opened .top-crease{opacity:0}
+.opened .seal{opacity:0;transform:translate(-50%,-50%) rotate(8deg) scale(.6);pointer-events:none}
 .opened .seal-pulse{display:none}
 .opened .peek{transform:translateY(-58%)}
 .opened .hint,.opened .for,.opened .eyebrow,.opened .datefoot{opacity:0}
@@ -134,14 +137,58 @@ a{color:inherit;text-decoration:none}
     <p class="eyebrow">You&rsquo;re invited</p>
     <p class="for" id="for"></p>
     <div class="env-wrap">
+      <div class="env-tilt">
       <div class="env-back paper"></div>
       <div class="env-liner" aria-hidden="true"></div>
       <div class="peek" aria-hidden="true"><i>L&amp;S</i></div>
-      <div class="env-pocket" aria-hidden="true"><div class="paper"></div></div>
+      <div class="env-pocket" aria-hidden="true"><div class="pk paper"></div></div>
+      <svg class="seams" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,100 44,62" fill="none" stroke="rgba(120,90,40,.16)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+        <polyline points="100,100 56,62" fill="none" stroke="rgba(120,90,40,.16)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+        <polyline points="0.3,100.4 44.3,62.4" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+        <polyline points="99.7,100.4 55.7,62.4" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <svg class="flap-shadow" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs><filter id="fsb" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur stdDeviation="1.6"/></filter></defs><polygon points="1,0 99,0 50,63" fill="rgba(70,50,20,.28)" filter="url(#fsb)"/></svg>
       <div class="env-flap" aria-hidden="true"><div class="ff paper"><div class="flap-shade"></div></div><div class="fb"></div></div>
-      <svg class="flap-edge" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,0 50,100 100,0" vector-effect="non-scaling-stroke"/></svg>
+      <svg class="flap-edge" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,0 50,100 100,0" fill="none" stroke="rgba(150,115,60,.45)" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
+      <div class="top-crease" aria-hidden="true"></div>
+      </div>
       <div class="seal-pulse" aria-hidden="true"></div>
-      <button class="seal" id="seal" type="button" aria-label="Open your invitation"><b>L&amp;S</b><span>26 · VI · 27</span></button>
+      <button class="seal" id="seal" type="button" aria-label="Open your invitation">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <radialGradient id="wx" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#E6C68B"/><stop offset=".3" stop-color="#C39B55"/><stop offset=".62" stop-color="#9A7533"/><stop offset="1" stop-color="#674A1C"/></radialGradient>
+            <radialGradient id="wxin" cx="42%" cy="38%" r="72%"><stop offset="0" stop-color="#C29A56"/><stop offset=".7" stop-color="#94702F"/><stop offset="1" stop-color="#7A5A24"/></radialGradient>
+            <linearGradient id="emb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3DDAE"/><stop offset="1" stop-color="#C9A262"/></linearGradient>
+            <filter id="blob" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".028" numOctaves="2" seed="11" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter>
+            <filter id="gloss" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur in="SourceAlpha" stdDeviation="5" result="b"/><feSpecularLighting in="b" surfaceScale="6" specularConstant=".75" specularExponent="18" lighting-color="#FFF2D2" result="s"><fePointLight x="30" y="10" z="170"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".75" k4="0"/></filter>
+            <filter id="soft"><feGaussianBlur stdDeviation="3.5"/></filter>
+            <path id="ring" d="M100,100 m-47,0 a47,47 0 1,1 94,0 a47,47 0 1,1 -94,0"/>
+          </defs>
+          <g filter="url(#gloss)"><g filter="url(#blob)">
+            <circle cx="100" cy="100" r="80" fill="url(#wx)"/>
+            <ellipse cx="166" cy="146" rx="15" ry="10" fill="#8C6A2C"/>
+            <ellipse cx="38" cy="62" rx="11" ry="8" fill="#B48C48"/>
+            <ellipse cx="54" cy="160" rx="9" ry="7" fill="#7E5E26"/>
+          </g></g>
+          <circle cx="100" cy="100" r="61" fill="url(#wxin)"/>
+          <circle cx="100" cy="98.6" r="61" fill="none" stroke="rgba(50,30,5,.55)" stroke-width="3"/>
+          <circle cx="100" cy="101.6" r="61.5" fill="none" stroke="rgba(255,236,190,.38)" stroke-width="1.6"/>
+          <circle cx="100" cy="100" r="35" fill="none" stroke="rgba(50,30,5,.35)" stroke-width="1"/>
+          <circle cx="100" cy="100.8" r="35" fill="none" stroke="rgba(255,236,190,.3)" stroke-width=".8"/>
+          <g font-family="Jost, sans-serif" font-size="8.6" letter-spacing="2.6" text-anchor="middle">
+            <text fill="rgba(50,30,5,.6)" dy="1"><textPath href="#ring" startOffset="50%">LUCIE · SIMON · 26 · VI · 2027 ·</textPath></text>
+            <text fill="#EBD3A0"><textPath href="#ring" startOffset="50%">LUCIE · SIMON · 26 · VI · 2027 ·</textPath></text>
+          </g>
+          <g font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-size="36" text-anchor="middle">
+            <text x="100" y="114.8" fill="rgba(45,25,0,.7)">L&amp;S</text>
+            <text x="99.4" y="111.8" fill="rgba(255,244,214,.55)">L&amp;S</text>
+            <text x="100" y="113" fill="url(#emb)">L&amp;S</text>
+          </g>
+          <ellipse cx="70" cy="56" rx="24" ry="10" fill="#FFF6E0" opacity=".32" filter="url(#soft)" transform="rotate(-32 70 56)"/>
+          <ellipse cx="132" cy="150" rx="14" ry="5" fill="#FFF6E0" opacity=".14" filter="url(#soft)" transform="rotate(-32 132 150)"/>
+        </svg>
+      </button>
     </div>
     <p class="hint">Tap the seal to open</p>
     <p class="datefoot">Saturday, 26th June 2027</p>
