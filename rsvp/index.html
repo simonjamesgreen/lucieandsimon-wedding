@@ -224,7 +224,7 @@ input[type="number"]:focus { border-bottom-color: var(--brass); }
       <button type="button" class="add-guest" id="add-guest">+ Add a guest</button>
     </div>
 
-    <fieldset class="fs" id="transport-section" hidden>
+    <fieldset class="fs" id="transport-section">
       <legend class="f-label">Coach from the church</legend>
       <p class="f-note">We&rsquo;re running coaches from St Mary&rsquo;s to Manor House straight after the ceremony, and we recommend them: no driving or parking to worry about. Would you like seats?</p>
       <div class="att-opts">
@@ -362,8 +362,8 @@ input[type="number"]:focus { border-bottom-color: var(--brass); }
              : 'Replying for more than one person? Add everyone this reply is for, including yourself.');
     guests.querySelectorAll('.g-diet-wrap').forEach(function(w){ w.style.display = dec ? 'none' : ''; });
     $('add-guest').textContent = dec ? '+ Add another name' : '+ Add a guest';
-    $('transport-section').hidden = att !== 'whole_day';
-    $('seat-count').hidden = !(att === 'whole_day' && transport() === 'yes');
+    $('transport-section').hidden = dec;
+    $('seat-count').hidden = !(!dec && transport() === 'yes');
     $('song-wrap').hidden = dec;
     $('submit').textContent = dec ? 'Send our regrets' : 'Send RSVP';
   }
